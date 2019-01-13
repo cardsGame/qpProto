@@ -8,13 +8,15 @@ It is generated from these files:
 	friendRoom/friendRoom.proto
 
 It has these top-level messages:
-	RoomMessage
+	Message
 	CreateRoomRequest
 	CreateRoomResponse
-	EnterRoomRequest
-	RoomData
 	GetPlayingRequest
 	GetPlayingResponse
+	EnterRoomMessage
+	RoomDataMessage
+	ReadyMessge
+	OkMessage
 	RoomOption
 */
 package friendRoom
@@ -50,7 +52,6 @@ var _ server.Option
 
 type FriendRoomService interface {
 	CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...client.CallOption) (*CreateRoomResponse, error)
-	EnterRoom(ctx context.Context, in *EnterRoomRequest, opts ...client.CallOption) (*RoomData, error)
 	GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...client.CallOption) (*GetPlayingResponse, error)
 	Stream(ctx context.Context, opts ...client.CallOption) (FriendRoom_StreamService, error)
 }
@@ -83,16 +84,6 @@ func (c *friendRoomService) CreateRoom(ctx context.Context, in *CreateRoomReques
 	return out, nil
 }
 
-func (c *friendRoomService) EnterRoom(ctx context.Context, in *EnterRoomRequest, opts ...client.CallOption) (*RoomData, error) {
-	req := c.c.NewRequest(c.name, "FriendRoom.EnterRoom", in)
-	out := new(RoomData)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *friendRoomService) GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...client.CallOption) (*GetPlayingResponse, error) {
 	req := c.c.NewRequest(c.name, "FriendRoom.GetPlaying", in)
 	out := new(GetPlayingResponse)
@@ -104,7 +95,7 @@ func (c *friendRoomService) GetPlaying(ctx context.Context, in *GetPlayingReques
 }
 
 func (c *friendRoomService) Stream(ctx context.Context, opts ...client.CallOption) (FriendRoom_StreamService, error) {
-	req := c.c.NewRequest(c.name, "FriendRoom.Stream", &RoomMessage{})
+	req := c.c.NewRequest(c.name, "FriendRoom.Stream", &Message{})
 	stream, err := c.c.Stream(ctx, req, opts...)
 	if err != nil {
 		return nil, err
@@ -116,8 +107,8 @@ type FriendRoom_StreamService interface {
 	SendMsg(interface{}) error
 	RecvMsg(interface{}) error
 	Close() error
-	Send(*RoomMessage) error
-	Recv() (*RoomMessage, error)
+	Send(*Message) error
+	Recv() (*Message, error)
 }
 
 type friendRoomServiceStream struct {
@@ -136,12 +127,12 @@ func (x *friendRoomServiceStream) RecvMsg(m interface{}) error {
 	return x.stream.Recv(m)
 }
 
-func (x *friendRoomServiceStream) Send(m *RoomMessage) error {
+func (x *friendRoomServiceStream) Send(m *Message) error {
 	return x.stream.Send(m)
 }
 
-func (x *friendRoomServiceStream) Recv() (*RoomMessage, error) {
-	m := new(RoomMessage)
+func (x *friendRoomServiceStream) Recv() (*Message, error) {
+	m := new(Message)
 	err := x.stream.Recv(m)
 	if err != nil {
 		return nil, err
@@ -153,7 +144,6 @@ func (x *friendRoomServiceStream) Recv() (*RoomMessage, error) {
 
 type FriendRoomHandler interface {
 	CreateRoom(context.Context, *CreateRoomRequest, *CreateRoomResponse) error
-	EnterRoom(context.Context, *EnterRoomRequest, *RoomData) error
 	GetPlaying(context.Context, *GetPlayingRequest, *GetPlayingResponse) error
 	Stream(context.Context, FriendRoom_StreamStream) error
 }
@@ -161,7 +151,6 @@ type FriendRoomHandler interface {
 func RegisterFriendRoomHandler(s server.Server, hdlr FriendRoomHandler, opts ...server.HandlerOption) error {
 	type friendRoom interface {
 		CreateRoom(ctx context.Context, in *CreateRoomRequest, out *CreateRoomResponse) error
-		EnterRoom(ctx context.Context, in *EnterRoomRequest, out *RoomData) error
 		GetPlaying(ctx context.Context, in *GetPlayingRequest, out *GetPlayingResponse) error
 		Stream(ctx context.Context, stream server.Stream) error
 	}
@@ -180,10 +169,6 @@ func (h *friendRoomHandler) CreateRoom(ctx context.Context, in *CreateRoomReques
 	return h.FriendRoomHandler.CreateRoom(ctx, in, out)
 }
 
-func (h *friendRoomHandler) EnterRoom(ctx context.Context, in *EnterRoomRequest, out *RoomData) error {
-	return h.FriendRoomHandler.EnterRoom(ctx, in, out)
-}
-
 func (h *friendRoomHandler) GetPlaying(ctx context.Context, in *GetPlayingRequest, out *GetPlayingResponse) error {
 	return h.FriendRoomHandler.GetPlaying(ctx, in, out)
 }
@@ -196,8 +181,8 @@ type FriendRoom_StreamStream interface {
 	SendMsg(interface{}) error
 	RecvMsg(interface{}) error
 	Close() error
-	Send(*RoomMessage) error
-	Recv() (*RoomMessage, error)
+	Send(*Message) error
+	Recv() (*Message, error)
 }
 
 type friendRoomStreamStream struct {
@@ -216,12 +201,12 @@ func (x *friendRoomStreamStream) RecvMsg(m interface{}) error {
 	return x.stream.Recv(m)
 }
 
-func (x *friendRoomStreamStream) Send(m *RoomMessage) error {
+func (x *friendRoomStreamStream) Send(m *Message) error {
 	return x.stream.Send(m)
 }
 
-func (x *friendRoomStreamStream) Recv() (*RoomMessage, error) {
-	m := new(RoomMessage)
+func (x *friendRoomStreamStream) Recv() (*Message, error) {
+	m := new(Message)
 	if err := x.stream.Recv(m); err != nil {
 		return nil, err
 	}
