@@ -1,6 +1,6 @@
 syntax = "proto3";
 package room;
-option go_package= "github.com/cardsGame/qpProto/room";
+// option go_package= "github.com/cardsGame/qpProto/room";
 
 // 游戏类型
 enum GameType {
