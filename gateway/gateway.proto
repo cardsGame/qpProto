@@ -1,22 +1,14 @@
 syntax = "proto3";
 
 enum T {
-    None = 0; // 占位符
-    Auth = 1; // 认证
-    Config = 2; // 配置
-    Room = 3; // 房间请求
-    EnterRoom = 4; // 加入房间请求
+    auth = 0; // 认证
+    config = 1; // 配置
+    friendRoom = 2; // 好友房stream请求
 }
 
 // socket 请求消息
-message Request {
+message Message {
     T type = 1;
-    string data = 2;
-}
-
-// 事件
-message Event {
-    string type = 1;
     string data = 2;
 }
 
@@ -28,11 +20,6 @@ message AuthMessage {
 // 配置消息
 message ConfigMessage {
 
-}
-
-// 加入房间
-message EnterRoomMessage {
-    string roomNo = 1;
 }
 
 message CloseMessage {

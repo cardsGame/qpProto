@@ -4,20 +4,19 @@ import "github.com/cardsGame/qpProto/room/room.proto";
 
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
-    rpc EnterRoom(EnterRoomRequest) returns (RoomData) {}
     rpc GetPlaying(GetPlayingRequest) returns(GetPlayingResponse) {}
-    rpc Stream(stream RoomMessage) returns(stream RoomMessage) {}
+    rpc Stream(stream Message) returns(stream Message) {}
 }
 
 enum MessageType {
-    error = 0; // 占位符
+    enter = 0; // 进入房间
     sit_down = 1; // 坐下
     stand_up = 2; // 站起
     change_seat = 3; // 换座位
     ready = 4; // 准备
 }
 
-message RoomMessage {
+message Message {
     MessageType type = 1;
     string data = 2;
 }
@@ -39,14 +38,6 @@ message CreateRoomResponse {
     room.RoomType roomType = 3;
 }
 
-message EnterRoomRequest {
-    string roomNo = 1;
-}
-
-message RoomData {
-
-}
-
 // 获取进行中房间请求
 message GetPlayingRequest {
 
@@ -57,6 +48,23 @@ message GetPlayingResponse {
     string roomNo = 1;
     room.GameType gameType = 2;
     room.RoomType roomType = 3;
+}
+
+// 消息号请求
+message EnterRoomMessage {
+    string roomNo = 1;
+}
+
+message RoomDataMessage {
+    string roomNo = 1;
+}
+
+message ReadyMessge {
+
+}
+
+message OkMessage {
+
 }
 
 // 房间选项
