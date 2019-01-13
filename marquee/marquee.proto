@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+service Marquee {
+    rpc GetMarqueeList(GetMarqueeListRequest) returns (GetMarqueeListResponse) {}
+    rpc CreateMarquee(CreateMarqueeRequest) returns(MarqueeData) {}
+    rpc UpdateMarquee(UpdateMarqueeRequest) returns(MarqueeData) {}
+    rpc DeleteMarquee(DeleteMarqueeRequest) returns(MarqueeData) {}
+}
+
+message GetMarqueeListRequest {
+
+}
+
+message GetMarqueeListResponse {
+    repeated MarqueeData list = 1;
+    int32 total = 2;
+}
+
+message CreateMarqueeRequest {
+    string content = 1;
+}
+
+message DeleteMarqueeRequest {
+    int32 id = 1;
+}
+
+message UpdateMarqueeRequest {
+    int32 id = 1;
+    string content = 2;
+}
+
+message MarqueeData {
+    int32 id = 1;
+    string content = 2;
+}

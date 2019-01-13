@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+service ShopUserService {
+    // 获取商城货物列表
+    rpc GetGoodsList(GetGoodsListRequest) returns (GetGoodsListResponse){}
+
+
+    // 购买单个物品(可以调节数量)
+    rpc BuyOneGood(BuyOneGoodRequest) returns (BuyOneGoodResponse) {}
+}
+
+service ShopAdminService {
+    // 获取商城货物列表
+    rpc GetGoodsList(GetGoodsListRequest) returns (GetGoodsListResponse){}
+
+    // 新增一个货物到商城
+    rpc AddOneGood(AddOneGoodRequest) returns (AddOneGoodResponse) {}
+
+    // 更新一个
+    rpc UpdateOneGood(UpdateOneGoodRequest) returns (UpdateOneGoodResponse) {}
+
+    // 购买单个物品(可以调节数量)
+    rpc BuyOneGood(BuyOneGoodRequest) returns (BuyOneGoodResponse) {}
+}
+
+// 单件物品
+message Item {
+    int32 id = 1;
+    int32 count = 2;
+}
+
+// 单件商品
+message Good {
+    int32 id = 1;
+    string name = 2;
+    string imgUrl = 3;
+    string description = 4;
+    int32 t = 5;
+    int32 total = 6;
+    int32 sold = 7;
+    int32 price = 8;
+    int32 discount = 9;
+    int32 state = 10;
+    int32 currencyType = 11;
+    repeated Item items = 12;
+}
+
+message GetGoodsListRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 t = 3;
+}
+
+message GetGoodsListResponse {
+    message good {
+        int32 id = 1;
+        string name = 2;
+        string imgUrl = 3;
+        string description = 4;
+        int32 t = 5;
+        int32 total = 6;
+        int32 sold = 7;
+        int32 price = 8;
+        int32 discount = 9;
+        int32 state = 10;
+        int32 currencyType = 11;
+        repeated Item items = 12;
+    }
+    repeated good Goods = 1;
+}
+
+message AddOneGoodRequest {
+    string name = 1;
+    string imgUrl = 2;
+    string description = 3;
+    int32 t = 4;
+    int32 total = 5;
+    int32 sold = 6;
+    int32 price = 7;
+    int32 discount = 8;
+    int32 state = 9;
+    int32 currencyType = 10;
+    repeated Item items = 11;
+}
+
+
+message AddOneGoodResponse {
+    bool success = 1;
+}
+
+message UpdateOneGoodRequest {
+    int32 id  = 1;
+    map<string, string> update = 2;
+    repeated Item items = 3;
+}
+
+message UpdateOneGoodResponse {
+    Good good  = 1;
+    bool success = 2;
+}
+
+message BuyOneGoodRequest {
+    int32 id = 1;
+    int32 count = 2;
+    int32 userId = 3;
+}
+
+message BuyOneGoodResponse {
+    repeated Item items =1;
+    repeated Item userUpdate = 2;
+    Good goodUpdate = 3;
+    bool success = 4;
+    string msg = 5;
+
+}

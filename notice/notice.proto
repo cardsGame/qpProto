@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+service Notice {
+    rpc CreateNotice(CreateNoticeRequest) returns (NoticeData) {}
+    rpc DeleteNotice(DeleteNoticeRequest) returns (NoticeData) {}
+    rpc UpdateNotice(UpdateNoticeRequest) returns (NoticeData) {}
+    rpc GetNoticeList(GetNoticeListRequest) returns(GetNoticeListResponse) {}
+}
+
+enum NoticeType {
+    lvse = 0; // 绿色声明
+    daili = 1; // 代理公告
+}
+
+message NoticeData {
+    NoticeType type = 1;
+    string content = 2;
+}
+
+message CreateNoticeRequest {
+    NoticeType type = 1;
+    string content = 2;
+}
+
+message DeleteNoticeRequest {
+    NoticeType type = 1;
+}
+
+message UpdateNoticeRequest {
+    NoticeType type = 1;
+    string content = 2;
+}
+
+message GetNoticeListRequest {
+
+}
+
+message GetNoticeListResponse {
+    repeated NoticeData notices = 1;
+}
