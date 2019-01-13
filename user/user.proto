@@ -1,0 +1,117 @@
+syntax = "proto3";
+option go_package = "user";
+
+// 用户查询服务
+service UserQuery {
+    // 获取某个用户的详细信息
+    rpc GetDetailInfo(GetDetailInfoRequest) returns(UserInfo) {}
+    // 获取所有用户
+    rpc GetAllUser(GetAllUserRequest) returns(GetAllUserResponse) {}
+}
+
+// 用户业务服务
+service UserBiz {
+    // 给玩家增加物品
+    rpc AddItems(AddItemsRequest) returns(UserUpdate) {}
+}
+
+// 用户认证服务
+service UserAuth{
+    // 通过本地认证
+    rpc AuthLocal(AuthLocalRequest) returns (PayloadToken) {}
+    // 通过微信h5登录认证
+    rpc AuthWxH5(AuthWxH5Request) returns (PayloadToken) {}
+    // 登录游戏
+    rpc SignInGame(SignInGameRequest) returns (UserInfo) {}
+    // 验证token
+    rpc VerifyToken(VerifyTokenRequest) returns(PayloadToken) {}
+}
+
+// 本地登录认证请求
+message AuthLocalRequest {
+    string accountName = 1;
+    string password = 2;
+    string nickName = 3;
+    string headImgUrl = 4;
+    int32 gender = 5;
+    bool isBot = 6;
+    int32 inviteUserId = 7;
+}
+
+// 微信h5登录认证请求
+message AuthWxH5Request {}
+
+// token信息
+message PayloadToken {
+    int32 id = 1;
+    string token = 2;
+    int32 expireAt = 3;
+    string role = 4;
+    bool isNew = 5;
+}
+
+// token验证请求
+message SignInGameRequest{
+    string token = 1;
+}
+
+// 验证token请求
+message VerifyTokenRequest {
+    string token = 1;
+}
+
+message VerifyTokenResponse {
+
+}
+
+// 获取用户详细信息
+message GetDetailInfoRequest {
+    int32 userId = 1;
+}
+
+// 获取所有用户信息
+message GetAllUserRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string q = 3;
+}
+
+// 获取所有用户信息响应
+message GetAllUserResponse {
+    repeated UserInfo list = 1;
+}
+
+// 增加物品请求
+message AddItemsRequest {
+    int32 userId = 1;
+    repeated Item items = 2;
+}
+
+// 用户更新内容
+message UserUpdate {
+    repeated Item getItems = 1;
+    UserInfo userUpdate = 2;
+}
+
+// 物品
+message Item {
+    int32 itemId = 1;
+    int32 count = 2;
+}
+
+// 用户信息
+message UserInfo {
+    int32 userId = 1;
+    string nickName = 2;
+    string headImgUrl= 3;
+    int32 accountType = 4;
+    int32 gender = 5;
+    int32 diamond = 6;
+    int32 gold = 7;
+    int32 roomCard= 8;
+    int32 vip = 9;
+    int32 vipExpc =10;
+    int32 lvl = 11;
+    int32 lvlExpc = 12;
+    map<string, int32> bag = 13;
+}

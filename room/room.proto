@@ -1,0 +1,41 @@
+syntax = "proto3";
+package room;
+// option go_package= "github.com/VoidMainR/qpProto/room";
+
+// 游戏类型
+enum GameType {
+    none_game= 0; // 占位符
+    zlmj = 1; // 肇州麻将
+    ddz = 2; // 斗地主
+}
+
+// 房间类型
+enum RoomType {
+    none_room= 0; // 占位符
+    friend = 1; // 好友房
+    gold = 2; // 金币房
+    division = 3; // 段位匹配房
+    match = 4; // 比赛房
+}
+
+// 房间支付类型
+enum RoomPay {
+    none_pay= 0; // 占位符
+    aa_pay = 1; // aa支付
+    master_pay = 2; // 房主支付
+}
+
+// 房间结束类型
+enum RoomOverType {
+    none_over= 0; // 占位符
+    not_over = 1; // 未结束
+    normal = 2; // 正常结束
+    force_over = 3; // 强制结束
+}
+
+// 房间玩家角色
+enum RoomPlayerRole {
+    none_role= 0; // 占位符
+    player = 1; // 玩家
+    guest = 2; // 游客
+}

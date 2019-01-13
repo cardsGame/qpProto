@@ -1,0 +1,83 @@
+syntax = "proto3";
+package friendRoom;
+import "github.com/VoidMainR/qpProto/room/room.proto";
+
+service FriendRoom {
+    rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
+    rpc EnterRoom(EnterRoomRequest) returns (RoomData) {}
+    rpc GetPlaying(GetPlayingRequest) returns(GetPlayingResponse) {}
+    rpc Stream(stream RoomMessage) returns(stream RoomMessage) {}
+}
+
+enum MessageType {
+    error = 0; // 占位符
+    sit_down = 1; // 坐下
+    stand_up = 2; // 站起
+    change_seat = 3; // 换座位
+    ready = 4; // 准备
+}
+
+message RoomMessage {
+    MessageType type = 1;
+    string data = 2;
+}
+
+// 创建房间请求
+message CreateRoomRequest{
+    room.GameType gameType = 1;
+    RoomOption roomOption = 2;
+    //    oneof game_option {
+    //        ZLMJGameOption zlmj_option = 3;
+    //        DDZGameOption ddz_option = 4;
+    //    }
+}
+
+// 创建房间响应
+message CreateRoomResponse {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+}
+
+message EnterRoomRequest {
+    string roomNo = 1;
+}
+
+message RoomData {
+
+}
+
+// 获取进行中房间请求
+message GetPlayingRequest {
+
+}
+
+// 获取进行中房间响应
+message GetPlayingResponse {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+}
+
+// 房间选项
+message RoomOption {
+    bool autoSit = 1; // 是否自动坐下
+    room.RoomPay payType = 2; // 支付类型
+    int32 totalRound = 3; // 总局数
+    int32 totalTime = 4; // 总时长
+    bool needReady = 5; // 是否需要准备
+}
+
+// 房间状态
+enum RoomState {
+    wait_join = 0; // 等待加入
+    in_game = 1; // 游戏中
+    wait_ready = 2; // 小结算等待准备
+    over = 3; // 结束
+}
+
+// 房间限制类型
+enum RoomLimit {
+    limit_round = 0; // 限局
+    limit_time = 1; // 限时
+}

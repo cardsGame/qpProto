@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+// 语音服务
+service Audio {
+    // 上传语音
+    rpc UploadVoice (UploadVoiceRequest) returns (UploadVoiceResponse) {}
+    // 下载语音
+    rpc DownloadVoice(DownloadVoiceRequest) returns (DownloadVoiceResponse) {}
+}
+
+message UploadVoiceRequest {
+    string voice = 1;
+    int32 seconds = 2;
+}
+
+message UploadVoiceResponse {
+    int32 id = 1;
+}
+
+message DownloadVoiceRequest {
+    int32 id = 1;
+}
+
+message DownloadVoiceResponse {
+    int32 id = 1;
+    string voice = 2;
+    int32 seconds = 3;
+}
