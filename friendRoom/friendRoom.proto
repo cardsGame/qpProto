@@ -1,6 +1,6 @@
 syntax = "proto3";
 package friendRoom;
-import "github.com/VoidMainR/qpProto/room/room.proto";
+import "github.com/cardsGame/qpProto/room/room.proto";
 
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
