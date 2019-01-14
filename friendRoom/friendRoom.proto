@@ -5,6 +5,7 @@ import "github.com/cardsGame/qpProto/room/room.proto";
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
     rpc GetPlaying(GetPlayingRequest) returns(GetPlayingResponse) {}
+    rpc JoinRoom(JoinRoomRequest) returns (RoomData) {}
     rpc Stream(stream Message) returns(stream Message) {}
 }
 
@@ -50,12 +51,18 @@ message GetPlayingResponse {
     room.RoomType roomType = 3;
 }
 
-// 消息号请求
-message EnterRoomMessage {
+// 加入房间请求
+message JoinRoomRequest {
     string roomNo = 1;
 }
 
-message RoomDataMessage {
+// 房间数据
+message RoomData {
+    string roomNo = 1;
+}
+
+// 消息号请求
+message EnterRoomMessage {
     string roomNo = 1;
 }
 
