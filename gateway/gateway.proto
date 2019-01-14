@@ -13,6 +13,11 @@ message Message {
     string data = 2;
 }
 
+
+message JoinRoomMessage {
+    string roomNo = 1;
+}
+
 // 认证消息
 message AuthMessage {
     string token = 1;
