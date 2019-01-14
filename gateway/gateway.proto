@@ -3,7 +3,8 @@ syntax = "proto3";
 enum T {
     auth = 0; // 认证
     config = 1; // 配置
-    friendRoom = 2; // 好友房stream请求
+    enterFriendRoom = 2; // 加入好友房 stream验证
+    friendRoom = 3; // 好友房stream请求
 }
 
 // socket 请求消息
