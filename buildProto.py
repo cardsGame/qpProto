@@ -31,7 +31,7 @@ def genProto():
         print(folderList)
         os.environ['GO111MODULE'] = 'off'
         os.system('go get -u -x github.com/cardsGame/qpProto')
-        goPath = os.environ['GOPATH']
+        goPath = os.getenv('GOPATH')
         print(goPath)
         dIndex = goPath.find(';')
         if (dIndex > 0) :
