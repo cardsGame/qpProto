@@ -17,21 +17,11 @@ def removeOldTypings():
 
 def genProto():
         fileList = os.listdir()
-        #     removeOldTypings()
-        #     genJsCmd = 'pbjs -t static-module -w commonjs -o ./assets/script/typings/proto.js ./proto/*.proto --no-create --no-beautify --no-verify --no-convert --no-delimited'
-        #     os.system(genJsCmd)
-        #     os.system('pbts -o ./proto.d.ts ./assets/script/typings/proto.js')
-        #     os.system(genJsCmd +' --no-comments')
-        folderList = []
-        for i in range(0,len(fileList)) :
-                fileName = fileList[i]
-                dotIndex = fileName.find('.')
-                if (dotIndex < 0) :
-                        folderList.append(fileName)
-        print(folderList)
+        # 关闭goModule先
         os.environ['GO111MODULE'] = 'off'
+        # 通过goget拉取项目路径到GOPATH
         os.system('go get -u -x github.com/cardsGame/qpProto')
-        goPath = os.getenv('GOPATH')
+        goPath =  os.getenv('GOPATH') or ''
         print(goPath)
         dIndex = goPath.find(';')
         if (dIndex > 0) :
@@ -39,8 +29,15 @@ def genProto():
         ddIndex = goPath.find(',')
         if (dIndex > 0) :
                 goPath = goPath[:ddIndex] + r'\src'
+        folderList = []
+        for i in range(0,len(fileList)) :
+                fileName = fileList[i]
+                dotIndex = fileName.find('.')
+                if (dotIndex < 0) :
+                        folderList.append(fileName)
+        print(folderList)
         for folderName in folderList : 
-                cmd = 'protoc --proto_path="'+ goPath + '" --proto_path=. --go_out=. --micro_out=. ' + folderName + '/' + folderName + '.proto'
+                cmd = 'protoc --proto_path="'+ goPath + '" --proto_path=. --go_out=plugins=grpc:. --micro_out=plugins=grpc:. ' + folderName + '/' + folderName + '.proto'
                 # print(cmd)
                 os.system(cmd)
 genProto()

@@ -4,8 +4,10 @@
 package notice
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -327,4 +329,175 @@ var fileDescriptor_a4805187b6be1089 = []byte{
 	0x04, 0x31, 0x52, 0x1e, 0xa0, 0xfb, 0xa6, 0x1b, 0x38, 0xfe, 0x06, 0x03, 0x27, 0xca, 0x07, 0x6d,
 	0x36, 0x55, 0x5e, 0x66, 0x32, 0x78, 0xee, 0x37, 0x5f, 0x72, 0xf1, 0x11, 0x00, 0x00, 0xff, 0xff,
 	0x5a, 0x6f, 0x56, 0xbc, 0xa9, 0x02, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// NoticeClient is the client API for Notice service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type NoticeClient interface {
+	CreateNotice(ctx context.Context, in *CreateNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error)
+	DeleteNotice(ctx context.Context, in *DeleteNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error)
+	UpdateNotice(ctx context.Context, in *UpdateNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error)
+	GetNoticeList(ctx context.Context, in *GetNoticeListRequest, opts ...grpc.CallOption) (*GetNoticeListResponse, error)
+}
+
+type noticeClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewNoticeClient(cc *grpc.ClientConn) NoticeClient {
+	return &noticeClient{cc}
+}
+
+func (c *noticeClient) CreateNotice(ctx context.Context, in *CreateNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error) {
+	out := new(NoticeData)
+	err := c.cc.Invoke(ctx, "/Notice/CreateNotice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeClient) DeleteNotice(ctx context.Context, in *DeleteNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error) {
+	out := new(NoticeData)
+	err := c.cc.Invoke(ctx, "/Notice/DeleteNotice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeClient) UpdateNotice(ctx context.Context, in *UpdateNoticeRequest, opts ...grpc.CallOption) (*NoticeData, error) {
+	out := new(NoticeData)
+	err := c.cc.Invoke(ctx, "/Notice/UpdateNotice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeClient) GetNoticeList(ctx context.Context, in *GetNoticeListRequest, opts ...grpc.CallOption) (*GetNoticeListResponse, error) {
+	out := new(GetNoticeListResponse)
+	err := c.cc.Invoke(ctx, "/Notice/GetNoticeList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// NoticeServer is the server API for Notice service.
+type NoticeServer interface {
+	CreateNotice(context.Context, *CreateNoticeRequest) (*NoticeData, error)
+	DeleteNotice(context.Context, *DeleteNoticeRequest) (*NoticeData, error)
+	UpdateNotice(context.Context, *UpdateNoticeRequest) (*NoticeData, error)
+	GetNoticeList(context.Context, *GetNoticeListRequest) (*GetNoticeListResponse, error)
+}
+
+func RegisterNoticeServer(s *grpc.Server, srv NoticeServer) {
+	s.RegisterService(&_Notice_serviceDesc, srv)
+}
+
+func _Notice_CreateNotice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateNoticeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).CreateNotice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Notice/CreateNotice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).CreateNotice(ctx, req.(*CreateNoticeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Notice_DeleteNotice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteNoticeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).DeleteNotice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Notice/DeleteNotice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).DeleteNotice(ctx, req.(*DeleteNoticeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Notice_UpdateNotice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNoticeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).UpdateNotice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Notice/UpdateNotice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).UpdateNotice(ctx, req.(*UpdateNoticeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Notice_GetNoticeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNoticeListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).GetNoticeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Notice/GetNoticeList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).GetNoticeList(ctx, req.(*GetNoticeListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Notice_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "Notice",
+	HandlerType: (*NoticeServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateNotice",
+			Handler:    _Notice_CreateNotice_Handler,
+		},
+		{
+			MethodName: "DeleteNotice",
+			Handler:    _Notice_DeleteNotice_Handler,
+		},
+		{
+			MethodName: "UpdateNotice",
+			Handler:    _Notice_UpdateNotice_Handler,
+		},
+		{
+			MethodName: "GetNoticeList",
+			Handler:    _Notice_GetNoticeList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "notice/notice.proto",
 }

@@ -4,8 +4,10 @@
 package audio
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -224,4 +226,113 @@ var fileDescriptor_62a3602995c17564 = []byte{
 	0x1e, 0x16, 0x4f, 0x29, 0x31, 0x08, 0x39, 0x70, 0xf1, 0xa2, 0x38, 0x4f, 0x48, 0x54, 0x0f, 0x9b,
 	0xb7, 0xa4, 0xc4, 0xf4, 0xb0, 0xfa, 0x42, 0x89, 0x21, 0x89, 0x0d, 0x1c, 0xf8, 0xc6, 0x80, 0x00,
 	0x00, 0x00, 0xff, 0xff, 0x7f, 0x3a, 0x5e, 0xd9, 0x91, 0x01, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// AudioClient is the client API for Audio service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type AudioClient interface {
+	// 上传语音
+	UploadVoice(ctx context.Context, in *UploadVoiceRequest, opts ...grpc.CallOption) (*UploadVoiceResponse, error)
+	// 下载语音
+	DownloadVoice(ctx context.Context, in *DownloadVoiceRequest, opts ...grpc.CallOption) (*DownloadVoiceResponse, error)
+}
+
+type audioClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewAudioClient(cc *grpc.ClientConn) AudioClient {
+	return &audioClient{cc}
+}
+
+func (c *audioClient) UploadVoice(ctx context.Context, in *UploadVoiceRequest, opts ...grpc.CallOption) (*UploadVoiceResponse, error) {
+	out := new(UploadVoiceResponse)
+	err := c.cc.Invoke(ctx, "/Audio/UploadVoice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *audioClient) DownloadVoice(ctx context.Context, in *DownloadVoiceRequest, opts ...grpc.CallOption) (*DownloadVoiceResponse, error) {
+	out := new(DownloadVoiceResponse)
+	err := c.cc.Invoke(ctx, "/Audio/DownloadVoice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AudioServer is the server API for Audio service.
+type AudioServer interface {
+	// 上传语音
+	UploadVoice(context.Context, *UploadVoiceRequest) (*UploadVoiceResponse, error)
+	// 下载语音
+	DownloadVoice(context.Context, *DownloadVoiceRequest) (*DownloadVoiceResponse, error)
+}
+
+func RegisterAudioServer(s *grpc.Server, srv AudioServer) {
+	s.RegisterService(&_Audio_serviceDesc, srv)
+}
+
+func _Audio_UploadVoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadVoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AudioServer).UploadVoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Audio/UploadVoice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AudioServer).UploadVoice(ctx, req.(*UploadVoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Audio_DownloadVoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadVoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AudioServer).DownloadVoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Audio/DownloadVoice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AudioServer).DownloadVoice(ctx, req.(*DownloadVoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Audio_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "Audio",
+	HandlerType: (*AudioServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UploadVoice",
+			Handler:    _Audio_UploadVoice_Handler,
+		},
+		{
+			MethodName: "DownloadVoice",
+			Handler:    _Audio_DownloadVoice_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "audio/audio.proto",
 }
