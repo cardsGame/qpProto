@@ -175,7 +175,7 @@ message Roomplayer {
     string nickName = 4;
     bool isOnline = 5;
     room.RoomPlayerRole role = 6;
-    bool isReady = 6;
+    bool isReady = 7;
 }
 
 message GamePlayer {

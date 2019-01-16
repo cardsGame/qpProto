@@ -13,12 +13,24 @@ It has these top-level messages:
 	CreateRoomResponse
 	GetPlayingRequest
 	GetPlayingResponse
-	JoinRoomRequest
-	RoomData
-	EnterRoomMessage
-	ReadyMessge
-	OkMessage
 	RoomOption
+	EnterRoomReq
+	ReadyReq
+	SitdownReq
+	StandupReq
+	ChangesitReq
+	LeaveReq
+	OfflineReq
+	UploadLocationReq
+	RequestDissolveReq
+	ReplyDissolveReq
+	Room
+	RoomData
+	GameData
+	Error
+	Roomplayer
+	GamePlayer
+	PlayerEnter
 */
 package friendRoom
 
@@ -54,7 +66,6 @@ var _ server.Option
 type FriendRoomService interface {
 	CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...client.CallOption) (*CreateRoomResponse, error)
 	GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...client.CallOption) (*GetPlayingResponse, error)
-	JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...client.CallOption) (*RoomData, error)
 	Stream(ctx context.Context, opts ...client.CallOption) (FriendRoom_StreamService, error)
 }
 
@@ -89,16 +100,6 @@ func (c *friendRoomService) CreateRoom(ctx context.Context, in *CreateRoomReques
 func (c *friendRoomService) GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...client.CallOption) (*GetPlayingResponse, error) {
 	req := c.c.NewRequest(c.name, "FriendRoom.GetPlaying", in)
 	out := new(GetPlayingResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *friendRoomService) JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...client.CallOption) (*RoomData, error) {
-	req := c.c.NewRequest(c.name, "FriendRoom.JoinRoom", in)
-	out := new(RoomData)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -157,7 +158,6 @@ func (x *friendRoomServiceStream) Recv() (*Message, error) {
 type FriendRoomHandler interface {
 	CreateRoom(context.Context, *CreateRoomRequest, *CreateRoomResponse) error
 	GetPlaying(context.Context, *GetPlayingRequest, *GetPlayingResponse) error
-	JoinRoom(context.Context, *JoinRoomRequest, *RoomData) error
 	Stream(context.Context, FriendRoom_StreamStream) error
 }
 
@@ -165,7 +165,6 @@ func RegisterFriendRoomHandler(s server.Server, hdlr FriendRoomHandler, opts ...
 	type friendRoom interface {
 		CreateRoom(ctx context.Context, in *CreateRoomRequest, out *CreateRoomResponse) error
 		GetPlaying(ctx context.Context, in *GetPlayingRequest, out *GetPlayingResponse) error
-		JoinRoom(ctx context.Context, in *JoinRoomRequest, out *RoomData) error
 		Stream(ctx context.Context, stream server.Stream) error
 	}
 	type FriendRoom struct {
@@ -185,10 +184,6 @@ func (h *friendRoomHandler) CreateRoom(ctx context.Context, in *CreateRoomReques
 
 func (h *friendRoomHandler) GetPlaying(ctx context.Context, in *GetPlayingRequest, out *GetPlayingResponse) error {
 	return h.FriendRoomHandler.GetPlaying(ctx, in, out)
-}
-
-func (h *friendRoomHandler) JoinRoom(ctx context.Context, in *JoinRoomRequest, out *RoomData) error {
-	return h.FriendRoomHandler.JoinRoom(ctx, in, out)
 }
 
 func (h *friendRoomHandler) Stream(ctx context.Context, stream server.Stream) error {

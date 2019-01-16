@@ -23,30 +23,49 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// 双向流传输数据类型
 type MessageType int32
 
 const (
-	MessageType_enter       MessageType = 0
-	MessageType_sit_down    MessageType = 1
-	MessageType_stand_up    MessageType = 2
-	MessageType_change_seat MessageType = 3
-	MessageType_ready       MessageType = 4
+	MessageType_error            MessageType = 0
+	MessageType_enter            MessageType = 1
+	MessageType_ready            MessageType = 2
+	MessageType_sit_down         MessageType = 3
+	MessageType_stand_up         MessageType = 4
+	MessageType_change_seat      MessageType = 5
+	MessageType_leave            MessageType = 6
+	MessageType_offline          MessageType = 7
+	MessageType_upload_location  MessageType = 8
+	MessageType_request_dissolve MessageType = 9
+	MessageType_reply_dissolve   MessageType = 10
 )
 
 var MessageType_name = map[int32]string{
-	0: "enter",
-	1: "sit_down",
-	2: "stand_up",
-	3: "change_seat",
-	4: "ready",
+	0:  "error",
+	1:  "enter",
+	2:  "ready",
+	3:  "sit_down",
+	4:  "stand_up",
+	5:  "change_seat",
+	6:  "leave",
+	7:  "offline",
+	8:  "upload_location",
+	9:  "request_dissolve",
+	10: "reply_dissolve",
 }
 
 var MessageType_value = map[string]int32{
-	"enter":       0,
-	"sit_down":    1,
-	"stand_up":    2,
-	"change_seat": 3,
-	"ready":       4,
+	"error":            0,
+	"enter":            1,
+	"ready":            2,
+	"sit_down":         3,
+	"stand_up":         4,
+	"change_seat":      5,
+	"leave":            6,
+	"offline":          7,
+	"upload_location":  8,
+	"request_dissolve": 9,
+	"reply_dissolve":   10,
 }
 
 func (x MessageType) String() string {
@@ -115,6 +134,7 @@ func (RoomLimit) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_b2975553733e89e1, []int{2}
 }
 
+// 双向流传输数据
 type Message struct {
 	Type                 MessageType `protobuf:"varint,1,opt,name=type,proto3,enum=friendRoom.MessageType" json:"type,omitempty"`
 	Data                 string      `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
@@ -152,7 +172,7 @@ func (m *Message) GetType() MessageType {
 	if m != nil {
 		return m.Type
 	}
-	return MessageType_enter
+	return MessageType_error
 }
 
 func (m *Message) GetData() string {
@@ -354,188 +374,6 @@ func (m *GetPlayingResponse) GetRoomType() room.RoomType {
 	return room.RoomType_none_room
 }
 
-// 加入房间请求
-type JoinRoomRequest struct {
-	RoomNo               string   `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *JoinRoomRequest) Reset()         { *m = JoinRoomRequest{} }
-func (m *JoinRoomRequest) String() string { return proto.CompactTextString(m) }
-func (*JoinRoomRequest) ProtoMessage()    {}
-func (*JoinRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{5}
-}
-
-func (m *JoinRoomRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_JoinRoomRequest.Unmarshal(m, b)
-}
-func (m *JoinRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_JoinRoomRequest.Marshal(b, m, deterministic)
-}
-func (m *JoinRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_JoinRoomRequest.Merge(m, src)
-}
-func (m *JoinRoomRequest) XXX_Size() int {
-	return xxx_messageInfo_JoinRoomRequest.Size(m)
-}
-func (m *JoinRoomRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_JoinRoomRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_JoinRoomRequest proto.InternalMessageInfo
-
-func (m *JoinRoomRequest) GetRoomNo() string {
-	if m != nil {
-		return m.RoomNo
-	}
-	return ""
-}
-
-// 房间数据
-type RoomData struct {
-	RoomNo               string   `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *RoomData) Reset()         { *m = RoomData{} }
-func (m *RoomData) String() string { return proto.CompactTextString(m) }
-func (*RoomData) ProtoMessage()    {}
-func (*RoomData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{6}
-}
-
-func (m *RoomData) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RoomData.Unmarshal(m, b)
-}
-func (m *RoomData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RoomData.Marshal(b, m, deterministic)
-}
-func (m *RoomData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RoomData.Merge(m, src)
-}
-func (m *RoomData) XXX_Size() int {
-	return xxx_messageInfo_RoomData.Size(m)
-}
-func (m *RoomData) XXX_DiscardUnknown() {
-	xxx_messageInfo_RoomData.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RoomData proto.InternalMessageInfo
-
-func (m *RoomData) GetRoomNo() string {
-	if m != nil {
-		return m.RoomNo
-	}
-	return ""
-}
-
-// 消息号请求
-type EnterRoomMessage struct {
-	RoomNo               string   `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *EnterRoomMessage) Reset()         { *m = EnterRoomMessage{} }
-func (m *EnterRoomMessage) String() string { return proto.CompactTextString(m) }
-func (*EnterRoomMessage) ProtoMessage()    {}
-func (*EnterRoomMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{7}
-}
-
-func (m *EnterRoomMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_EnterRoomMessage.Unmarshal(m, b)
-}
-func (m *EnterRoomMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_EnterRoomMessage.Marshal(b, m, deterministic)
-}
-func (m *EnterRoomMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnterRoomMessage.Merge(m, src)
-}
-func (m *EnterRoomMessage) XXX_Size() int {
-	return xxx_messageInfo_EnterRoomMessage.Size(m)
-}
-func (m *EnterRoomMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_EnterRoomMessage.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_EnterRoomMessage proto.InternalMessageInfo
-
-func (m *EnterRoomMessage) GetRoomNo() string {
-	if m != nil {
-		return m.RoomNo
-	}
-	return ""
-}
-
-type ReadyMessge struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ReadyMessge) Reset()         { *m = ReadyMessge{} }
-func (m *ReadyMessge) String() string { return proto.CompactTextString(m) }
-func (*ReadyMessge) ProtoMessage()    {}
-func (*ReadyMessge) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{8}
-}
-
-func (m *ReadyMessge) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ReadyMessge.Unmarshal(m, b)
-}
-func (m *ReadyMessge) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ReadyMessge.Marshal(b, m, deterministic)
-}
-func (m *ReadyMessge) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadyMessge.Merge(m, src)
-}
-func (m *ReadyMessge) XXX_Size() int {
-	return xxx_messageInfo_ReadyMessge.Size(m)
-}
-func (m *ReadyMessge) XXX_DiscardUnknown() {
-	xxx_messageInfo_ReadyMessge.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ReadyMessge proto.InternalMessageInfo
-
-type OkMessage struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *OkMessage) Reset()         { *m = OkMessage{} }
-func (m *OkMessage) String() string { return proto.CompactTextString(m) }
-func (*OkMessage) ProtoMessage()    {}
-func (*OkMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{9}
-}
-
-func (m *OkMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_OkMessage.Unmarshal(m, b)
-}
-func (m *OkMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_OkMessage.Marshal(b, m, deterministic)
-}
-func (m *OkMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OkMessage.Merge(m, src)
-}
-func (m *OkMessage) XXX_Size() int {
-	return xxx_messageInfo_OkMessage.Size(m)
-}
-func (m *OkMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_OkMessage.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_OkMessage proto.InternalMessageInfo
-
 // 房间选项
 type RoomOption struct {
 	AutoSit              bool         `protobuf:"varint,1,opt,name=autoSit,proto3" json:"autoSit,omitempty"`
@@ -552,7 +390,7 @@ func (m *RoomOption) Reset()         { *m = RoomOption{} }
 func (m *RoomOption) String() string { return proto.CompactTextString(m) }
 func (*RoomOption) ProtoMessage()    {}
 func (*RoomOption) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b2975553733e89e1, []int{10}
+	return fileDescriptor_b2975553733e89e1, []int{5}
 }
 
 func (m *RoomOption) XXX_Unmarshal(b []byte) error {
@@ -608,6 +446,810 @@ func (m *RoomOption) GetNeedReady() bool {
 	return false
 }
 
+// 进入请求
+type EnterRoomReq struct {
+	RoomNo               string   `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EnterRoomReq) Reset()         { *m = EnterRoomReq{} }
+func (m *EnterRoomReq) String() string { return proto.CompactTextString(m) }
+func (*EnterRoomReq) ProtoMessage()    {}
+func (*EnterRoomReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{6}
+}
+
+func (m *EnterRoomReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EnterRoomReq.Unmarshal(m, b)
+}
+func (m *EnterRoomReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EnterRoomReq.Marshal(b, m, deterministic)
+}
+func (m *EnterRoomReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnterRoomReq.Merge(m, src)
+}
+func (m *EnterRoomReq) XXX_Size() int {
+	return xxx_messageInfo_EnterRoomReq.Size(m)
+}
+func (m *EnterRoomReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_EnterRoomReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EnterRoomReq proto.InternalMessageInfo
+
+func (m *EnterRoomReq) GetRoomNo() string {
+	if m != nil {
+		return m.RoomNo
+	}
+	return ""
+}
+
+// 准备请求
+type ReadyReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ReadyReq) Reset()         { *m = ReadyReq{} }
+func (m *ReadyReq) String() string { return proto.CompactTextString(m) }
+func (*ReadyReq) ProtoMessage()    {}
+func (*ReadyReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{7}
+}
+
+func (m *ReadyReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReadyReq.Unmarshal(m, b)
+}
+func (m *ReadyReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReadyReq.Marshal(b, m, deterministic)
+}
+func (m *ReadyReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadyReq.Merge(m, src)
+}
+func (m *ReadyReq) XXX_Size() int {
+	return xxx_messageInfo_ReadyReq.Size(m)
+}
+func (m *ReadyReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReadyReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReadyReq proto.InternalMessageInfo
+
+// 坐下请求
+type SitdownReq struct {
+	Index                int32    `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SitdownReq) Reset()         { *m = SitdownReq{} }
+func (m *SitdownReq) String() string { return proto.CompactTextString(m) }
+func (*SitdownReq) ProtoMessage()    {}
+func (*SitdownReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{8}
+}
+
+func (m *SitdownReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SitdownReq.Unmarshal(m, b)
+}
+func (m *SitdownReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SitdownReq.Marshal(b, m, deterministic)
+}
+func (m *SitdownReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SitdownReq.Merge(m, src)
+}
+func (m *SitdownReq) XXX_Size() int {
+	return xxx_messageInfo_SitdownReq.Size(m)
+}
+func (m *SitdownReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SitdownReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SitdownReq proto.InternalMessageInfo
+
+func (m *SitdownReq) GetIndex() int32 {
+	if m != nil {
+		return m.Index
+	}
+	return 0
+}
+
+// 站起请求
+type StandupReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *StandupReq) Reset()         { *m = StandupReq{} }
+func (m *StandupReq) String() string { return proto.CompactTextString(m) }
+func (*StandupReq) ProtoMessage()    {}
+func (*StandupReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{9}
+}
+
+func (m *StandupReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StandupReq.Unmarshal(m, b)
+}
+func (m *StandupReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StandupReq.Marshal(b, m, deterministic)
+}
+func (m *StandupReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StandupReq.Merge(m, src)
+}
+func (m *StandupReq) XXX_Size() int {
+	return xxx_messageInfo_StandupReq.Size(m)
+}
+func (m *StandupReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_StandupReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StandupReq proto.InternalMessageInfo
+
+// 换座位请求
+type ChangesitReq struct {
+	Index                int32    `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ChangesitReq) Reset()         { *m = ChangesitReq{} }
+func (m *ChangesitReq) String() string { return proto.CompactTextString(m) }
+func (*ChangesitReq) ProtoMessage()    {}
+func (*ChangesitReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{10}
+}
+
+func (m *ChangesitReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ChangesitReq.Unmarshal(m, b)
+}
+func (m *ChangesitReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ChangesitReq.Marshal(b, m, deterministic)
+}
+func (m *ChangesitReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChangesitReq.Merge(m, src)
+}
+func (m *ChangesitReq) XXX_Size() int {
+	return xxx_messageInfo_ChangesitReq.Size(m)
+}
+func (m *ChangesitReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChangesitReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ChangesitReq proto.InternalMessageInfo
+
+func (m *ChangesitReq) GetIndex() int32 {
+	if m != nil {
+		return m.Index
+	}
+	return 0
+}
+
+// 离开请求
+type LeaveReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaveReq) Reset()         { *m = LeaveReq{} }
+func (m *LeaveReq) String() string { return proto.CompactTextString(m) }
+func (*LeaveReq) ProtoMessage()    {}
+func (*LeaveReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{11}
+}
+
+func (m *LeaveReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LeaveReq.Unmarshal(m, b)
+}
+func (m *LeaveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LeaveReq.Marshal(b, m, deterministic)
+}
+func (m *LeaveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaveReq.Merge(m, src)
+}
+func (m *LeaveReq) XXX_Size() int {
+	return xxx_messageInfo_LeaveReq.Size(m)
+}
+func (m *LeaveReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaveReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LeaveReq proto.InternalMessageInfo
+
+// 断线
+type OfflineReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OfflineReq) Reset()         { *m = OfflineReq{} }
+func (m *OfflineReq) String() string { return proto.CompactTextString(m) }
+func (*OfflineReq) ProtoMessage()    {}
+func (*OfflineReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{12}
+}
+
+func (m *OfflineReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OfflineReq.Unmarshal(m, b)
+}
+func (m *OfflineReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OfflineReq.Marshal(b, m, deterministic)
+}
+func (m *OfflineReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OfflineReq.Merge(m, src)
+}
+func (m *OfflineReq) XXX_Size() int {
+	return xxx_messageInfo_OfflineReq.Size(m)
+}
+func (m *OfflineReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_OfflineReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OfflineReq proto.InternalMessageInfo
+
+// 上报位置请求
+type UploadLocationReq struct {
+	Latitude             float32  `protobuf:"fixed32,1,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude            float32  `protobuf:"fixed32,2,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UploadLocationReq) Reset()         { *m = UploadLocationReq{} }
+func (m *UploadLocationReq) String() string { return proto.CompactTextString(m) }
+func (*UploadLocationReq) ProtoMessage()    {}
+func (*UploadLocationReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{13}
+}
+
+func (m *UploadLocationReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UploadLocationReq.Unmarshal(m, b)
+}
+func (m *UploadLocationReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UploadLocationReq.Marshal(b, m, deterministic)
+}
+func (m *UploadLocationReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadLocationReq.Merge(m, src)
+}
+func (m *UploadLocationReq) XXX_Size() int {
+	return xxx_messageInfo_UploadLocationReq.Size(m)
+}
+func (m *UploadLocationReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadLocationReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadLocationReq proto.InternalMessageInfo
+
+func (m *UploadLocationReq) GetLatitude() float32 {
+	if m != nil {
+		return m.Latitude
+	}
+	return 0
+}
+
+func (m *UploadLocationReq) GetLongitude() float32 {
+	if m != nil {
+		return m.Longitude
+	}
+	return 0
+}
+
+// 请求解散请求
+type RequestDissolveReq struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestDissolveReq) Reset()         { *m = RequestDissolveReq{} }
+func (m *RequestDissolveReq) String() string { return proto.CompactTextString(m) }
+func (*RequestDissolveReq) ProtoMessage()    {}
+func (*RequestDissolveReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{14}
+}
+
+func (m *RequestDissolveReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestDissolveReq.Unmarshal(m, b)
+}
+func (m *RequestDissolveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestDissolveReq.Marshal(b, m, deterministic)
+}
+func (m *RequestDissolveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestDissolveReq.Merge(m, src)
+}
+func (m *RequestDissolveReq) XXX_Size() int {
+	return xxx_messageInfo_RequestDissolveReq.Size(m)
+}
+func (m *RequestDissolveReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestDissolveReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestDissolveReq proto.InternalMessageInfo
+
+// 回应解散请求
+type ReplyDissolveReq struct {
+	Agree                bool     `protobuf:"varint,1,opt,name=agree,proto3" json:"agree,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ReplyDissolveReq) Reset()         { *m = ReplyDissolveReq{} }
+func (m *ReplyDissolveReq) String() string { return proto.CompactTextString(m) }
+func (*ReplyDissolveReq) ProtoMessage()    {}
+func (*ReplyDissolveReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{15}
+}
+
+func (m *ReplyDissolveReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReplyDissolveReq.Unmarshal(m, b)
+}
+func (m *ReplyDissolveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReplyDissolveReq.Marshal(b, m, deterministic)
+}
+func (m *ReplyDissolveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplyDissolveReq.Merge(m, src)
+}
+func (m *ReplyDissolveReq) XXX_Size() int {
+	return xxx_messageInfo_ReplyDissolveReq.Size(m)
+}
+func (m *ReplyDissolveReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReplyDissolveReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReplyDissolveReq proto.InternalMessageInfo
+
+func (m *ReplyDissolveReq) GetAgree() bool {
+	if m != nil {
+		return m.Agree
+	}
+	return false
+}
+
+type Room struct {
+	Room                 *RoomData `protobuf:"bytes,1,opt,name=room,proto3" json:"room,omitempty"`
+	Game                 *GameData `protobuf:"bytes,2,opt,name=game,proto3" json:"game,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Room) Reset()         { *m = Room{} }
+func (m *Room) String() string { return proto.CompactTextString(m) }
+func (*Room) ProtoMessage()    {}
+func (*Room) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{16}
+}
+
+func (m *Room) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Room.Unmarshal(m, b)
+}
+func (m *Room) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Room.Marshal(b, m, deterministic)
+}
+func (m *Room) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Room.Merge(m, src)
+}
+func (m *Room) XXX_Size() int {
+	return xxx_messageInfo_Room.Size(m)
+}
+func (m *Room) XXX_DiscardUnknown() {
+	xxx_messageInfo_Room.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Room proto.InternalMessageInfo
+
+func (m *Room) GetRoom() *RoomData {
+	if m != nil {
+		return m.Room
+	}
+	return nil
+}
+
+func (m *Room) GetGame() *GameData {
+	if m != nil {
+		return m.Game
+	}
+	return nil
+}
+
+// 房间数据
+type RoomData struct {
+	RoomNo               string        `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
+	GameType             room.GameType `protobuf:"varint,2,opt,name=gameType,proto3,enum=room.GameType" json:"gameType,omitempty"`
+	RoomType             room.RoomType `protobuf:"varint,3,opt,name=roomType,proto3,enum=room.RoomType" json:"roomType,omitempty"`
+	State                RoomState     `protobuf:"varint,4,opt,name=state,proto3,enum=friendRoom.RoomState" json:"state,omitempty"`
+	IsStart              bool          `protobuf:"varint,5,opt,name=isStart,proto3" json:"isStart,omitempty"`
+	Players              []*Roomplayer `protobuf:"bytes,6,rep,name=players,proto3" json:"players,omitempty"`
+	Option               *RoomOption   `protobuf:"bytes,7,opt,name=option,proto3" json:"option,omitempty"`
+	OwnerUserId          int32         `protobuf:"varint,8,opt,name=ownerUserId,proto3" json:"ownerUserId,omitempty"`
+	DissolveLeft         int32         `protobuf:"varint,9,opt,name=dissolveLeft,proto3" json:"dissolveLeft,omitempty"`
+	DissolveStartUserId  int32         `protobuf:"varint,10,opt,name=dissolveStartUserId,proto3" json:"dissolveStartUserId,omitempty"`
+	CurRound             int32         `protobuf:"varint,11,opt,name=curRound,proto3" json:"curRound,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *RoomData) Reset()         { *m = RoomData{} }
+func (m *RoomData) String() string { return proto.CompactTextString(m) }
+func (*RoomData) ProtoMessage()    {}
+func (*RoomData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{17}
+}
+
+func (m *RoomData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RoomData.Unmarshal(m, b)
+}
+func (m *RoomData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RoomData.Marshal(b, m, deterministic)
+}
+func (m *RoomData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoomData.Merge(m, src)
+}
+func (m *RoomData) XXX_Size() int {
+	return xxx_messageInfo_RoomData.Size(m)
+}
+func (m *RoomData) XXX_DiscardUnknown() {
+	xxx_messageInfo_RoomData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RoomData proto.InternalMessageInfo
+
+func (m *RoomData) GetRoomNo() string {
+	if m != nil {
+		return m.RoomNo
+	}
+	return ""
+}
+
+func (m *RoomData) GetGameType() room.GameType {
+	if m != nil {
+		return m.GameType
+	}
+	return room.GameType_none_game
+}
+
+func (m *RoomData) GetRoomType() room.RoomType {
+	if m != nil {
+		return m.RoomType
+	}
+	return room.RoomType_none_room
+}
+
+func (m *RoomData) GetState() RoomState {
+	if m != nil {
+		return m.State
+	}
+	return RoomState_wait_join
+}
+
+func (m *RoomData) GetIsStart() bool {
+	if m != nil {
+		return m.IsStart
+	}
+	return false
+}
+
+func (m *RoomData) GetPlayers() []*Roomplayer {
+	if m != nil {
+		return m.Players
+	}
+	return nil
+}
+
+func (m *RoomData) GetOption() *RoomOption {
+	if m != nil {
+		return m.Option
+	}
+	return nil
+}
+
+func (m *RoomData) GetOwnerUserId() int32 {
+	if m != nil {
+		return m.OwnerUserId
+	}
+	return 0
+}
+
+func (m *RoomData) GetDissolveLeft() int32 {
+	if m != nil {
+		return m.DissolveLeft
+	}
+	return 0
+}
+
+func (m *RoomData) GetDissolveStartUserId() int32 {
+	if m != nil {
+		return m.DissolveStartUserId
+	}
+	return 0
+}
+
+func (m *RoomData) GetCurRound() int32 {
+	if m != nil {
+		return m.CurRound
+	}
+	return 0
+}
+
+type GameData struct {
+	Players              []*GamePlayer `protobuf:"bytes,1,rep,name=players,proto3" json:"players,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *GameData) Reset()         { *m = GameData{} }
+func (m *GameData) String() string { return proto.CompactTextString(m) }
+func (*GameData) ProtoMessage()    {}
+func (*GameData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{18}
+}
+
+func (m *GameData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameData.Unmarshal(m, b)
+}
+func (m *GameData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameData.Marshal(b, m, deterministic)
+}
+func (m *GameData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameData.Merge(m, src)
+}
+func (m *GameData) XXX_Size() int {
+	return xxx_messageInfo_GameData.Size(m)
+}
+func (m *GameData) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameData proto.InternalMessageInfo
+
+func (m *GameData) GetPlayers() []*GamePlayer {
+	if m != nil {
+		return m.Players
+	}
+	return nil
+}
+
+// 错误结构
+type Error struct {
+	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Error) Reset()         { *m = Error{} }
+func (m *Error) String() string { return proto.CompactTextString(m) }
+func (*Error) ProtoMessage()    {}
+func (*Error) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{19}
+}
+
+func (m *Error) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Error.Unmarshal(m, b)
+}
+func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Error.Marshal(b, m, deterministic)
+}
+func (m *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(m, src)
+}
+func (m *Error) XXX_Size() int {
+	return xxx_messageInfo_Error.Size(m)
+}
+func (m *Error) XXX_DiscardUnknown() {
+	xxx_messageInfo_Error.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Error proto.InternalMessageInfo
+
+func (m *Error) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *Error) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+type Roomplayer struct {
+	UserId               int32               `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	HeadImgUrl           string              `protobuf:"bytes,2,opt,name=headImgUrl,proto3" json:"headImgUrl,omitempty"`
+	Gender               int32               `protobuf:"varint,3,opt,name=gender,proto3" json:"gender,omitempty"`
+	NickName             string              `protobuf:"bytes,4,opt,name=nickName,proto3" json:"nickName,omitempty"`
+	IsOnline             bool                `protobuf:"varint,5,opt,name=isOnline,proto3" json:"isOnline,omitempty"`
+	Role                 room.RoomPlayerRole `protobuf:"varint,6,opt,name=role,proto3,enum=room.RoomPlayerRole" json:"role,omitempty"`
+	IsReady              bool                `protobuf:"varint,7,opt,name=isReady,proto3" json:"isReady,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
+}
+
+func (m *Roomplayer) Reset()         { *m = Roomplayer{} }
+func (m *Roomplayer) String() string { return proto.CompactTextString(m) }
+func (*Roomplayer) ProtoMessage()    {}
+func (*Roomplayer) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{20}
+}
+
+func (m *Roomplayer) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Roomplayer.Unmarshal(m, b)
+}
+func (m *Roomplayer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Roomplayer.Marshal(b, m, deterministic)
+}
+func (m *Roomplayer) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Roomplayer.Merge(m, src)
+}
+func (m *Roomplayer) XXX_Size() int {
+	return xxx_messageInfo_Roomplayer.Size(m)
+}
+func (m *Roomplayer) XXX_DiscardUnknown() {
+	xxx_messageInfo_Roomplayer.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Roomplayer proto.InternalMessageInfo
+
+func (m *Roomplayer) GetUserId() int32 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *Roomplayer) GetHeadImgUrl() string {
+	if m != nil {
+		return m.HeadImgUrl
+	}
+	return ""
+}
+
+func (m *Roomplayer) GetGender() int32 {
+	if m != nil {
+		return m.Gender
+	}
+	return 0
+}
+
+func (m *Roomplayer) GetNickName() string {
+	if m != nil {
+		return m.NickName
+	}
+	return ""
+}
+
+func (m *Roomplayer) GetIsOnline() bool {
+	if m != nil {
+		return m.IsOnline
+	}
+	return false
+}
+
+func (m *Roomplayer) GetRole() room.RoomPlayerRole {
+	if m != nil {
+		return m.Role
+	}
+	return room.RoomPlayerRole_none_role
+}
+
+func (m *Roomplayer) GetIsReady() bool {
+	if m != nil {
+		return m.IsReady
+	}
+	return false
+}
+
+type GamePlayer struct {
+	UserId               int32    `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	Index                int32    `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GamePlayer) Reset()         { *m = GamePlayer{} }
+func (m *GamePlayer) String() string { return proto.CompactTextString(m) }
+func (*GamePlayer) ProtoMessage()    {}
+func (*GamePlayer) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{21}
+}
+
+func (m *GamePlayer) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GamePlayer.Unmarshal(m, b)
+}
+func (m *GamePlayer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GamePlayer.Marshal(b, m, deterministic)
+}
+func (m *GamePlayer) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GamePlayer.Merge(m, src)
+}
+func (m *GamePlayer) XXX_Size() int {
+	return xxx_messageInfo_GamePlayer.Size(m)
+}
+func (m *GamePlayer) XXX_DiscardUnknown() {
+	xxx_messageInfo_GamePlayer.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GamePlayer proto.InternalMessageInfo
+
+func (m *GamePlayer) GetUserId() int32 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *GamePlayer) GetIndex() int32 {
+	if m != nil {
+		return m.Index
+	}
+	return 0
+}
+
+// 玩家进入
+type PlayerEnter struct {
+	RoomPlayer           *Roomplayer `protobuf:"bytes,1,opt,name=roomPlayer,proto3" json:"roomPlayer,omitempty"`
+	GamePlayer           *GamePlayer `protobuf:"bytes,2,opt,name=gamePlayer,proto3" json:"gamePlayer,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *PlayerEnter) Reset()         { *m = PlayerEnter{} }
+func (m *PlayerEnter) String() string { return proto.CompactTextString(m) }
+func (*PlayerEnter) ProtoMessage()    {}
+func (*PlayerEnter) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b2975553733e89e1, []int{22}
+}
+
+func (m *PlayerEnter) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PlayerEnter.Unmarshal(m, b)
+}
+func (m *PlayerEnter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PlayerEnter.Marshal(b, m, deterministic)
+}
+func (m *PlayerEnter) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerEnter.Merge(m, src)
+}
+func (m *PlayerEnter) XXX_Size() int {
+	return xxx_messageInfo_PlayerEnter.Size(m)
+}
+func (m *PlayerEnter) XXX_DiscardUnknown() {
+	xxx_messageInfo_PlayerEnter.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PlayerEnter proto.InternalMessageInfo
+
+func (m *PlayerEnter) GetRoomPlayer() *Roomplayer {
+	if m != nil {
+		return m.RoomPlayer
+	}
+	return nil
+}
+
+func (m *PlayerEnter) GetGamePlayer() *GamePlayer {
+	if m != nil {
+		return m.GamePlayer
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("friendRoom.MessageType", MessageType_name, MessageType_value)
 	proto.RegisterEnum("friendRoom.RoomState", RoomState_name, RoomState_value)
@@ -617,56 +1259,97 @@ func init() {
 	proto.RegisterType((*CreateRoomResponse)(nil), "friendRoom.CreateRoomResponse")
 	proto.RegisterType((*GetPlayingRequest)(nil), "friendRoom.GetPlayingRequest")
 	proto.RegisterType((*GetPlayingResponse)(nil), "friendRoom.GetPlayingResponse")
-	proto.RegisterType((*JoinRoomRequest)(nil), "friendRoom.JoinRoomRequest")
-	proto.RegisterType((*RoomData)(nil), "friendRoom.RoomData")
-	proto.RegisterType((*EnterRoomMessage)(nil), "friendRoom.EnterRoomMessage")
-	proto.RegisterType((*ReadyMessge)(nil), "friendRoom.ReadyMessge")
-	proto.RegisterType((*OkMessage)(nil), "friendRoom.OkMessage")
 	proto.RegisterType((*RoomOption)(nil), "friendRoom.RoomOption")
+	proto.RegisterType((*EnterRoomReq)(nil), "friendRoom.EnterRoomReq")
+	proto.RegisterType((*ReadyReq)(nil), "friendRoom.ReadyReq")
+	proto.RegisterType((*SitdownReq)(nil), "friendRoom.SitdownReq")
+	proto.RegisterType((*StandupReq)(nil), "friendRoom.StandupReq")
+	proto.RegisterType((*ChangesitReq)(nil), "friendRoom.ChangesitReq")
+	proto.RegisterType((*LeaveReq)(nil), "friendRoom.LeaveReq")
+	proto.RegisterType((*OfflineReq)(nil), "friendRoom.OfflineReq")
+	proto.RegisterType((*UploadLocationReq)(nil), "friendRoom.UploadLocationReq")
+	proto.RegisterType((*RequestDissolveReq)(nil), "friendRoom.RequestDissolveReq")
+	proto.RegisterType((*ReplyDissolveReq)(nil), "friendRoom.ReplyDissolveReq")
+	proto.RegisterType((*Room)(nil), "friendRoom.Room")
+	proto.RegisterType((*RoomData)(nil), "friendRoom.RoomData")
+	proto.RegisterType((*GameData)(nil), "friendRoom.GameData")
+	proto.RegisterType((*Error)(nil), "friendRoom.Error")
+	proto.RegisterType((*Roomplayer)(nil), "friendRoom.Roomplayer")
+	proto.RegisterType((*GamePlayer)(nil), "friendRoom.GamePlayer")
+	proto.RegisterType((*PlayerEnter)(nil), "friendRoom.PlayerEnter")
 }
 
 func init() { proto.RegisterFile("friendRoom/friendRoom.proto", fileDescriptor_b2975553733e89e1) }
 
 var fileDescriptor_b2975553733e89e1 = []byte{
-	// 607 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x54, 0x4d, 0x4f, 0x1b, 0x31,
-	0x10, 0xdd, 0x0d, 0x81, 0xec, 0x4e, 0x0a, 0x2c, 0x43, 0x45, 0xa3, 0xd0, 0x22, 0xb4, 0x97, 0xd2,
-	0x14, 0x25, 0x15, 0x95, 0xaa, 0xde, 0xaa, 0xaa, 0x1f, 0x48, 0xa8, 0x94, 0xc8, 0x70, 0x8f, 0x0c,
-	0x3b, 0x0d, 0x6e, 0x59, 0x7b, 0xd9, 0x75, 0x8a, 0xf6, 0xde, 0xbf, 0xd2, 0x53, 0xff, 0x64, 0x65,
-	0x67, 0x93, 0x35, 0x1f, 0x51, 0x8f, 0xbd, 0xd9, 0xef, 0xbd, 0x79, 0x33, 0xb6, 0x67, 0x0c, 0xdb,
-	0xdf, 0x72, 0x41, 0x32, 0x61, 0x4a, 0xa5, 0x83, 0x7a, 0xd9, 0xcf, 0x72, 0xa5, 0x15, 0x42, 0x8d,
-	0x74, 0xf7, 0xc7, 0x42, 0x5f, 0x4e, 0xce, 0xfb, 0x17, 0x2a, 0x1d, 0x5c, 0xf0, 0x3c, 0x29, 0x0e,
-	0x79, 0x4a, 0x83, 0xeb, 0x6c, 0x68, 0x94, 0x83, 0xdc, 0xc4, 0xe7, 0xf3, 0xc8, 0xf8, 0x08, 0x5a,
-	0xc7, 0x54, 0x14, 0x7c, 0x4c, 0xf8, 0x12, 0x9a, 0xba, 0xcc, 0xa8, 0xe3, 0xef, 0xfa, 0x7b, 0x6b,
-	0x07, 0x4f, 0xfa, 0x4e, 0x96, 0x4a, 0x72, 0x56, 0x66, 0xc4, 0xac, 0x08, 0x11, 0x9a, 0x09, 0xd7,
-	0xbc, 0xd3, 0xd8, 0xf5, 0xf7, 0x42, 0x66, 0xd7, 0xf1, 0x0d, 0x6c, 0x7c, 0xc8, 0x89, 0x6b, 0x32,
-	0x31, 0x8c, 0xae, 0x27, 0x54, 0x68, 0xec, 0x41, 0x30, 0xe6, 0xa9, 0x0d, 0xad, 0x9c, 0xd7, 0xfa,
-	0x36, 0xff, 0x61, 0x85, 0xb2, 0x39, 0x8f, 0x6f, 0x00, 0x0c, 0x75, 0x92, 0x69, 0xa1, 0xa4, 0xb5,
-	0x6e, 0x1f, 0x6c, 0xb9, 0x75, 0xb0, 0x39, 0xcb, 0x1c, 0x65, 0xfc, 0xcb, 0x07, 0x74, 0x33, 0x17,
-	0x99, 0x92, 0x05, 0xe1, 0x16, 0xac, 0x18, 0xd1, 0x57, 0x65, 0x13, 0x87, 0xac, 0xda, 0xdd, 0x2a,
-	0xa9, 0xf1, 0x8f, 0x92, 0x7a, 0x10, 0x18, 0xca, 0x6a, 0x97, 0x5c, 0x2d, 0xab, 0x50, 0x36, 0xe7,
-	0xe3, 0x4d, 0xd8, 0x38, 0x24, 0x3d, 0xbc, 0xe2, 0xa5, 0x90, 0xe3, 0xea, 0xfc, 0xb6, 0x36, 0x17,
-	0xfd, 0x4f, 0xb5, 0xbd, 0x80, 0xf5, 0x23, 0x25, 0xa4, 0xfb, 0x32, 0x0b, 0x4a, 0x88, 0x63, 0x08,
-	0x8c, 0xec, 0x23, 0xd7, 0x7c, 0xa1, 0xa6, 0x07, 0xd1, 0x27, 0xa9, 0x29, 0x37, 0xc2, 0x59, 0xff,
-	0x2c, 0xd2, 0xae, 0x42, 0x9b, 0x11, 0x4f, 0x4a, 0xa3, 0x1b, 0x53, 0xdc, 0x86, 0xf0, 0xe4, 0x47,
-	0x15, 0x13, 0xff, 0xf1, 0x01, 0xea, 0x47, 0xc5, 0x0e, 0xb4, 0xf8, 0x44, 0xab, 0x53, 0xa1, 0xad,
-	0x47, 0xc0, 0x66, 0x5b, 0x7c, 0x0e, 0xad, 0x8c, 0x97, 0xce, 0xb5, 0xac, 0xd6, 0x47, 0x1d, 0xf2,
-	0x92, 0xcd, 0x58, 0xdc, 0x01, 0xd0, 0x4a, 0xf3, 0x2b, 0xa6, 0x26, 0x32, 0xb1, 0xd7, 0xb2, 0xcc,
-	0x1c, 0x04, 0x9f, 0x42, 0x68, 0x77, 0x67, 0x22, 0xa5, 0x4e, 0xd3, 0xd2, 0x35, 0x60, 0x58, 0x49,
-	0x94, 0xd8, 0x7a, 0x3b, 0xcb, 0xb6, 0x84, 0x1a, 0xe8, 0x0d, 0xa1, 0xed, 0x4c, 0x02, 0x86, 0xb0,
-	0x4c, 0xe6, 0x12, 0x22, 0x0f, 0x1f, 0x41, 0x50, 0x08, 0x3d, 0x4a, 0xd4, 0x8d, 0x8c, 0x7c, 0xbb,
-	0xd3, 0x5c, 0x26, 0xa3, 0x49, 0x16, 0x35, 0x70, 0x1d, 0xda, 0x17, 0x97, 0x5c, 0x8e, 0x69, 0x54,
-	0x10, 0xd7, 0xd1, 0x92, 0x89, 0xcb, 0x8d, 0x5f, 0xd4, 0xec, 0xbd, 0x87, 0xd0, 0x9c, 0xe0, 0x54,
-	0x73, 0x4d, 0xb8, 0x0a, 0xe1, 0x0d, 0x17, 0x7a, 0xf4, 0x5d, 0x09, 0x19, 0x79, 0xd8, 0x86, 0x96,
-	0x90, 0x23, 0xf3, 0xda, 0x91, 0x8f, 0x6b, 0x00, 0x96, 0x9b, 0x06, 0x36, 0x30, 0x80, 0xa6, 0xfa,
-	0x49, 0x79, 0xb4, 0xd4, 0xdb, 0x9f, 0x5a, 0x7c, 0x11, 0xa9, 0xd0, 0x26, 0xd7, 0x95, 0x59, 0x8c,
-	0x72, 0x73, 0xd8, 0xc8, 0x33, 0x71, 0x53, 0x40, 0x0b, 0xe3, 0x73, 0xf0, 0xbb, 0x01, 0xf0, 0x79,
-	0x3e, 0x50, 0x78, 0x0c, 0x50, 0x0f, 0x0e, 0x3e, 0x73, 0x67, 0xed, 0xde, 0x28, 0x77, 0x77, 0x16,
-	0xd1, 0xd3, 0x9e, 0x8e, 0x3d, 0x63, 0x57, 0xf7, 0xfa, 0x6d, 0xbb, 0x7b, 0x93, 0x71, 0xdb, 0xee,
-	0xfe, 0x88, 0xc4, 0x1e, 0xbe, 0x83, 0x60, 0xd6, 0xb4, 0xb8, 0xed, 0xaa, 0xef, 0xb4, 0x72, 0xf7,
-	0xf1, 0xdd, 0x4f, 0xc2, 0x34, 0x6f, 0xec, 0xe1, 0x5b, 0x58, 0x39, 0xd5, 0x39, 0xf1, 0x14, 0x37,
-	0x1f, 0xf8, 0xce, 0xba, 0x0f, 0x81, 0xb1, 0xb7, 0xe7, 0xbf, 0xf2, 0xcf, 0x57, 0xec, 0xf7, 0xf8,
-	0xfa, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x78, 0xa6, 0x22, 0x21, 0x77, 0x05, 0x00, 0x00,
+	// 1067 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0xcd, 0x6e, 0x1c, 0x45,
+	0x10, 0xde, 0x59, 0xef, 0xcf, 0x6c, 0xed, 0xc6, 0x19, 0xb7, 0x4d, 0x58, 0x19, 0x88, 0xac, 0x11,
+	0x02, 0xcb, 0x89, 0x6c, 0xcb, 0x08, 0x84, 0x10, 0x17, 0x94, 0x04, 0x2b, 0xc8, 0x8e, 0xad, 0xde,
+	0xf8, 0xc2, 0x65, 0xd5, 0xd9, 0x69, 0x8f, 0x1b, 0x66, 0xa7, 0xc7, 0x3d, 0x3d, 0x31, 0x7b, 0xe0,
+	0xc6, 0xdb, 0x70, 0xe3, 0xc2, 0xab, 0xf0, 0x00, 0x3c, 0x08, 0xaa, 0xee, 0x9e, 0x9f, 0x8d, 0x77,
+	0xe1, 0x46, 0x6e, 0x53, 0x55, 0x5f, 0x55, 0x57, 0xd7, 0x7c, 0xfd, 0x75, 0xc3, 0x47, 0xd7, 0x4a,
+	0xf0, 0x34, 0xa2, 0x52, 0xce, 0x8f, 0xea, 0xcf, 0xc3, 0x4c, 0x49, 0x2d, 0x09, 0xd4, 0x9e, 0xdd,
+	0xa7, 0xb1, 0xd0, 0x37, 0xc5, 0x9b, 0xc3, 0x99, 0x9c, 0x1f, 0xcd, 0x98, 0x8a, 0xf2, 0x53, 0x36,
+	0xe7, 0x47, 0xb7, 0xd9, 0x25, 0x22, 0x8f, 0x14, 0xe6, 0xab, 0x2a, 0x33, 0xfc, 0x01, 0xfa, 0xe7,
+	0x3c, 0xcf, 0x59, 0xcc, 0xc9, 0x13, 0xe8, 0xe8, 0x45, 0xc6, 0xc7, 0xde, 0x9e, 0xb7, 0xbf, 0x79,
+	0xf2, 0xe1, 0x61, 0x63, 0x15, 0x07, 0x79, 0xbd, 0xc8, 0x38, 0x35, 0x20, 0x42, 0xa0, 0x13, 0x31,
+	0xcd, 0xc6, 0xed, 0x3d, 0x6f, 0x7f, 0x40, 0xcd, 0x77, 0x78, 0x07, 0x5b, 0xcf, 0x14, 0x67, 0x9a,
+	0x63, 0x0e, 0xe5, 0xb7, 0x05, 0xcf, 0x35, 0x39, 0x00, 0x3f, 0x66, 0x73, 0x93, 0xea, 0x2a, 0x6f,
+	0x1e, 0x9a, 0xf5, 0x4f, 0x9d, 0x97, 0x56, 0x71, 0xf2, 0x15, 0x00, 0x86, 0x2e, 0x32, 0x2d, 0x64,
+	0x6a, 0x4a, 0x0f, 0x4f, 0x1e, 0x35, 0xfb, 0xa0, 0x55, 0x94, 0x36, 0x90, 0xe1, 0x6f, 0x1e, 0x90,
+	0xe6, 0xca, 0x79, 0x26, 0xd3, 0x9c, 0x93, 0x47, 0xd0, 0x43, 0xd0, 0x2b, 0x69, 0x16, 0x1e, 0x50,
+	0x67, 0x2d, 0xb5, 0xd4, 0xfe, 0x8f, 0x96, 0x0e, 0xc0, 0xc7, 0x90, 0xc1, 0x6e, 0x34, 0xb1, 0xd4,
+	0x79, 0x69, 0x15, 0x0f, 0xb7, 0x61, 0xeb, 0x94, 0xeb, 0xcb, 0x84, 0x2d, 0x44, 0x1a, 0xbb, 0xfd,
+	0x9b, 0xde, 0x9a, 0xde, 0xf7, 0xd4, 0xdb, 0xef, 0x1e, 0x40, 0x3d, 0x3d, 0x32, 0x86, 0x3e, 0x2b,
+	0xb4, 0x9c, 0x08, 0x6d, 0xd6, 0xf7, 0x69, 0x69, 0x92, 0xcf, 0xa1, 0x9f, 0xb1, 0x45, 0x63, 0xfd,
+	0x07, 0x75, 0xcd, 0x4b, 0xb6, 0xa0, 0x65, 0x94, 0x3c, 0x06, 0xd0, 0x52, 0xb3, 0x84, 0xca, 0x22,
+	0x8d, 0xcc, 0xfa, 0x5d, 0xda, 0xf0, 0x90, 0x8f, 0x61, 0x60, 0xac, 0xd7, 0x62, 0xce, 0xc7, 0x1d,
+	0x13, 0xae, 0x1d, 0x18, 0x4d, 0x39, 0x8f, 0x28, 0x67, 0xd1, 0x62, 0xdc, 0x35, 0x2d, 0xd4, 0x8e,
+	0xf0, 0x33, 0x18, 0xbd, 0x48, 0x35, 0x57, 0x8e, 0x48, 0xeb, 0xa6, 0x15, 0x02, 0xf8, 0x26, 0x81,
+	0xf2, 0xdb, 0x30, 0x04, 0x98, 0x08, 0x1d, 0xc9, 0xbb, 0x14, 0x33, 0x76, 0xa0, 0x2b, 0xd2, 0x88,
+	0xff, 0x62, 0x12, 0xba, 0xd4, 0x1a, 0xe1, 0x08, 0x60, 0xa2, 0x59, 0x1a, 0x15, 0x19, 0x66, 0x7c,
+	0x0a, 0xa3, 0x67, 0x37, 0x2c, 0x8d, 0x79, 0x2e, 0xf4, 0xfa, 0x1c, 0x00, 0xff, 0x8c, 0xb3, 0xb7,
+	0x1c, 0x33, 0x46, 0x00, 0x17, 0xd7, 0xd7, 0x89, 0x48, 0x8d, 0x75, 0x0e, 0x5b, 0x57, 0x59, 0x22,
+	0x59, 0x74, 0x26, 0x67, 0xcc, 0x90, 0x92, 0xdf, 0x92, 0x5d, 0xf0, 0x13, 0xa6, 0x85, 0x2e, 0x22,
+	0xcb, 0xf7, 0x36, 0xad, 0x6c, 0xdc, 0x74, 0x22, 0xd3, 0xd8, 0x06, 0xdb, 0x26, 0x58, 0x3b, 0xc2,
+	0x1d, 0x20, 0x8e, 0x34, 0xcf, 0x45, 0x9e, 0xcb, 0xc4, 0x2e, 0xb9, 0x0f, 0x01, 0xe5, 0x59, 0xb2,
+	0x68, 0xf8, 0xb0, 0x51, 0x16, 0x2b, 0xce, 0xdd, 0xbf, 0xb3, 0x46, 0xf8, 0x23, 0x74, 0x70, 0x5e,
+	0x64, 0x1f, 0x3a, 0x38, 0x1e, 0x13, 0x1c, 0x9e, 0xec, 0xbc, 0x7b, 0x7e, 0x9e, 0x33, 0xcd, 0xa8,
+	0x41, 0x20, 0x12, 0xc9, 0xe4, 0x4e, 0xda, 0x12, 0x12, 0xe9, 0x66, 0x91, 0x88, 0x08, 0xff, 0xdc,
+	0x00, 0xbf, 0x4c, 0xfe, 0xbf, 0xb9, 0x4b, 0x9e, 0x40, 0x37, 0xd7, 0x4c, 0x5b, 0x16, 0x6d, 0x9e,
+	0x7c, 0xf0, 0xee, 0x8e, 0x26, 0x18, 0xa4, 0x16, 0x83, 0xcc, 0x16, 0xf9, 0x44, 0x33, 0xa5, 0x1d,
+	0xad, 0x4a, 0x93, 0x1c, 0x43, 0x3f, 0x4b, 0xd8, 0x82, 0xab, 0x7c, 0xdc, 0xdb, 0xdb, 0x58, 0x25,
+	0x2d, 0x36, 0x4c, 0x4b, 0x18, 0x39, 0x84, 0x9e, 0xb4, 0x5a, 0xd4, 0xff, 0x57, 0x2d, 0x72, 0x28,
+	0xb2, 0x07, 0x43, 0x79, 0x97, 0x72, 0x75, 0x95, 0x73, 0xf5, 0x32, 0x1a, 0xfb, 0x86, 0x46, 0x4d,
+	0x17, 0x09, 0x61, 0x14, 0xb9, 0x1f, 0x79, 0xc6, 0xaf, 0xf5, 0x78, 0x60, 0x20, 0x4b, 0x3e, 0x72,
+	0x0c, 0xdb, 0xa5, 0x6d, 0x1a, 0x77, 0xd5, 0xc0, 0x40, 0x57, 0x85, 0x90, 0x73, 0xb3, 0x42, 0xd9,
+	0x83, 0x38, 0x34, 0xb0, 0xca, 0x0e, 0xbf, 0x05, 0xbf, 0xfc, 0x97, 0xcd, 0x09, 0x78, 0xf7, 0x27,
+	0x80, 0xb0, 0xcb, 0xe5, 0x09, 0x84, 0x5f, 0x42, 0xf7, 0x85, 0x52, 0x52, 0xa1, 0xde, 0xcf, 0xa4,
+	0xa3, 0x74, 0x97, 0x9a, 0x6f, 0x1c, 0xf5, 0xdc, 0x5e, 0x0c, 0xee, 0x1a, 0x28, 0xcd, 0xf0, 0x2f,
+	0xa7, 0x36, 0xb6, 0x0c, 0x12, 0xa6, 0xb0, 0x9b, 0xb0, 0xe9, 0xce, 0x42, 0x09, 0xb9, 0xe1, 0x2c,
+	0x7a, 0x39, 0x8f, 0xaf, 0x54, 0xe2, 0x6a, 0x34, 0x3c, 0x98, 0x17, 0xf3, 0x34, 0xe2, 0xca, 0xc9,
+	0x8b, 0xb3, 0x70, 0xbf, 0xa9, 0x98, 0xfd, 0xfc, 0x8a, 0x39, 0x65, 0x19, 0xd0, 0xca, 0xc6, 0x98,
+	0xc8, 0x2f, 0x52, 0x3c, 0xa3, 0x8e, 0x00, 0x95, 0x6d, 0x4f, 0x46, 0xc2, 0xc7, 0x3d, 0xc3, 0xa3,
+	0x9d, 0x86, 0xb0, 0xd9, 0x6d, 0xcb, 0x84, 0x53, 0x83, 0xb0, 0x2c, 0xb2, 0xe2, 0xd4, 0x2f, 0x59,
+	0x64, 0xa5, 0xe9, 0x1b, 0x80, 0x7a, 0x50, 0x6b, 0x77, 0x56, 0x49, 0x49, 0xbb, 0x29, 0x25, 0xbf,
+	0xc2, 0xd0, 0xe6, 0x19, 0x71, 0x2b, 0xaf, 0x3b, 0xeb, 0x72, 0xc7, 0x75, 0x1d, 0x27, 0x1b, 0x48,
+	0xcc, 0x8b, 0xab, 0x16, 0x56, 0x5d, 0x93, 0x8d, 0x3f, 0xd9, 0x40, 0x1e, 0xfc, 0xe1, 0xc1, 0xb0,
+	0x71, 0x93, 0x93, 0x01, 0x74, 0x39, 0xfe, 0xdc, 0xa0, 0x65, 0x3e, 0xb1, 0xa7, 0xc0, 0xc3, 0x4f,
+	0x85, 0x3b, 0x0d, 0xda, 0x64, 0x04, 0x7e, 0x2e, 0xf4, 0x14, 0x35, 0x35, 0xd8, 0x30, 0x16, 0x8a,
+	0xe7, 0xb4, 0xc8, 0x82, 0x0e, 0x79, 0x08, 0xc3, 0x99, 0x11, 0xcf, 0x69, 0xce, 0x99, 0x0e, 0xba,
+	0x98, 0x97, 0xa0, 0x4e, 0x06, 0x3d, 0x32, 0x84, 0xbe, 0xb4, 0x32, 0x19, 0xf4, 0xc9, 0x36, 0x3c,
+	0x2c, 0x8c, 0x4a, 0x4e, 0x13, 0x27, 0x93, 0x81, 0x4f, 0x76, 0x20, 0x50, 0x56, 0xeb, 0xa6, 0x25,
+	0xa1, 0x83, 0x01, 0x21, 0xb0, 0xa9, 0x50, 0xeb, 0x6a, 0x1f, 0x1c, 0x7c, 0x07, 0x83, 0xea, 0x8c,
+	0x93, 0x07, 0x30, 0xb8, 0x63, 0x42, 0x4f, 0x7f, 0x92, 0x22, 0x0d, 0x5a, 0xb8, 0x8e, 0x48, 0xa7,
+	0xb8, 0xc3, 0xc0, 0x23, 0x9b, 0x00, 0x26, 0x56, 0x36, 0xef, 0x43, 0x47, 0xbe, 0xe5, 0x2a, 0xd8,
+	0x38, 0x78, 0x6a, 0x4b, 0x9c, 0x89, 0xb9, 0xd0, 0xd8, 0x77, 0x82, 0x1f, 0x53, 0x85, 0xc7, 0x23,
+	0x68, 0x61, 0x9e, 0x75, 0x68, 0x81, 0x75, 0x4e, 0xfe, 0xf6, 0x00, 0xbe, 0xaf, 0x66, 0x49, 0xce,
+	0x01, 0xea, 0xa7, 0x05, 0xf9, 0xa4, 0x39, 0xe6, 0x7b, 0x8f, 0x9d, 0xdd, 0xc7, 0xeb, 0xc2, 0xf6,
+	0xd6, 0x0f, 0x5b, 0x58, 0xae, 0x7e, 0x0d, 0x2c, 0x97, 0xbb, 0xf7, 0x76, 0x58, 0x2e, 0x77, 0xff,
+	0x11, 0x11, 0xb6, 0xc8, 0xd7, 0xd0, 0x9b, 0x68, 0xc5, 0xd9, 0x9c, 0x6c, 0xaf, 0x78, 0xaf, 0xed,
+	0xae, 0x72, 0x86, 0xad, 0x7d, 0xef, 0xd8, 0x7b, 0xd3, 0x33, 0xef, 0xbf, 0x2f, 0xfe, 0x09, 0x00,
+	0x00, 0xff, 0xff, 0x11, 0x12, 0xb8, 0x30, 0x58, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -683,7 +1366,6 @@ const _ = grpc.SupportPackageIsVersion4
 type FriendRoomClient interface {
 	CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...grpc.CallOption) (*CreateRoomResponse, error)
 	GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...grpc.CallOption) (*GetPlayingResponse, error)
-	JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...grpc.CallOption) (*RoomData, error)
 	Stream(ctx context.Context, opts ...grpc.CallOption) (FriendRoom_StreamClient, error)
 }
 
@@ -707,15 +1389,6 @@ func (c *friendRoomClient) CreateRoom(ctx context.Context, in *CreateRoomRequest
 func (c *friendRoomClient) GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...grpc.CallOption) (*GetPlayingResponse, error) {
 	out := new(GetPlayingResponse)
 	err := c.cc.Invoke(ctx, "/friendRoom.FriendRoom/GetPlaying", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *friendRoomClient) JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...grpc.CallOption) (*RoomData, error) {
-	out := new(RoomData)
-	err := c.cc.Invoke(ctx, "/friendRoom.FriendRoom/JoinRoom", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -757,7 +1430,6 @@ func (x *friendRoomStreamClient) Recv() (*Message, error) {
 type FriendRoomServer interface {
 	CreateRoom(context.Context, *CreateRoomRequest) (*CreateRoomResponse, error)
 	GetPlaying(context.Context, *GetPlayingRequest) (*GetPlayingResponse, error)
-	JoinRoom(context.Context, *JoinRoomRequest) (*RoomData, error)
 	Stream(FriendRoom_StreamServer) error
 }
 
@@ -801,24 +1473,6 @@ func _FriendRoom_GetPlaying_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FriendRoom_JoinRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JoinRoomRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FriendRoomServer).JoinRoom(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/friendRoom.FriendRoom/JoinRoom",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendRoomServer).JoinRoom(ctx, req.(*JoinRoomRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _FriendRoom_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(FriendRoomServer).Stream(&friendRoomStreamServer{stream})
 }
@@ -856,10 +1510,6 @@ var _FriendRoom_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPlaying",
 			Handler:    _FriendRoom_GetPlaying_Handler,
-		},
-		{
-			MethodName: "JoinRoom",
-			Handler:    _FriendRoom_JoinRoom_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
