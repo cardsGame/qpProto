@@ -8,6 +8,7 @@ service FriendRoom {
     rpc Stream(stream Message) returns(stream Message) {}
 }
 
+// 双向流传输数据类型
 enum MessageType {
     error = 0; // 错误类型
     enter = 1; // 进入
@@ -22,6 +23,7 @@ enum MessageType {
     reply_dissolve = 10; // 回应解散
 }
 
+// 双向流传输数据
 message Message {
     MessageType type = 1;
     string data = 2;
@@ -136,15 +138,55 @@ message ReplyDissolveReq {
 
 /****************** 服务端推送数据 *******************/
 
+message Room {
+    RoomData room = 1;
+    GameData game = 2;
+}
+
 // 房间数据
 message RoomData {
     string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+    RoomState state = 4;
+    bool isStart = 5;
+    repeated Roomplayer players = 6;
+    RoomOption option = 7;
+    int32 ownerUserId = 8;
+    int32 dissolveLeft = 9;
+    int32 dissolveStartUserId = 10;
+    int32 curRound = 11;
+}
+
+message GameData {
+    repeated GamePlayer players = 1;
 }
 
 // 错误结构
 message Error {
     int32 code = 1;
     string message = 2;
+}
+
+message Roomplayer {
+    int32 userId = 1;
+    string headImgUrl = 2;
+    int32 gender = 3;
+    string nickName = 4;
+    bool isOnline = 5;
+    room.RoomPlayerRole role = 6;
+    bool isReady = 6;
+}
+
+message GamePlayer {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+// 玩家进入
+message PlayerEnter {
+    Roomplayer roomPlayer = 1;
+    GamePlayer gamePlayer = 2;
 }
 
 /****************** 服务端推送数据 *******************/
