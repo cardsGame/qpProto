@@ -8,8 +8,8 @@ service FriendRoom {
     rpc Stream(stream Message) returns(stream Message) {}
 }
 
-// 双向流传输数据类型
-enum MessageType {
+// 请求号
+enum ReqId {
     error = 0; // 错误类型
     enter = 1; // 进入
     ready = 2;
@@ -21,11 +21,27 @@ enum MessageType {
     upload_location = 8; // 上报位置
     request_dissolve = 9; // 申请解散
     reply_dissolve = 10; // 回应解散
+    text_chat = 11; // 文字聊天
+    quick_chat = 12; // 短语聊天
+    emoji_chat = 13; // 表情聊天
+    voice_chat = 14; // 语音聊天
+    zlmj_discards = 101; // 镇赉麻将出牌
+}
+
+// 事件id
+enum EventId {
+    player_enter = 0;
 }
 
 // 双向流传输数据
 message Message {
-    MessageType type = 1;
+    ReqId reqId = 1;
+    string data = 2;
+}
+
+// 房间事件
+message Event {
+    EventId eventId = 1;
     string data = 2;
 }
 
@@ -33,10 +49,9 @@ message Message {
 message CreateRoomRequest{
     room.GameType gameType = 1;
     RoomOption roomOption = 2;
-    //    oneof game_option {
-    //        ZLMJGameOption zlmj_option = 3;
-    //        DDZGameOption ddz_option = 4;
-    //    }
+    oneof game_option {
+        ZLMJGameOption zlmj_option = 3;
+    }
 }
 
 // 创建房间响应
@@ -80,6 +95,46 @@ enum RoomState {
 enum RoomLimit {
     limit_round = 0; // 限局
     limit_time = 1; // 限时
+}
+
+message GamePlayer {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+message Roomplayer {
+    int32 userId = 1;
+    string headImgUrl = 2;
+    int32 gender = 3;
+    string nickName = 4;
+    bool isOnline = 5;
+    room.RoomPlayerRole role = 6;
+    bool isReady = 7;
+}
+
+// 错误结构
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+
+// 房间数据
+message RoomData {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+    RoomState state = 4;
+    bool isStart = 5;
+    repeated Roomplayer players = 6;
+    RoomOption option = 7;
+    int32 ownerUserId = 8;
+    int32 dissolveLeft = 9;
+    int32 dissolveStartUserId = 10;
+    int32 curRound = 11;
+}
+
+message GameData {
+    repeated GamePlayer players = 1;
 }
 
 /****************** 消息号请求 *******************/
@@ -134,54 +189,21 @@ message ReplyDissolveReq {
     bool agree = 1;
 }
 
-/****************** 消息号请求 *******************/
+/****************** end 消息号请求 *******************/
 
-/****************** 服务端推送数据 *******************/
 
-message Room {
+/****************** 消息号响应 *******************/
+
+// 进入房间响应
+message EnterRoomRsp {
     RoomData room = 1;
     GameData game = 2;
 }
 
-// 房间数据
-message RoomData {
-    string roomNo = 1;
-    room.GameType gameType = 2;
-    room.RoomType roomType = 3;
-    RoomState state = 4;
-    bool isStart = 5;
-    repeated Roomplayer players = 6;
-    RoomOption option = 7;
-    int32 ownerUserId = 8;
-    int32 dissolveLeft = 9;
-    int32 dissolveStartUserId = 10;
-    int32 curRound = 11;
-}
 
-message GameData {
-    repeated GamePlayer players = 1;
-}
+/****************** end 消息号响应 *******************/
 
-// 错误结构
-message Error {
-    int32 code = 1;
-    string message = 2;
-}
-
-message Roomplayer {
-    int32 userId = 1;
-    string headImgUrl = 2;
-    int32 gender = 3;
-    string nickName = 4;
-    bool isOnline = 5;
-    room.RoomPlayerRole role = 6;
-    bool isReady = 7;
-}
-
-message GamePlayer {
-    int32 userId = 1;
-    int32 index = 2;
-}
+/****************** 服务端推送数据 *******************/
 
 // 玩家进入
 message PlayerEnter {
@@ -189,4 +211,4 @@ message PlayerEnter {
     GamePlayer gamePlayer = 2;
 }
 
-/****************** 服务端推送数据 *******************/
+/****************** end 服务端推送数据 *******************/

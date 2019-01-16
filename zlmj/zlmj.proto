@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package zlmj;
+
+message GameOption {
+    bool cheat = 1;
+}
+
+message GameData {
+    State state = 1;
+}
+
+message PlayerData {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+enum State {
+    initing = 0; // 初始化
+}
+
+/****************** 消息号请求 *******************/
+
+message DiscardsReq {
+
+}
+
+/****************** end 消息号请求 *******************/
+
+
+/****************** 消息号响应 *******************/
+
+message DiscardsRsp {
+
+}
+
+/******************  end 消息号响应 *******************/
+
+
+
+/****************** 推送 *******************/
+
+message DiscardsEvent {
+
+}
+
+/****************** end 推送 *******************/
