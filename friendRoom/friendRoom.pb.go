@@ -4,9 +4,11 @@
 package friendRoom
 
 import (
+	context "context"
 	fmt "fmt"
 	room "github.com/cardsGame/qpProto/room"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -665,4 +667,208 @@ var fileDescriptor_b2975553733e89e1 = []byte{
 	0xf1, 0xdd, 0x4f, 0xc2, 0x34, 0x6f, 0xec, 0xe1, 0x5b, 0x58, 0x39, 0xd5, 0x39, 0xf1, 0x14, 0x37,
 	0x1f, 0xf8, 0xce, 0xba, 0x0f, 0x81, 0xb1, 0xb7, 0xe7, 0xbf, 0xf2, 0xcf, 0x57, 0xec, 0xf7, 0xf8,
 	0xfa, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x78, 0xa6, 0x22, 0x21, 0x77, 0x05, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// FriendRoomClient is the client API for FriendRoom service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type FriendRoomClient interface {
+	CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...grpc.CallOption) (*CreateRoomResponse, error)
+	GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...grpc.CallOption) (*GetPlayingResponse, error)
+	JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...grpc.CallOption) (*RoomData, error)
+	Stream(ctx context.Context, opts ...grpc.CallOption) (FriendRoom_StreamClient, error)
+}
+
+type friendRoomClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewFriendRoomClient(cc *grpc.ClientConn) FriendRoomClient {
+	return &friendRoomClient{cc}
+}
+
+func (c *friendRoomClient) CreateRoom(ctx context.Context, in *CreateRoomRequest, opts ...grpc.CallOption) (*CreateRoomResponse, error) {
+	out := new(CreateRoomResponse)
+	err := c.cc.Invoke(ctx, "/friendRoom.FriendRoom/CreateRoom", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *friendRoomClient) GetPlaying(ctx context.Context, in *GetPlayingRequest, opts ...grpc.CallOption) (*GetPlayingResponse, error) {
+	out := new(GetPlayingResponse)
+	err := c.cc.Invoke(ctx, "/friendRoom.FriendRoom/GetPlaying", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *friendRoomClient) JoinRoom(ctx context.Context, in *JoinRoomRequest, opts ...grpc.CallOption) (*RoomData, error) {
+	out := new(RoomData)
+	err := c.cc.Invoke(ctx, "/friendRoom.FriendRoom/JoinRoom", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *friendRoomClient) Stream(ctx context.Context, opts ...grpc.CallOption) (FriendRoom_StreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_FriendRoom_serviceDesc.Streams[0], "/friendRoom.FriendRoom/Stream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &friendRoomStreamClient{stream}
+	return x, nil
+}
+
+type FriendRoom_StreamClient interface {
+	Send(*Message) error
+	Recv() (*Message, error)
+	grpc.ClientStream
+}
+
+type friendRoomStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *friendRoomStreamClient) Send(m *Message) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *friendRoomStreamClient) Recv() (*Message, error) {
+	m := new(Message)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// FriendRoomServer is the server API for FriendRoom service.
+type FriendRoomServer interface {
+	CreateRoom(context.Context, *CreateRoomRequest) (*CreateRoomResponse, error)
+	GetPlaying(context.Context, *GetPlayingRequest) (*GetPlayingResponse, error)
+	JoinRoom(context.Context, *JoinRoomRequest) (*RoomData, error)
+	Stream(FriendRoom_StreamServer) error
+}
+
+func RegisterFriendRoomServer(s *grpc.Server, srv FriendRoomServer) {
+	s.RegisterService(&_FriendRoom_serviceDesc, srv)
+}
+
+func _FriendRoom_CreateRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FriendRoomServer).CreateRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/friendRoom.FriendRoom/CreateRoom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FriendRoomServer).CreateRoom(ctx, req.(*CreateRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FriendRoom_GetPlaying_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlayingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FriendRoomServer).GetPlaying(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/friendRoom.FriendRoom/GetPlaying",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FriendRoomServer).GetPlaying(ctx, req.(*GetPlayingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FriendRoom_JoinRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JoinRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FriendRoomServer).JoinRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/friendRoom.FriendRoom/JoinRoom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FriendRoomServer).JoinRoom(ctx, req.(*JoinRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FriendRoom_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(FriendRoomServer).Stream(&friendRoomStreamServer{stream})
+}
+
+type FriendRoom_StreamServer interface {
+	Send(*Message) error
+	Recv() (*Message, error)
+	grpc.ServerStream
+}
+
+type friendRoomStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *friendRoomStreamServer) Send(m *Message) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *friendRoomStreamServer) Recv() (*Message, error) {
+	m := new(Message)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _FriendRoom_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "friendRoom.FriendRoom",
+	HandlerType: (*FriendRoomServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateRoom",
+			Handler:    _FriendRoom_CreateRoom_Handler,
+		},
+		{
+			MethodName: "GetPlaying",
+			Handler:    _FriendRoom_GetPlaying_Handler,
+		},
+		{
+			MethodName: "JoinRoom",
+			Handler:    _FriendRoom_JoinRoom_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Stream",
+			Handler:       _FriendRoom_Stream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "friendRoom/friendRoom.proto",
 }

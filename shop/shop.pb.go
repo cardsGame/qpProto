@@ -4,8 +4,10 @@
 package shop
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -864,4 +866,284 @@ var fileDescriptor_cbe66af8c4005172 = []byte{
 	0x48, 0xd4, 0x9a, 0x25, 0xc1, 0x76, 0xd4, 0x7e, 0x3b, 0xe1, 0x1a, 0x79, 0x05, 0xff, 0x2d, 0xf5,
 	0x19, 0xd9, 0xe9, 0xec, 0xfd, 0x60, 0x37, 0xea, 0x6c, 0xc7, 0x3f, 0xe0, 0xf0, 0xb1, 0x8f, 0x7f,
 	0x09, 0x9e, 0xfe, 0x0e, 0x00, 0x00, 0xff, 0xff, 0xaf, 0xd9, 0x5b, 0x97, 0x25, 0x08, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// ShopUserServiceClient is the client API for ShopUserService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ShopUserServiceClient interface {
+	// 获取商城货物列表
+	GetGoodsList(ctx context.Context, in *GetGoodsListRequest, opts ...grpc.CallOption) (*GetGoodsListResponse, error)
+	// 购买单个物品(可以调节数量)
+	BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, opts ...grpc.CallOption) (*BuyOneGoodResponse, error)
+}
+
+type shopUserServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewShopUserServiceClient(cc *grpc.ClientConn) ShopUserServiceClient {
+	return &shopUserServiceClient{cc}
+}
+
+func (c *shopUserServiceClient) GetGoodsList(ctx context.Context, in *GetGoodsListRequest, opts ...grpc.CallOption) (*GetGoodsListResponse, error) {
+	out := new(GetGoodsListResponse)
+	err := c.cc.Invoke(ctx, "/ShopUserService/GetGoodsList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shopUserServiceClient) BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, opts ...grpc.CallOption) (*BuyOneGoodResponse, error) {
+	out := new(BuyOneGoodResponse)
+	err := c.cc.Invoke(ctx, "/ShopUserService/BuyOneGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ShopUserServiceServer is the server API for ShopUserService service.
+type ShopUserServiceServer interface {
+	// 获取商城货物列表
+	GetGoodsList(context.Context, *GetGoodsListRequest) (*GetGoodsListResponse, error)
+	// 购买单个物品(可以调节数量)
+	BuyOneGood(context.Context, *BuyOneGoodRequest) (*BuyOneGoodResponse, error)
+}
+
+func RegisterShopUserServiceServer(s *grpc.Server, srv ShopUserServiceServer) {
+	s.RegisterService(&_ShopUserService_serviceDesc, srv)
+}
+
+func _ShopUserService_GetGoodsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodsListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopUserServiceServer).GetGoodsList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopUserService/GetGoodsList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopUserServiceServer).GetGoodsList(ctx, req.(*GetGoodsListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShopUserService_BuyOneGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuyOneGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopUserServiceServer).BuyOneGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopUserService/BuyOneGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopUserServiceServer).BuyOneGood(ctx, req.(*BuyOneGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ShopUserService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "ShopUserService",
+	HandlerType: (*ShopUserServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetGoodsList",
+			Handler:    _ShopUserService_GetGoodsList_Handler,
+		},
+		{
+			MethodName: "BuyOneGood",
+			Handler:    _ShopUserService_BuyOneGood_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "shop/shop.proto",
+}
+
+// ShopAdminServiceClient is the client API for ShopAdminService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ShopAdminServiceClient interface {
+	// 获取商城货物列表
+	GetGoodsList(ctx context.Context, in *GetGoodsListRequest, opts ...grpc.CallOption) (*GetGoodsListResponse, error)
+	// 新增一个货物到商城
+	AddOneGood(ctx context.Context, in *AddOneGoodRequest, opts ...grpc.CallOption) (*AddOneGoodResponse, error)
+	// 更新一个
+	UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, opts ...grpc.CallOption) (*UpdateOneGoodResponse, error)
+	// 购买单个物品(可以调节数量)
+	BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, opts ...grpc.CallOption) (*BuyOneGoodResponse, error)
+}
+
+type shopAdminServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewShopAdminServiceClient(cc *grpc.ClientConn) ShopAdminServiceClient {
+	return &shopAdminServiceClient{cc}
+}
+
+func (c *shopAdminServiceClient) GetGoodsList(ctx context.Context, in *GetGoodsListRequest, opts ...grpc.CallOption) (*GetGoodsListResponse, error) {
+	out := new(GetGoodsListResponse)
+	err := c.cc.Invoke(ctx, "/ShopAdminService/GetGoodsList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shopAdminServiceClient) AddOneGood(ctx context.Context, in *AddOneGoodRequest, opts ...grpc.CallOption) (*AddOneGoodResponse, error) {
+	out := new(AddOneGoodResponse)
+	err := c.cc.Invoke(ctx, "/ShopAdminService/AddOneGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shopAdminServiceClient) UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, opts ...grpc.CallOption) (*UpdateOneGoodResponse, error) {
+	out := new(UpdateOneGoodResponse)
+	err := c.cc.Invoke(ctx, "/ShopAdminService/UpdateOneGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shopAdminServiceClient) BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, opts ...grpc.CallOption) (*BuyOneGoodResponse, error) {
+	out := new(BuyOneGoodResponse)
+	err := c.cc.Invoke(ctx, "/ShopAdminService/BuyOneGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ShopAdminServiceServer is the server API for ShopAdminService service.
+type ShopAdminServiceServer interface {
+	// 获取商城货物列表
+	GetGoodsList(context.Context, *GetGoodsListRequest) (*GetGoodsListResponse, error)
+	// 新增一个货物到商城
+	AddOneGood(context.Context, *AddOneGoodRequest) (*AddOneGoodResponse, error)
+	// 更新一个
+	UpdateOneGood(context.Context, *UpdateOneGoodRequest) (*UpdateOneGoodResponse, error)
+	// 购买单个物品(可以调节数量)
+	BuyOneGood(context.Context, *BuyOneGoodRequest) (*BuyOneGoodResponse, error)
+}
+
+func RegisterShopAdminServiceServer(s *grpc.Server, srv ShopAdminServiceServer) {
+	s.RegisterService(&_ShopAdminService_serviceDesc, srv)
+}
+
+func _ShopAdminService_GetGoodsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodsListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopAdminServiceServer).GetGoodsList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopAdminService/GetGoodsList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopAdminServiceServer).GetGoodsList(ctx, req.(*GetGoodsListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShopAdminService_AddOneGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddOneGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopAdminServiceServer).AddOneGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopAdminService/AddOneGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopAdminServiceServer).AddOneGood(ctx, req.(*AddOneGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShopAdminService_UpdateOneGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateOneGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopAdminServiceServer).UpdateOneGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopAdminService/UpdateOneGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopAdminServiceServer).UpdateOneGood(ctx, req.(*UpdateOneGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShopAdminService_BuyOneGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuyOneGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopAdminServiceServer).BuyOneGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ShopAdminService/BuyOneGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopAdminServiceServer).BuyOneGood(ctx, req.(*BuyOneGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ShopAdminService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "ShopAdminService",
+	HandlerType: (*ShopAdminServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetGoodsList",
+			Handler:    _ShopAdminService_GetGoodsList_Handler,
+		},
+		{
+			MethodName: "AddOneGood",
+			Handler:    _ShopAdminService_AddOneGood_Handler,
+		},
+		{
+			MethodName: "UpdateOneGood",
+			Handler:    _ShopAdminService_UpdateOneGood_Handler,
+		},
+		{
+			MethodName: "BuyOneGood",
+			Handler:    _ShopAdminService_BuyOneGood_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "shop/shop.proto",
 }

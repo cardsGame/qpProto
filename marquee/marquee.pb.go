@@ -4,8 +4,10 @@
 package marquee
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -300,4 +302,175 @@ var fileDescriptor_94a316c3e91c3c32 = []byte{
 	0xde, 0x47, 0xce, 0x73, 0x80, 0x99, 0x0c, 0x39, 0x09, 0x71, 0x9e, 0x63, 0xcc, 0x64, 0xc8, 0xf9,
 	0x21, 0xf7, 0x7e, 0x3e, 0xbc, 0x9f, 0xbb, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xed, 0x08, 0xd2,
 	0x14, 0x58, 0x02, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// MarqueeClient is the client API for Marquee service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type MarqueeClient interface {
+	GetMarqueeList(ctx context.Context, in *GetMarqueeListRequest, opts ...grpc.CallOption) (*GetMarqueeListResponse, error)
+	CreateMarquee(ctx context.Context, in *CreateMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error)
+	UpdateMarquee(ctx context.Context, in *UpdateMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error)
+	DeleteMarquee(ctx context.Context, in *DeleteMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error)
+}
+
+type marqueeClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewMarqueeClient(cc *grpc.ClientConn) MarqueeClient {
+	return &marqueeClient{cc}
+}
+
+func (c *marqueeClient) GetMarqueeList(ctx context.Context, in *GetMarqueeListRequest, opts ...grpc.CallOption) (*GetMarqueeListResponse, error) {
+	out := new(GetMarqueeListResponse)
+	err := c.cc.Invoke(ctx, "/Marquee/GetMarqueeList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marqueeClient) CreateMarquee(ctx context.Context, in *CreateMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error) {
+	out := new(MarqueeData)
+	err := c.cc.Invoke(ctx, "/Marquee/CreateMarquee", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marqueeClient) UpdateMarquee(ctx context.Context, in *UpdateMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error) {
+	out := new(MarqueeData)
+	err := c.cc.Invoke(ctx, "/Marquee/UpdateMarquee", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marqueeClient) DeleteMarquee(ctx context.Context, in *DeleteMarqueeRequest, opts ...grpc.CallOption) (*MarqueeData, error) {
+	out := new(MarqueeData)
+	err := c.cc.Invoke(ctx, "/Marquee/DeleteMarquee", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MarqueeServer is the server API for Marquee service.
+type MarqueeServer interface {
+	GetMarqueeList(context.Context, *GetMarqueeListRequest) (*GetMarqueeListResponse, error)
+	CreateMarquee(context.Context, *CreateMarqueeRequest) (*MarqueeData, error)
+	UpdateMarquee(context.Context, *UpdateMarqueeRequest) (*MarqueeData, error)
+	DeleteMarquee(context.Context, *DeleteMarqueeRequest) (*MarqueeData, error)
+}
+
+func RegisterMarqueeServer(s *grpc.Server, srv MarqueeServer) {
+	s.RegisterService(&_Marquee_serviceDesc, srv)
+}
+
+func _Marquee_GetMarqueeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMarqueeListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarqueeServer).GetMarqueeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Marquee/GetMarqueeList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarqueeServer).GetMarqueeList(ctx, req.(*GetMarqueeListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marquee_CreateMarquee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMarqueeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarqueeServer).CreateMarquee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Marquee/CreateMarquee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarqueeServer).CreateMarquee(ctx, req.(*CreateMarqueeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marquee_UpdateMarquee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMarqueeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarqueeServer).UpdateMarquee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Marquee/UpdateMarquee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarqueeServer).UpdateMarquee(ctx, req.(*UpdateMarqueeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marquee_DeleteMarquee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteMarqueeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarqueeServer).DeleteMarquee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Marquee/DeleteMarquee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarqueeServer).DeleteMarquee(ctx, req.(*DeleteMarqueeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Marquee_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "Marquee",
+	HandlerType: (*MarqueeServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetMarqueeList",
+			Handler:    _Marquee_GetMarqueeList_Handler,
+		},
+		{
+			MethodName: "CreateMarquee",
+			Handler:    _Marquee_CreateMarquee_Handler,
+		},
+		{
+			MethodName: "UpdateMarquee",
+			Handler:    _Marquee_UpdateMarquee_Handler,
+		},
+		{
+			MethodName: "DeleteMarquee",
+			Handler:    _Marquee_DeleteMarquee_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "marquee/marquee.proto",
 }

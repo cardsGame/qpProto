@@ -4,8 +4,10 @@
 package user
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -810,4 +812,350 @@ var fileDescriptor_ed89022014131a74 = []byte{
 	0x19, 0xe1, 0x91, 0xb7, 0xbb, 0xc6, 0x76, 0x62, 0x4c, 0x5b, 0x97, 0x4d, 0xc5, 0x81, 0xab, 0x96,
 	0xfe, 0x2f, 0x8d, 0xff, 0x0b, 0x00, 0x00, 0xff, 0xff, 0x32, 0x6f, 0x0e, 0x38, 0xaa, 0x06, 0x00,
 	0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// UserQueryClient is the client API for UserQuery service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type UserQueryClient interface {
+	// 获取某个用户的详细信息
+	GetDetailInfo(ctx context.Context, in *GetDetailInfoRequest, opts ...grpc.CallOption) (*UserInfo, error)
+	// 获取所有用户
+	GetAllUser(ctx context.Context, in *GetAllUserRequest, opts ...grpc.CallOption) (*GetAllUserResponse, error)
+}
+
+type userQueryClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewUserQueryClient(cc *grpc.ClientConn) UserQueryClient {
+	return &userQueryClient{cc}
+}
+
+func (c *userQueryClient) GetDetailInfo(ctx context.Context, in *GetDetailInfoRequest, opts ...grpc.CallOption) (*UserInfo, error) {
+	out := new(UserInfo)
+	err := c.cc.Invoke(ctx, "/UserQuery/GetDetailInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userQueryClient) GetAllUser(ctx context.Context, in *GetAllUserRequest, opts ...grpc.CallOption) (*GetAllUserResponse, error) {
+	out := new(GetAllUserResponse)
+	err := c.cc.Invoke(ctx, "/UserQuery/GetAllUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserQueryServer is the server API for UserQuery service.
+type UserQueryServer interface {
+	// 获取某个用户的详细信息
+	GetDetailInfo(context.Context, *GetDetailInfoRequest) (*UserInfo, error)
+	// 获取所有用户
+	GetAllUser(context.Context, *GetAllUserRequest) (*GetAllUserResponse, error)
+}
+
+func RegisterUserQueryServer(s *grpc.Server, srv UserQueryServer) {
+	s.RegisterService(&_UserQuery_serviceDesc, srv)
+}
+
+func _UserQuery_GetDetailInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDetailInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserQueryServer).GetDetailInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserQuery/GetDetailInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserQueryServer).GetDetailInfo(ctx, req.(*GetDetailInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserQuery_GetAllUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserQueryServer).GetAllUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserQuery/GetAllUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserQueryServer).GetAllUser(ctx, req.(*GetAllUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _UserQuery_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "UserQuery",
+	HandlerType: (*UserQueryServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetDetailInfo",
+			Handler:    _UserQuery_GetDetailInfo_Handler,
+		},
+		{
+			MethodName: "GetAllUser",
+			Handler:    _UserQuery_GetAllUser_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user/user.proto",
+}
+
+// UserBizClient is the client API for UserBiz service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type UserBizClient interface {
+	// 给玩家增加物品
+	AddItems(ctx context.Context, in *AddItemsRequest, opts ...grpc.CallOption) (*UserUpdate, error)
+}
+
+type userBizClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewUserBizClient(cc *grpc.ClientConn) UserBizClient {
+	return &userBizClient{cc}
+}
+
+func (c *userBizClient) AddItems(ctx context.Context, in *AddItemsRequest, opts ...grpc.CallOption) (*UserUpdate, error) {
+	out := new(UserUpdate)
+	err := c.cc.Invoke(ctx, "/UserBiz/AddItems", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserBizServer is the server API for UserBiz service.
+type UserBizServer interface {
+	// 给玩家增加物品
+	AddItems(context.Context, *AddItemsRequest) (*UserUpdate, error)
+}
+
+func RegisterUserBizServer(s *grpc.Server, srv UserBizServer) {
+	s.RegisterService(&_UserBiz_serviceDesc, srv)
+}
+
+func _UserBiz_AddItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddItemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserBizServer).AddItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserBiz/AddItems",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserBizServer).AddItems(ctx, req.(*AddItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _UserBiz_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "UserBiz",
+	HandlerType: (*UserBizServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AddItems",
+			Handler:    _UserBiz_AddItems_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user/user.proto",
+}
+
+// UserAuthClient is the client API for UserAuth service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type UserAuthClient interface {
+	// 通过本地认证
+	AuthLocal(ctx context.Context, in *AuthLocalRequest, opts ...grpc.CallOption) (*PayloadToken, error)
+	// 通过微信h5登录认证
+	AuthWxH5(ctx context.Context, in *AuthWxH5Request, opts ...grpc.CallOption) (*PayloadToken, error)
+	// 登录游戏
+	SignInGame(ctx context.Context, in *SignInGameRequest, opts ...grpc.CallOption) (*UserInfo, error)
+	// 验证token
+	VerifyToken(ctx context.Context, in *VerifyTokenRequest, opts ...grpc.CallOption) (*PayloadToken, error)
+}
+
+type userAuthClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewUserAuthClient(cc *grpc.ClientConn) UserAuthClient {
+	return &userAuthClient{cc}
+}
+
+func (c *userAuthClient) AuthLocal(ctx context.Context, in *AuthLocalRequest, opts ...grpc.CallOption) (*PayloadToken, error) {
+	out := new(PayloadToken)
+	err := c.cc.Invoke(ctx, "/UserAuth/AuthLocal", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthClient) AuthWxH5(ctx context.Context, in *AuthWxH5Request, opts ...grpc.CallOption) (*PayloadToken, error) {
+	out := new(PayloadToken)
+	err := c.cc.Invoke(ctx, "/UserAuth/AuthWxH5", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthClient) SignInGame(ctx context.Context, in *SignInGameRequest, opts ...grpc.CallOption) (*UserInfo, error) {
+	out := new(UserInfo)
+	err := c.cc.Invoke(ctx, "/UserAuth/SignInGame", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthClient) VerifyToken(ctx context.Context, in *VerifyTokenRequest, opts ...grpc.CallOption) (*PayloadToken, error) {
+	out := new(PayloadToken)
+	err := c.cc.Invoke(ctx, "/UserAuth/VerifyToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserAuthServer is the server API for UserAuth service.
+type UserAuthServer interface {
+	// 通过本地认证
+	AuthLocal(context.Context, *AuthLocalRequest) (*PayloadToken, error)
+	// 通过微信h5登录认证
+	AuthWxH5(context.Context, *AuthWxH5Request) (*PayloadToken, error)
+	// 登录游戏
+	SignInGame(context.Context, *SignInGameRequest) (*UserInfo, error)
+	// 验证token
+	VerifyToken(context.Context, *VerifyTokenRequest) (*PayloadToken, error)
+}
+
+func RegisterUserAuthServer(s *grpc.Server, srv UserAuthServer) {
+	s.RegisterService(&_UserAuth_serviceDesc, srv)
+}
+
+func _UserAuth_AuthLocal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthLocalRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthServer).AuthLocal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserAuth/AuthLocal",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthServer).AuthLocal(ctx, req.(*AuthLocalRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuth_AuthWxH5_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthWxH5Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthServer).AuthWxH5(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserAuth/AuthWxH5",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthServer).AuthWxH5(ctx, req.(*AuthWxH5Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuth_SignInGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignInGameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthServer).SignInGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserAuth/SignInGame",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthServer).SignInGame(ctx, req.(*SignInGameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuth_VerifyToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthServer).VerifyToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserAuth/VerifyToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthServer).VerifyToken(ctx, req.(*VerifyTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _UserAuth_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "UserAuth",
+	HandlerType: (*UserAuthServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AuthLocal",
+			Handler:    _UserAuth_AuthLocal_Handler,
+		},
+		{
+			MethodName: "AuthWxH5",
+			Handler:    _UserAuth_AuthWxH5_Handler,
+		},
+		{
+			MethodName: "SignInGame",
+			Handler:    _UserAuth_SignInGame_Handler,
+		},
+		{
+			MethodName: "VerifyToken",
+			Handler:    _UserAuth_VerifyToken_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user/user.proto",
 }
