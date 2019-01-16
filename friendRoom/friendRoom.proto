@@ -115,7 +115,7 @@ message LeaveReq {
 
 // 断线
 message OfflineReq {
-
+    int32 userId = 1;
 }
 
 // 上报位置请求
