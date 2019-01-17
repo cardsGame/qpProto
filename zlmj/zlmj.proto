@@ -2,46 +2,71 @@ syntax = "proto3";
 
 package zlmj;
 
+// 游戏选项
 message GameOption {
     bool cheat = 1;
 }
 
+// 游戏数据结构
 message GameData {
     State state = 1;
+    GameOption option = 2;
 }
 
+// 玩家数据结构
 message PlayerData {
     int32 userId = 1;
     int32 index = 2;
 }
 
+// 状态
 enum State {
     initing = 0; // 初始化
 }
 
-/****************** 消息号请求 *******************/
+message Message {
+    oneof message {
+        Req req = 1;
+        Rsp res = 2;
+        Event event = 3;
+    }
+}
 
+message Req {
+    oneof req {
+        DiscardsReq discardsReq = 1;
+    }
+}
+
+message Rsp {
+    oneof rsp {
+        DiscardsRsp discardsRsp = 21;
+    }
+}
+
+message Event {
+    oneof event {
+        DiscardsEvent discardsEvent = 1;
+    }
+}
+
+
+// region 请求
+// 出牌请求
 message DiscardsReq {
 
 }
+// endregion
 
-/****************** end 消息号请求 *******************/
-
-
-/****************** 消息号响应 *******************/
-
+// region 响应
 message DiscardsRsp {
 
 }
+// endregion
 
-/******************  end 消息号响应 *******************/
-
-
-
-/****************** 推送 *******************/
-
+// region 事件
+// 玩家打牌事件
 message DiscardsEvent {
-
+    int32 index = 1;
 }
-
-/****************** end 推送 *******************/
+// endregion
