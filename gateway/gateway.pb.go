@@ -3,11 +3,9 @@
 
 package gateway
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,63 +16,34 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type T int32
-
-const (
-	T_auth           T = 0
-	T_config         T = 1
-	T_joinFriendRoom T = 2
-	T_friendRoom     T = 3
-)
-
-var T_name = map[int32]string{
-	0: "auth",
-	1: "config",
-	2: "joinFriendRoom",
-	3: "friendRoom",
-}
-
-var T_value = map[string]int32{
-	"auth":           0,
-	"config":         1,
-	"joinFriendRoom": 2,
-	"friendRoom":     3,
-}
-
-func (x T) String() string {
-	return proto.EnumName(T_name, int32(x))
-}
-
-func (T) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{0}
-}
-
-// socket 请求消息
 type Message struct {
-	Type                 T        `protobuf:"varint,1,opt,name=type,proto3,enum=T" json:"type,omitempty"`
-	Data                 string   `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// Types that are valid to be assigned to Message:
+	//	*Message_Req
+	//	*Message_Res
+	//	*Message_Event
+	//	*Message_Stream
+	Message              isMessage_Message `protobuf_oneof:"message"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *Message) Reset()         { *m = Message{} }
 func (m *Message) String() string { return proto.CompactTextString(m) }
 func (*Message) ProtoMessage()    {}
 func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{0}
+	return fileDescriptor_gateway_bdf60b515df81589, []int{0}
 }
-
 func (m *Message) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Message.Unmarshal(m, b)
 }
 func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
 }
-func (m *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(m, src)
+func (dst *Message) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Message.Merge(dst, src)
 }
 func (m *Message) XXX_Size() int {
 	return xxx_messageInfo_Message.Size(m)
@@ -85,93 +54,680 @@ func (m *Message) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Message proto.InternalMessageInfo
 
-func (m *Message) GetType() T {
-	if m != nil {
-		return m.Type
-	}
-	return T_auth
+type isMessage_Message interface {
+	isMessage_Message()
 }
 
-func (m *Message) GetData() string {
-	if m != nil {
-		return m.Data
-	}
-	return ""
+type Message_Req struct {
+	Req *Req `protobuf:"bytes,1,opt,name=req,proto3,oneof"`
 }
 
-type JoinRoomMessage struct {
-	RoomNo               string   `protobuf:"bytes,1,opt,name=roomNo,proto3" json:"roomNo,omitempty"`
+type Message_Res struct {
+	Res *Res `protobuf:"bytes,2,opt,name=res,proto3,oneof"`
+}
+
+type Message_Event struct {
+	Event *Event `protobuf:"bytes,3,opt,name=event,proto3,oneof"`
+}
+
+type Message_Stream struct {
+	Stream *Stream `protobuf:"bytes,4,opt,name=stream,proto3,oneof"`
+}
+
+func (*Message_Req) isMessage_Message() {}
+
+func (*Message_Res) isMessage_Message() {}
+
+func (*Message_Event) isMessage_Message() {}
+
+func (*Message_Stream) isMessage_Message() {}
+
+func (m *Message) GetMessage() isMessage_Message {
+	if m != nil {
+		return m.Message
+	}
+	return nil
+}
+
+func (m *Message) GetReq() *Req {
+	if x, ok := m.GetMessage().(*Message_Req); ok {
+		return x.Req
+	}
+	return nil
+}
+
+func (m *Message) GetRes() *Res {
+	if x, ok := m.GetMessage().(*Message_Res); ok {
+		return x.Res
+	}
+	return nil
+}
+
+func (m *Message) GetEvent() *Event {
+	if x, ok := m.GetMessage().(*Message_Event); ok {
+		return x.Event
+	}
+	return nil
+}
+
+func (m *Message) GetStream() *Stream {
+	if x, ok := m.GetMessage().(*Message_Stream); ok {
+		return x.Stream
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Message) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Message_OneofMarshaler, _Message_OneofUnmarshaler, _Message_OneofSizer, []interface{}{
+		(*Message_Req)(nil),
+		(*Message_Res)(nil),
+		(*Message_Event)(nil),
+		(*Message_Stream)(nil),
+	}
+}
+
+func _Message_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Message)
+	// message
+	switch x := m.Message.(type) {
+	case *Message_Req:
+		b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Req); err != nil {
+			return err
+		}
+	case *Message_Res:
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Res); err != nil {
+			return err
+		}
+	case *Message_Event:
+		b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Event); err != nil {
+			return err
+		}
+	case *Message_Stream:
+		b.EncodeVarint(4<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Stream); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Message.Message has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Message_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Message)
+	switch tag {
+	case 1: // message.req
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Req)
+		err := b.DecodeMessage(msg)
+		m.Message = &Message_Req{msg}
+		return true, err
+	case 2: // message.res
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Res)
+		err := b.DecodeMessage(msg)
+		m.Message = &Message_Res{msg}
+		return true, err
+	case 3: // message.event
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Event)
+		err := b.DecodeMessage(msg)
+		m.Message = &Message_Event{msg}
+		return true, err
+	case 4: // message.stream
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Stream)
+		err := b.DecodeMessage(msg)
+		m.Message = &Message_Stream{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Message_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Message)
+	// message
+	switch x := m.Message.(type) {
+	case *Message_Req:
+		s := proto.Size(x.Req)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Res:
+		s := proto.Size(x.Res)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Event:
+		s := proto.Size(x.Event)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Stream:
+		s := proto.Size(x.Stream)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type Req struct {
+	// Types that are valid to be assigned to Req:
+	//	*Req_AuthReq
+	//	*Req_ConfigReq
+	Req                  isReq_Req `protobuf_oneof:"req"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Req) Reset()         { *m = Req{} }
+func (m *Req) String() string { return proto.CompactTextString(m) }
+func (*Req) ProtoMessage()    {}
+func (*Req) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{1}
+}
+func (m *Req) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Req.Unmarshal(m, b)
+}
+func (m *Req) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Req.Marshal(b, m, deterministic)
+}
+func (dst *Req) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Req.Merge(dst, src)
+}
+func (m *Req) XXX_Size() int {
+	return xxx_messageInfo_Req.Size(m)
+}
+func (m *Req) XXX_DiscardUnknown() {
+	xxx_messageInfo_Req.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Req proto.InternalMessageInfo
+
+type isReq_Req interface {
+	isReq_Req()
+}
+
+type Req_AuthReq struct {
+	AuthReq *AuthReq `protobuf:"bytes,100,opt,name=authReq,proto3,oneof"`
+}
+
+type Req_ConfigReq struct {
+	ConfigReq *ConfigReq `protobuf:"bytes,101,opt,name=configReq,proto3,oneof"`
+}
+
+func (*Req_AuthReq) isReq_Req() {}
+
+func (*Req_ConfigReq) isReq_Req() {}
+
+func (m *Req) GetReq() isReq_Req {
+	if m != nil {
+		return m.Req
+	}
+	return nil
+}
+
+func (m *Req) GetAuthReq() *AuthReq {
+	if x, ok := m.GetReq().(*Req_AuthReq); ok {
+		return x.AuthReq
+	}
+	return nil
+}
+
+func (m *Req) GetConfigReq() *ConfigReq {
+	if x, ok := m.GetReq().(*Req_ConfigReq); ok {
+		return x.ConfigReq
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Req) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Req_OneofMarshaler, _Req_OneofUnmarshaler, _Req_OneofSizer, []interface{}{
+		(*Req_AuthReq)(nil),
+		(*Req_ConfigReq)(nil),
+	}
+}
+
+func _Req_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Req)
+	// req
+	switch x := m.Req.(type) {
+	case *Req_AuthReq:
+		b.EncodeVarint(100<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.AuthReq); err != nil {
+			return err
+		}
+	case *Req_ConfigReq:
+		b.EncodeVarint(101<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ConfigReq); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Req.Req has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Req_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Req)
+	switch tag {
+	case 100: // req.authReq
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(AuthReq)
+		err := b.DecodeMessage(msg)
+		m.Req = &Req_AuthReq{msg}
+		return true, err
+	case 101: // req.configReq
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ConfigReq)
+		err := b.DecodeMessage(msg)
+		m.Req = &Req_ConfigReq{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Req_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Req)
+	// req
+	switch x := m.Req.(type) {
+	case *Req_AuthReq:
+		s := proto.Size(x.AuthReq)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Req_ConfigReq:
+		s := proto.Size(x.ConfigReq)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type Res struct {
+	// Types that are valid to be assigned to Res:
+	//	*Res_AuthRes
+	//	*Res_ConfigRes
+	//	*Res_ErrorRes
+	Res                  isRes_Res `protobuf_oneof:"res"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Res) Reset()         { *m = Res{} }
+func (m *Res) String() string { return proto.CompactTextString(m) }
+func (*Res) ProtoMessage()    {}
+func (*Res) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{2}
+}
+func (m *Res) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Res.Unmarshal(m, b)
+}
+func (m *Res) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Res.Marshal(b, m, deterministic)
+}
+func (dst *Res) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Res.Merge(dst, src)
+}
+func (m *Res) XXX_Size() int {
+	return xxx_messageInfo_Res.Size(m)
+}
+func (m *Res) XXX_DiscardUnknown() {
+	xxx_messageInfo_Res.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Res proto.InternalMessageInfo
+
+type isRes_Res interface {
+	isRes_Res()
+}
+
+type Res_AuthRes struct {
+	AuthRes *AuthRes `protobuf:"bytes,200,opt,name=authRes,proto3,oneof"`
+}
+
+type Res_ConfigRes struct {
+	ConfigRes *ConfigRes `protobuf:"bytes,201,opt,name=configRes,proto3,oneof"`
+}
+
+type Res_ErrorRes struct {
+	ErrorRes *ErrorRes `protobuf:"bytes,202,opt,name=errorRes,proto3,oneof"`
+}
+
+func (*Res_AuthRes) isRes_Res() {}
+
+func (*Res_ConfigRes) isRes_Res() {}
+
+func (*Res_ErrorRes) isRes_Res() {}
+
+func (m *Res) GetRes() isRes_Res {
+	if m != nil {
+		return m.Res
+	}
+	return nil
+}
+
+func (m *Res) GetAuthRes() *AuthRes {
+	if x, ok := m.GetRes().(*Res_AuthRes); ok {
+		return x.AuthRes
+	}
+	return nil
+}
+
+func (m *Res) GetConfigRes() *ConfigRes {
+	if x, ok := m.GetRes().(*Res_ConfigRes); ok {
+		return x.ConfigRes
+	}
+	return nil
+}
+
+func (m *Res) GetErrorRes() *ErrorRes {
+	if x, ok := m.GetRes().(*Res_ErrorRes); ok {
+		return x.ErrorRes
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Res) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Res_OneofMarshaler, _Res_OneofUnmarshaler, _Res_OneofSizer, []interface{}{
+		(*Res_AuthRes)(nil),
+		(*Res_ConfigRes)(nil),
+		(*Res_ErrorRes)(nil),
+	}
+}
+
+func _Res_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Res)
+	// res
+	switch x := m.Res.(type) {
+	case *Res_AuthRes:
+		b.EncodeVarint(200<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.AuthRes); err != nil {
+			return err
+		}
+	case *Res_ConfigRes:
+		b.EncodeVarint(201<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ConfigRes); err != nil {
+			return err
+		}
+	case *Res_ErrorRes:
+		b.EncodeVarint(202<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ErrorRes); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Res.Res has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Res_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Res)
+	switch tag {
+	case 200: // res.authRes
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(AuthRes)
+		err := b.DecodeMessage(msg)
+		m.Res = &Res_AuthRes{msg}
+		return true, err
+	case 201: // res.configRes
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ConfigRes)
+		err := b.DecodeMessage(msg)
+		m.Res = &Res_ConfigRes{msg}
+		return true, err
+	case 202: // res.errorRes
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ErrorRes)
+		err := b.DecodeMessage(msg)
+		m.Res = &Res_ErrorRes{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Res_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Res)
+	// res
+	switch x := m.Res.(type) {
+	case *Res_AuthRes:
+		s := proto.Size(x.AuthRes)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Res_ConfigRes:
+		s := proto.Size(x.ConfigRes)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Res_ErrorRes:
+		s := proto.Size(x.ErrorRes)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type Event struct {
+	// Types that are valid to be assigned to Event:
+	//	*Event_KickEvent
+	Event                isEvent_Event `protobuf_oneof:"event"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *Event) Reset()         { *m = Event{} }
+func (m *Event) String() string { return proto.CompactTextString(m) }
+func (*Event) ProtoMessage()    {}
+func (*Event) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{3}
+}
+func (m *Event) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Event.Unmarshal(m, b)
+}
+func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Event.Marshal(b, m, deterministic)
+}
+func (dst *Event) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Event.Merge(dst, src)
+}
+func (m *Event) XXX_Size() int {
+	return xxx_messageInfo_Event.Size(m)
+}
+func (m *Event) XXX_DiscardUnknown() {
+	xxx_messageInfo_Event.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Event proto.InternalMessageInfo
+
+type isEvent_Event interface {
+	isEvent_Event()
+}
+
+type Event_KickEvent struct {
+	KickEvent *KickEvent `protobuf:"bytes,300,opt,name=kickEvent,proto3,oneof"`
+}
+
+func (*Event_KickEvent) isEvent_Event() {}
+
+func (m *Event) GetEvent() isEvent_Event {
+	if m != nil {
+		return m.Event
+	}
+	return nil
+}
+
+func (m *Event) GetKickEvent() *KickEvent {
+	if x, ok := m.GetEvent().(*Event_KickEvent); ok {
+		return x.KickEvent
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Event) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Event_OneofMarshaler, _Event_OneofUnmarshaler, _Event_OneofSizer, []interface{}{
+		(*Event_KickEvent)(nil),
+	}
+}
+
+func _Event_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Event)
+	// event
+	switch x := m.Event.(type) {
+	case *Event_KickEvent:
+		b.EncodeVarint(300<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.KickEvent); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Event.Event has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Event_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Event)
+	switch tag {
+	case 300: // event.kickEvent
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(KickEvent)
+		err := b.DecodeMessage(msg)
+		m.Event = &Event_KickEvent{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Event_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Event)
+	// event
+	switch x := m.Event.(type) {
+	case *Event_KickEvent:
+		s := proto.Size(x.KickEvent)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type Stream struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *JoinRoomMessage) Reset()         { *m = JoinRoomMessage{} }
-func (m *JoinRoomMessage) String() string { return proto.CompactTextString(m) }
-func (*JoinRoomMessage) ProtoMessage()    {}
-func (*JoinRoomMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{1}
+func (m *Stream) Reset()         { *m = Stream{} }
+func (m *Stream) String() string { return proto.CompactTextString(m) }
+func (*Stream) ProtoMessage()    {}
+func (*Stream) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{4}
+}
+func (m *Stream) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Stream.Unmarshal(m, b)
+}
+func (m *Stream) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Stream.Marshal(b, m, deterministic)
+}
+func (dst *Stream) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Stream.Merge(dst, src)
+}
+func (m *Stream) XXX_Size() int {
+	return xxx_messageInfo_Stream.Size(m)
+}
+func (m *Stream) XXX_DiscardUnknown() {
+	xxx_messageInfo_Stream.DiscardUnknown(m)
 }
 
-func (m *JoinRoomMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_JoinRoomMessage.Unmarshal(m, b)
-}
-func (m *JoinRoomMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_JoinRoomMessage.Marshal(b, m, deterministic)
-}
-func (m *JoinRoomMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_JoinRoomMessage.Merge(m, src)
-}
-func (m *JoinRoomMessage) XXX_Size() int {
-	return xxx_messageInfo_JoinRoomMessage.Size(m)
-}
-func (m *JoinRoomMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_JoinRoomMessage.DiscardUnknown(m)
-}
+var xxx_messageInfo_Stream proto.InternalMessageInfo
 
-var xxx_messageInfo_JoinRoomMessage proto.InternalMessageInfo
-
-func (m *JoinRoomMessage) GetRoomNo() string {
-	if m != nil {
-		return m.RoomNo
-	}
-	return ""
-}
-
+// region 请求
 // 认证消息
-type AuthMessage struct {
+type AuthReq struct {
 	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AuthMessage) Reset()         { *m = AuthMessage{} }
-func (m *AuthMessage) String() string { return proto.CompactTextString(m) }
-func (*AuthMessage) ProtoMessage()    {}
-func (*AuthMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{2}
+func (m *AuthReq) Reset()         { *m = AuthReq{} }
+func (m *AuthReq) String() string { return proto.CompactTextString(m) }
+func (*AuthReq) ProtoMessage()    {}
+func (*AuthReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{5}
+}
+func (m *AuthReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AuthReq.Unmarshal(m, b)
+}
+func (m *AuthReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AuthReq.Marshal(b, m, deterministic)
+}
+func (dst *AuthReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthReq.Merge(dst, src)
+}
+func (m *AuthReq) XXX_Size() int {
+	return xxx_messageInfo_AuthReq.Size(m)
+}
+func (m *AuthReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthReq.DiscardUnknown(m)
 }
 
-func (m *AuthMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_AuthMessage.Unmarshal(m, b)
-}
-func (m *AuthMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_AuthMessage.Marshal(b, m, deterministic)
-}
-func (m *AuthMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AuthMessage.Merge(m, src)
-}
-func (m *AuthMessage) XXX_Size() int {
-	return xxx_messageInfo_AuthMessage.Size(m)
-}
-func (m *AuthMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_AuthMessage.DiscardUnknown(m)
-}
+var xxx_messageInfo_AuthReq proto.InternalMessageInfo
 
-var xxx_messageInfo_AuthMessage proto.InternalMessageInfo
-
-func (m *AuthMessage) GetToken() string {
+func (m *AuthReq) GetToken() string {
 	if m != nil {
 		return m.Token
 	}
@@ -179,38 +735,101 @@ func (m *AuthMessage) GetToken() string {
 }
 
 // 配置消息
-type ConfigMessage struct {
+type ConfigReq struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ConfigMessage) Reset()         { *m = ConfigMessage{} }
-func (m *ConfigMessage) String() string { return proto.CompactTextString(m) }
-func (*ConfigMessage) ProtoMessage()    {}
-func (*ConfigMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{3}
+func (m *ConfigReq) Reset()         { *m = ConfigReq{} }
+func (m *ConfigReq) String() string { return proto.CompactTextString(m) }
+func (*ConfigReq) ProtoMessage()    {}
+func (*ConfigReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{6}
+}
+func (m *ConfigReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ConfigReq.Unmarshal(m, b)
+}
+func (m *ConfigReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ConfigReq.Marshal(b, m, deterministic)
+}
+func (dst *ConfigReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConfigReq.Merge(dst, src)
+}
+func (m *ConfigReq) XXX_Size() int {
+	return xxx_messageInfo_ConfigReq.Size(m)
+}
+func (m *ConfigReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ConfigReq.DiscardUnknown(m)
 }
 
-func (m *ConfigMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ConfigMessage.Unmarshal(m, b)
-}
-func (m *ConfigMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ConfigMessage.Marshal(b, m, deterministic)
-}
-func (m *ConfigMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConfigMessage.Merge(m, src)
-}
-func (m *ConfigMessage) XXX_Size() int {
-	return xxx_messageInfo_ConfigMessage.Size(m)
-}
-func (m *ConfigMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_ConfigMessage.DiscardUnknown(m)
+var xxx_messageInfo_ConfigReq proto.InternalMessageInfo
+
+// region 响应
+// 认证返回
+type AuthRes struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-var xxx_messageInfo_ConfigMessage proto.InternalMessageInfo
+func (m *AuthRes) Reset()         { *m = AuthRes{} }
+func (m *AuthRes) String() string { return proto.CompactTextString(m) }
+func (*AuthRes) ProtoMessage()    {}
+func (*AuthRes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{7}
+}
+func (m *AuthRes) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AuthRes.Unmarshal(m, b)
+}
+func (m *AuthRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AuthRes.Marshal(b, m, deterministic)
+}
+func (dst *AuthRes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRes.Merge(dst, src)
+}
+func (m *AuthRes) XXX_Size() int {
+	return xxx_messageInfo_AuthRes.Size(m)
+}
+func (m *AuthRes) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRes.DiscardUnknown(m)
+}
 
-type CloseMessage struct {
+var xxx_messageInfo_AuthRes proto.InternalMessageInfo
+
+// 配置返回
+type ConfigRes struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ConfigRes) Reset()         { *m = ConfigRes{} }
+func (m *ConfigRes) String() string { return proto.CompactTextString(m) }
+func (*ConfigRes) ProtoMessage()    {}
+func (*ConfigRes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{8}
+}
+func (m *ConfigRes) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ConfigRes.Unmarshal(m, b)
+}
+func (m *ConfigRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ConfigRes.Marshal(b, m, deterministic)
+}
+func (dst *ConfigRes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConfigRes.Merge(dst, src)
+}
+func (m *ConfigRes) XXX_Size() int {
+	return xxx_messageInfo_ConfigRes.Size(m)
+}
+func (m *ConfigRes) XXX_DiscardUnknown() {
+	xxx_messageInfo_ConfigRes.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ConfigRes proto.InternalMessageInfo
+
+// 错误返回
+type ErrorRes struct {
 	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -218,71 +837,115 @@ type CloseMessage struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CloseMessage) Reset()         { *m = CloseMessage{} }
-func (m *CloseMessage) String() string { return proto.CompactTextString(m) }
-func (*CloseMessage) ProtoMessage()    {}
-func (*CloseMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_285396c8df15061f, []int{4}
+func (m *ErrorRes) Reset()         { *m = ErrorRes{} }
+func (m *ErrorRes) String() string { return proto.CompactTextString(m) }
+func (*ErrorRes) ProtoMessage()    {}
+func (*ErrorRes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{9}
+}
+func (m *ErrorRes) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ErrorRes.Unmarshal(m, b)
+}
+func (m *ErrorRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ErrorRes.Marshal(b, m, deterministic)
+}
+func (dst *ErrorRes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ErrorRes.Merge(dst, src)
+}
+func (m *ErrorRes) XXX_Size() int {
+	return xxx_messageInfo_ErrorRes.Size(m)
+}
+func (m *ErrorRes) XXX_DiscardUnknown() {
+	xxx_messageInfo_ErrorRes.DiscardUnknown(m)
 }
 
-func (m *CloseMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CloseMessage.Unmarshal(m, b)
-}
-func (m *CloseMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CloseMessage.Marshal(b, m, deterministic)
-}
-func (m *CloseMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CloseMessage.Merge(m, src)
-}
-func (m *CloseMessage) XXX_Size() int {
-	return xxx_messageInfo_CloseMessage.Size(m)
-}
-func (m *CloseMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_CloseMessage.DiscardUnknown(m)
-}
+var xxx_messageInfo_ErrorRes proto.InternalMessageInfo
 
-var xxx_messageInfo_CloseMessage proto.InternalMessageInfo
-
-func (m *CloseMessage) GetCode() int32 {
+func (m *ErrorRes) GetCode() int32 {
 	if m != nil {
 		return m.Code
 	}
 	return 0
 }
 
-func (m *CloseMessage) GetMessage() string {
+func (m *ErrorRes) GetMessage() string {
 	if m != nil {
 		return m.Message
 	}
 	return ""
 }
 
-func init() {
-	proto.RegisterEnum("T", T_name, T_value)
-	proto.RegisterType((*Message)(nil), "Message")
-	proto.RegisterType((*JoinRoomMessage)(nil), "JoinRoomMessage")
-	proto.RegisterType((*AuthMessage)(nil), "AuthMessage")
-	proto.RegisterType((*ConfigMessage)(nil), "ConfigMessage")
-	proto.RegisterType((*CloseMessage)(nil), "CloseMessage")
+// region 事件
+// 被踢出事件
+type KickEvent struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func init() { proto.RegisterFile("gateway/gateway.proto", fileDescriptor_285396c8df15061f) }
+func (m *KickEvent) Reset()         { *m = KickEvent{} }
+func (m *KickEvent) String() string { return proto.CompactTextString(m) }
+func (*KickEvent) ProtoMessage()    {}
+func (*KickEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gateway_bdf60b515df81589, []int{10}
+}
+func (m *KickEvent) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_KickEvent.Unmarshal(m, b)
+}
+func (m *KickEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_KickEvent.Marshal(b, m, deterministic)
+}
+func (dst *KickEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KickEvent.Merge(dst, src)
+}
+func (m *KickEvent) XXX_Size() int {
+	return xxx_messageInfo_KickEvent.Size(m)
+}
+func (m *KickEvent) XXX_DiscardUnknown() {
+	xxx_messageInfo_KickEvent.DiscardUnknown(m)
+}
 
-var fileDescriptor_285396c8df15061f = []byte{
-	// 234 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x44, 0x90, 0x41, 0x4b, 0xc3, 0x40,
-	0x14, 0x84, 0xdd, 0x98, 0xa6, 0x76, 0xd4, 0x34, 0x3c, 0x54, 0x72, 0x2c, 0xeb, 0xa5, 0x7a, 0xa8,
-	0xa0, 0x78, 0xd3, 0x83, 0x14, 0x3c, 0x08, 0x7a, 0x58, 0xfa, 0x07, 0xd6, 0x66, 0x9b, 0x46, 0xcd,
-	0xbe, 0x92, 0x6c, 0x91, 0xfe, 0x7b, 0x71, 0xb3, 0x21, 0xa7, 0x9d, 0x8f, 0x9d, 0x19, 0x86, 0x87,
-	0xcb, 0x52, 0x3b, 0xf3, 0xab, 0x0f, 0x77, 0xe1, 0x5d, 0xec, 0x1a, 0x76, 0x2c, 0x1f, 0x31, 0x7e,
-	0x37, 0x6d, 0xab, 0x4b, 0x43, 0x57, 0x88, 0xdd, 0x61, 0x67, 0x72, 0x31, 0x13, 0xf3, 0xf4, 0x3e,
-	0x5a, 0xac, 0x94, 0x67, 0x22, 0xc4, 0x85, 0x76, 0x3a, 0x8f, 0x66, 0x62, 0x3e, 0x51, 0x5e, 0xcb,
-	0x1b, 0x4c, 0xdf, 0xb8, 0xb2, 0x8a, 0xb9, 0x1e, 0xe2, 0x49, 0xc3, 0x5c, 0x7f, 0xb0, 0x2f, 0x98,
-	0xa8, 0x40, 0xf2, 0x1a, 0xa7, 0x2f, 0x7b, 0xb7, 0xed, 0x6d, 0x17, 0x18, 0x39, 0xfe, 0x36, 0x36,
-	0xb8, 0x3a, 0x90, 0x53, 0x9c, 0x2f, 0xd9, 0x6e, 0xaa, 0x32, 0xd8, 0xe4, 0x13, 0xce, 0x96, 0x3f,
-	0xdc, 0x9a, 0x3e, 0x46, 0x88, 0xd7, 0x5c, 0x74, 0xe3, 0x46, 0xca, 0x6b, 0xca, 0x31, 0xae, 0xbb,
-	0xef, 0xb0, 0xad, 0xc7, 0xdb, 0x67, 0x88, 0x15, 0x9d, 0x20, 0xd6, 0x7b, 0xb7, 0xcd, 0x8e, 0x08,
-	0x48, 0xd6, 0xbe, 0x3d, 0x13, 0x44, 0x48, 0xbf, 0xb8, 0xb2, 0xaf, 0x4d, 0x65, 0x6c, 0xf1, 0xbf,
-	0x3f, 0x8b, 0x28, 0x05, 0x36, 0x03, 0x1f, 0x7f, 0x26, 0xfe, 0x36, 0x0f, 0x7f, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x4a, 0xb3, 0xab, 0x02, 0x34, 0x01, 0x00, 0x00,
+var xxx_messageInfo_KickEvent proto.InternalMessageInfo
+
+func init() {
+	proto.RegisterType((*Message)(nil), "Message")
+	proto.RegisterType((*Req)(nil), "Req")
+	proto.RegisterType((*Res)(nil), "Res")
+	proto.RegisterType((*Event)(nil), "Event")
+	proto.RegisterType((*Stream)(nil), "Stream")
+	proto.RegisterType((*AuthReq)(nil), "AuthReq")
+	proto.RegisterType((*ConfigReq)(nil), "ConfigReq")
+	proto.RegisterType((*AuthRes)(nil), "AuthRes")
+	proto.RegisterType((*ConfigRes)(nil), "ConfigRes")
+	proto.RegisterType((*ErrorRes)(nil), "ErrorRes")
+	proto.RegisterType((*KickEvent)(nil), "KickEvent")
+}
+
+func init() { proto.RegisterFile("gateway/gateway.proto", fileDescriptor_gateway_bdf60b515df81589) }
+
+var fileDescriptor_gateway_bdf60b515df81589 = []byte{
+	// 353 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x92, 0xcf, 0x4a, 0xc3, 0x40,
+	0x10, 0xc6, 0x93, 0xb6, 0xf9, 0xb3, 0xd3, 0xdb, 0xa2, 0xb0, 0x27, 0xff, 0x2c, 0x0a, 0x45, 0x61,
+	0x05, 0xbd, 0x78, 0xf1, 0x60, 0xa5, 0x10, 0x10, 0x2f, 0xeb, 0x5d, 0x88, 0xed, 0x58, 0x4b, 0x69,
+	0x63, 0x32, 0x51, 0xf1, 0x15, 0xf4, 0x55, 0x7c, 0x10, 0xf5, 0xa9, 0x64, 0x77, 0x93, 0x4d, 0xf5,
+	0x94, 0xcc, 0xf7, 0x7d, 0xc9, 0x6f, 0x76, 0x66, 0x61, 0x7b, 0x9e, 0xd7, 0xf8, 0x9a, 0xbf, 0x9d,
+	0x34, 0x4f, 0xf5, 0x54, 0x15, 0x75, 0x21, 0x3f, 0x42, 0x48, 0x6e, 0x90, 0x28, 0x9f, 0x23, 0x17,
+	0xd0, 0xaf, 0xb0, 0x14, 0xe1, 0x5e, 0x38, 0x1a, 0x9e, 0x0e, 0x94, 0xc6, 0x32, 0x0b, 0xb4, 0x91,
+	0x9c, 0x43, 0xa2, 0xe7, 0x1d, 0x72, 0x0e, 0xf1, 0x1d, 0x88, 0xf0, 0x05, 0xd7, 0xb5, 0xe8, 0x5b,
+	0x2f, 0x56, 0x13, 0x53, 0x65, 0x81, 0x76, 0x32, 0xdf, 0x87, 0x98, 0xea, 0x0a, 0xf3, 0x95, 0x18,
+	0xd8, 0x40, 0xa2, 0x6e, 0x6d, 0x99, 0x05, 0xba, 0x31, 0xc6, 0x0c, 0x92, 0x95, 0xeb, 0x40, 0xde,
+	0x41, 0x5f, 0x63, 0xc9, 0x0f, 0x20, 0xc9, 0x9f, 0xeb, 0x47, 0x8d, 0xa5, 0x98, 0xd9, 0xaf, 0x52,
+	0x75, 0xe9, 0xea, 0x2c, 0xd0, 0xad, 0xc5, 0x8f, 0x80, 0x4d, 0x8b, 0xf5, 0xc3, 0x62, 0x6e, 0x72,
+	0x68, 0x73, 0xa0, 0xae, 0x5a, 0x25, 0x0b, 0x74, 0x67, 0x8f, 0x23, 0x7b, 0x34, 0xf9, 0x1e, 0x1a,
+	0x00, 0xf1, 0xc3, 0x16, 0x40, 0xe2, 0x2b, 0xfc, 0x43, 0xa0, 0x8e, 0x40, 0xfc, 0xb8, 0x23, 0x90,
+	0xf8, 0x0e, 0xff, 0x21, 0x68, 0x13, 0x41, 0x7c, 0x04, 0x29, 0x56, 0x55, 0x51, 0x99, 0xec, 0x8f,
+	0xcb, 0x32, 0x35, 0x69, 0x94, 0x2c, 0xd0, 0xde, 0x75, 0xcd, 0x90, 0xbc, 0x80, 0xc8, 0x0e, 0xcb,
+	0x60, 0x96, 0x8b, 0xe9, 0xd2, 0x16, 0xe2, 0xb3, 0xd7, 0x60, 0xae, 0x5b, 0xc9, 0x60, 0xbc, 0x3f,
+	0x4e, 0x9a, 0x81, 0xcb, 0x14, 0x62, 0x37, 0x4a, 0xb9, 0x0b, 0x49, 0x33, 0x1e, 0xbe, 0x05, 0x51,
+	0x5d, 0x2c, 0x71, 0x6d, 0x97, 0xc8, 0xb4, 0x2b, 0xe4, 0x10, 0x98, 0x9f, 0x8b, 0x64, 0x6d, 0x9a,
+	0x36, 0x75, 0x92, 0xe7, 0x90, 0xb6, 0xdd, 0x72, 0x0e, 0x83, 0x69, 0x31, 0x43, 0xfb, 0x97, 0x48,
+	0xdb, 0x77, 0x2e, 0xfc, 0x9a, 0xec, 0x3d, 0x60, 0xda, 0x6f, 0x6d, 0x08, 0xcc, 0x37, 0x7b, 0x1f,
+	0xdb, 0x7b, 0x75, 0xf6, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x82, 0xb9, 0xef, 0xa1, 0x70, 0x02, 0x00,
+	0x00,
 }

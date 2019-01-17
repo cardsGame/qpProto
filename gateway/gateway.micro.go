@@ -9,10 +9,16 @@ It is generated from these files:
 
 It has these top-level messages:
 	Message
-	JoinRoomMessage
-	AuthMessage
-	ConfigMessage
-	CloseMessage
+	Req
+	Res
+	Event
+	Stream
+	AuthReq
+	ConfigReq
+	AuthRes
+	ConfigRes
+	ErrorRes
+	KickEvent
 */
 package gateway
 

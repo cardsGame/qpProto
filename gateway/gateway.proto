@@ -1,34 +1,76 @@
 syntax = "proto3";
 
-enum T {
-    auth = 0; // 认证
-    config = 1; // 配置
-    joinFriendRoom = 2; // 加入好友房 stream验证
-    friendRoom = 3; // 好友房stream请求
-}
-
-// socket 请求消息
 message Message {
-    T type = 1;
-    string data = 2;
+    oneof message {
+        Req req = 1;
+        Res res = 2;
+        Event event = 3;
+        Stream stream = 4;
+    }
+}
+    
+message Req {
+    oneof req {
+        AuthReq authReq = 100;
+        ConfigReq configReq = 101;
+    }
+}
+
+message Res {
+    oneof res {
+        AuthRes authRes = 200;
+        ConfigRes configRes = 201;
+        ErrorRes errorRes = 202;
+    }
+}
+
+message Event {
+    oneof event {
+        KickEvent kickEvent = 300;
+    }
+}
+
+message Stream {
+    // oneof stream {
+    //     FriendRoomMessage friendRoomMessage = 400;
+    // }
 }
 
 
-message JoinRoomMessage {
-    string roomNo = 1;
-}
-
+// region 请求
 // 认证消息
-message AuthMessage {
+message AuthReq {
     string token = 1;
 }
 
 // 配置消息
-message ConfigMessage {
+message ConfigReq {
+
+}
+// endregion
+
+// region 响应
+// 认证返回
+message AuthRes {
 
 }
 
-message CloseMessage {
+// 配置返回
+message ConfigRes {
+
+}
+
+// 错误返回
+message ErrorRes {
     int32 code = 1;
     string message = 2;
 }
+
+// endregion
+
+// region 事件
+// 被踢出事件
+message KickEvent {
+
+}
+// endregion
