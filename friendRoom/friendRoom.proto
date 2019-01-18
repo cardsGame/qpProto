@@ -1,6 +1,7 @@
 syntax = "proto3";
 package friendRoom;
 import "github.com/cardsGame/qpProto/room/room.proto";
+import "github.com/cardsGame/qpProto/zlmj/zlmj.proto";
 
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
@@ -50,7 +51,7 @@ message CreateRoomRequest{
     room.GameType gameType = 1;
     RoomOption roomOption = 2;
     oneof game_option {
-        ZLMJGameOption zlmj_option = 3;
+        zlmj.GameOption zlmj_option = 3;
     }
 }
 

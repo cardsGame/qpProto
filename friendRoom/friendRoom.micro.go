@@ -9,11 +9,17 @@ It is generated from these files:
 
 It has these top-level messages:
 	Message
+	Event
 	CreateRoomRequest
 	CreateRoomResponse
 	GetPlayingRequest
 	GetPlayingResponse
 	RoomOption
+	GamePlayer
+	Roomplayer
+	Error
+	RoomData
+	GameData
 	EnterRoomReq
 	ReadyReq
 	SitdownReq
@@ -24,12 +30,7 @@ It has these top-level messages:
 	UploadLocationReq
 	RequestDissolveReq
 	ReplyDissolveReq
-	Room
-	RoomData
-	GameData
-	Error
-	Roomplayer
-	GamePlayer
+	EnterRoomRsp
 	PlayerEnter
 */
 package friendRoom
@@ -38,6 +39,7 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/cardsGame/qpProto/room"
+import _ "github.com/cardsGame/qpProto/zlmj"
 
 import (
 	context "context"
