@@ -127,7 +127,7 @@ message Event {
         PlayerStandUpEvent playerStandUpEvent = 6;
         PlayerChangeSeatEvent playerChangeSeatEvent = 7;
         PlayerUploadLocationEvent playerUploadLocationEvent = 8;
-        PlayerReady playerReady = 9;
+        PlayerReadyEvent playerReadyEvent = 9;
         PlayerRequestDissolveEvent playerRequestDissolveEvent = 10;
         PlayerReplyDissolveEvent playerReplyDissolveEvent = 11;
         CancelDissolveEvent cancelDissolveEvent = 12;
@@ -261,7 +261,7 @@ message PlayerUploadLocationEvent {
 }
 
 // 玩家准备事件
-message PlayerReady {
+message PlayerReadyEvent {
     int32 userId = 1;
 }
 
