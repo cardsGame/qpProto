@@ -10,14 +10,14 @@ It is generated from these files:
 It has these top-level messages:
 	Message
 	Req
-	Res
+	Rsp
 	Event
 	Stream
 	AuthReq
 	ConfigReq
-	AuthRes
-	ConfigRes
-	ErrorRes
+	AuthRsp
+	ConfigRsp
+	ErrorRsp
 	KickEvent
 */
 package gateway
@@ -25,6 +25,7 @@ package gateway
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import _ "github.com/cardsGame/qpProto/friendRoom"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

@@ -3,9 +3,11 @@
 
 package zlmj
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -16,7 +18,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // 状态
 type State int32
@@ -28,6 +30,7 @@ const (
 var State_name = map[int32]string{
 	0: "initing",
 }
+
 var State_value = map[string]int32{
 	"initing": 0,
 }
@@ -35,8 +38,9 @@ var State_value = map[string]int32{
 func (x State) String() string {
 	return proto.EnumName(State_name, int32(x))
 }
+
 func (State) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{0}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{0}
 }
 
 // 游戏选项
@@ -51,16 +55,17 @@ func (m *GameOption) Reset()         { *m = GameOption{} }
 func (m *GameOption) String() string { return proto.CompactTextString(m) }
 func (*GameOption) ProtoMessage()    {}
 func (*GameOption) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{0}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{0}
 }
+
 func (m *GameOption) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GameOption.Unmarshal(m, b)
 }
 func (m *GameOption) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GameOption.Marshal(b, m, deterministic)
 }
-func (dst *GameOption) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GameOption.Merge(dst, src)
+func (m *GameOption) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameOption.Merge(m, src)
 }
 func (m *GameOption) XXX_Size() int {
 	return xxx_messageInfo_GameOption.Size(m)
@@ -80,27 +85,29 @@ func (m *GameOption) GetCheat() bool {
 
 // 游戏数据结构
 type GameData struct {
-	State                State       `protobuf:"varint,1,opt,name=state,proto3,enum=zlmj.State" json:"state,omitempty"`
-	Option               *GameOption `protobuf:"bytes,2,opt,name=option,proto3" json:"option,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	State                State         `protobuf:"varint,1,opt,name=state,proto3,enum=zlmj.State" json:"state,omitempty"`
+	Option               *GameOption   `protobuf:"bytes,2,opt,name=option,proto3" json:"option,omitempty"`
+	Players              []*PlayerData `protobuf:"bytes,3,rep,name=players,proto3" json:"players,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *GameData) Reset()         { *m = GameData{} }
 func (m *GameData) String() string { return proto.CompactTextString(m) }
 func (*GameData) ProtoMessage()    {}
 func (*GameData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{1}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{1}
 }
+
 func (m *GameData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GameData.Unmarshal(m, b)
 }
 func (m *GameData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GameData.Marshal(b, m, deterministic)
 }
-func (dst *GameData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GameData.Merge(dst, src)
+func (m *GameData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameData.Merge(m, src)
 }
 func (m *GameData) XXX_Size() int {
 	return xxx_messageInfo_GameData.Size(m)
@@ -125,6 +132,13 @@ func (m *GameData) GetOption() *GameOption {
 	return nil
 }
 
+func (m *GameData) GetPlayers() []*PlayerData {
+	if m != nil {
+		return m.Players
+	}
+	return nil
+}
+
 // 玩家数据结构
 type PlayerData struct {
 	UserId               int32    `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
@@ -138,16 +152,17 @@ func (m *PlayerData) Reset()         { *m = PlayerData{} }
 func (m *PlayerData) String() string { return proto.CompactTextString(m) }
 func (*PlayerData) ProtoMessage()    {}
 func (*PlayerData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{2}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{2}
 }
+
 func (m *PlayerData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerData.Unmarshal(m, b)
 }
 func (m *PlayerData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerData.Marshal(b, m, deterministic)
 }
-func (dst *PlayerData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerData.Merge(dst, src)
+func (m *PlayerData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerData.Merge(m, src)
 }
 func (m *PlayerData) XXX_Size() int {
 	return xxx_messageInfo_PlayerData.Size(m)
@@ -187,16 +202,17 @@ func (m *Message) Reset()         { *m = Message{} }
 func (m *Message) String() string { return proto.CompactTextString(m) }
 func (*Message) ProtoMessage()    {}
 func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{3}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{3}
 }
+
 func (m *Message) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Message.Unmarshal(m, b)
 }
 func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
 }
-func (dst *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(dst, src)
+func (m *Message) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Message.Merge(m, src)
 }
 func (m *Message) XXX_Size() int {
 	return xxx_messageInfo_Message.Size(m)
@@ -257,97 +273,13 @@ func (m *Message) GetEvent() *Event {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Message) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Message_OneofMarshaler, _Message_OneofUnmarshaler, _Message_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Message) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Message_Req)(nil),
 		(*Message_Res)(nil),
 		(*Message_Event)(nil),
 	}
-}
-
-func _Message_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Message)
-	// message
-	switch x := m.Message.(type) {
-	case *Message_Req:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Req); err != nil {
-			return err
-		}
-	case *Message_Res:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Res); err != nil {
-			return err
-		}
-	case *Message_Event:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Event); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Message.Message has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Message_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Message)
-	switch tag {
-	case 1: // message.req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Req)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Req{msg}
-		return true, err
-	case 2: // message.res
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Rsp)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Res{msg}
-		return true, err
-	case 3: // message.event
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Event)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Event{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Message_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Message)
-	// message
-	switch x := m.Message.(type) {
-	case *Message_Req:
-		s := proto.Size(x.Req)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Message_Res:
-		s := proto.Size(x.Res)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Message_Event:
-		s := proto.Size(x.Event)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type Req struct {
@@ -363,16 +295,17 @@ func (m *Req) Reset()         { *m = Req{} }
 func (m *Req) String() string { return proto.CompactTextString(m) }
 func (*Req) ProtoMessage()    {}
 func (*Req) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{4}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{4}
 }
+
 func (m *Req) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Req.Unmarshal(m, b)
 }
 func (m *Req) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Req.Marshal(b, m, deterministic)
 }
-func (dst *Req) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Req.Merge(dst, src)
+func (m *Req) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Req.Merge(m, src)
 }
 func (m *Req) XXX_Size() int {
 	return xxx_messageInfo_Req.Size(m)
@@ -407,59 +340,11 @@ func (m *Req) GetDiscardsReq() *DiscardsReq {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Req) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Req_OneofMarshaler, _Req_OneofUnmarshaler, _Req_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Req) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Req_DiscardsReq)(nil),
 	}
-}
-
-func _Req_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Req)
-	// req
-	switch x := m.Req.(type) {
-	case *Req_DiscardsReq:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DiscardsReq); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Req.Req has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Req_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Req)
-	switch tag {
-	case 1: // req.discardsReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(DiscardsReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_DiscardsReq{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Req_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Req)
-	// req
-	switch x := m.Req.(type) {
-	case *Req_DiscardsReq:
-		s := proto.Size(x.DiscardsReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type Rsp struct {
@@ -475,16 +360,17 @@ func (m *Rsp) Reset()         { *m = Rsp{} }
 func (m *Rsp) String() string { return proto.CompactTextString(m) }
 func (*Rsp) ProtoMessage()    {}
 func (*Rsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{5}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{5}
 }
+
 func (m *Rsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Rsp.Unmarshal(m, b)
 }
 func (m *Rsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Rsp.Marshal(b, m, deterministic)
 }
-func (dst *Rsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Rsp.Merge(dst, src)
+func (m *Rsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Rsp.Merge(m, src)
 }
 func (m *Rsp) XXX_Size() int {
 	return xxx_messageInfo_Rsp.Size(m)
@@ -519,59 +405,11 @@ func (m *Rsp) GetDiscardsRsp() *DiscardsRsp {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Rsp) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Rsp_OneofMarshaler, _Rsp_OneofUnmarshaler, _Rsp_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Rsp) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Rsp_DiscardsRsp)(nil),
 	}
-}
-
-func _Rsp_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Rsp)
-	// rsp
-	switch x := m.Rsp.(type) {
-	case *Rsp_DiscardsRsp:
-		b.EncodeVarint(21<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DiscardsRsp); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Rsp.Rsp has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Rsp_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Rsp)
-	switch tag {
-	case 21: // rsp.discardsRsp
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(DiscardsRsp)
-		err := b.DecodeMessage(msg)
-		m.Rsp = &Rsp_DiscardsRsp{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Rsp_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Rsp)
-	// rsp
-	switch x := m.Rsp.(type) {
-	case *Rsp_DiscardsRsp:
-		s := proto.Size(x.DiscardsRsp)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type Event struct {
@@ -587,16 +425,17 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{6}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{6}
 }
+
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Event.Unmarshal(m, b)
 }
 func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Event.Marshal(b, m, deterministic)
 }
-func (dst *Event) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Event.Merge(dst, src)
+func (m *Event) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Event.Merge(m, src)
 }
 func (m *Event) XXX_Size() int {
 	return xxx_messageInfo_Event.Size(m)
@@ -631,59 +470,11 @@ func (m *Event) GetDiscardsEvent() *DiscardsEvent {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Event) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Event_OneofMarshaler, _Event_OneofUnmarshaler, _Event_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Event) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Event_DiscardsEvent)(nil),
 	}
-}
-
-func _Event_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Event)
-	// event
-	switch x := m.Event.(type) {
-	case *Event_DiscardsEvent:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DiscardsEvent); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Event.Event has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Event_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Event)
-	switch tag {
-	case 1: // event.discardsEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(DiscardsEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_DiscardsEvent{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Event_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Event)
-	// event
-	switch x := m.Event.(type) {
-	case *Event_DiscardsEvent:
-		s := proto.Size(x.DiscardsEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // region 请求
@@ -698,16 +489,17 @@ func (m *DiscardsReq) Reset()         { *m = DiscardsReq{} }
 func (m *DiscardsReq) String() string { return proto.CompactTextString(m) }
 func (*DiscardsReq) ProtoMessage()    {}
 func (*DiscardsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{7}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{7}
 }
+
 func (m *DiscardsReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DiscardsReq.Unmarshal(m, b)
 }
 func (m *DiscardsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DiscardsReq.Marshal(b, m, deterministic)
 }
-func (dst *DiscardsReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DiscardsReq.Merge(dst, src)
+func (m *DiscardsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DiscardsReq.Merge(m, src)
 }
 func (m *DiscardsReq) XXX_Size() int {
 	return xxx_messageInfo_DiscardsReq.Size(m)
@@ -729,16 +521,17 @@ func (m *DiscardsRsp) Reset()         { *m = DiscardsRsp{} }
 func (m *DiscardsRsp) String() string { return proto.CompactTextString(m) }
 func (*DiscardsRsp) ProtoMessage()    {}
 func (*DiscardsRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{8}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{8}
 }
+
 func (m *DiscardsRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DiscardsRsp.Unmarshal(m, b)
 }
 func (m *DiscardsRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DiscardsRsp.Marshal(b, m, deterministic)
 }
-func (dst *DiscardsRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DiscardsRsp.Merge(dst, src)
+func (m *DiscardsRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DiscardsRsp.Merge(m, src)
 }
 func (m *DiscardsRsp) XXX_Size() int {
 	return xxx_messageInfo_DiscardsRsp.Size(m)
@@ -762,16 +555,17 @@ func (m *DiscardsEvent) Reset()         { *m = DiscardsEvent{} }
 func (m *DiscardsEvent) String() string { return proto.CompactTextString(m) }
 func (*DiscardsEvent) ProtoMessage()    {}
 func (*DiscardsEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_zlmj_7a7067c80d004d3b, []int{9}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{9}
 }
+
 func (m *DiscardsEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DiscardsEvent.Unmarshal(m, b)
 }
 func (m *DiscardsEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DiscardsEvent.Marshal(b, m, deterministic)
 }
-func (dst *DiscardsEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DiscardsEvent.Merge(dst, src)
+func (m *DiscardsEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DiscardsEvent.Merge(m, src)
 }
 func (m *DiscardsEvent) XXX_Size() int {
 	return xxx_messageInfo_DiscardsEvent.Size(m)
@@ -790,6 +584,7 @@ func (m *DiscardsEvent) GetIndex() int32 {
 }
 
 func init() {
+	proto.RegisterEnum("zlmj.State", State_name, State_value)
 	proto.RegisterType((*GameOption)(nil), "zlmj.GameOption")
 	proto.RegisterType((*GameData)(nil), "zlmj.GameData")
 	proto.RegisterType((*PlayerData)(nil), "zlmj.PlayerData")
@@ -800,33 +595,34 @@ func init() {
 	proto.RegisterType((*DiscardsReq)(nil), "zlmj.DiscardsReq")
 	proto.RegisterType((*DiscardsRsp)(nil), "zlmj.DiscardsRsp")
 	proto.RegisterType((*DiscardsEvent)(nil), "zlmj.DiscardsEvent")
-	proto.RegisterEnum("zlmj.State", State_name, State_value)
 }
 
-func init() { proto.RegisterFile("zlmj/zlmj.proto", fileDescriptor_zlmj_7a7067c80d004d3b) }
+func init() { proto.RegisterFile("zlmj/zlmj.proto", fileDescriptor_ba28b2cf51ceff1b) }
 
-var fileDescriptor_zlmj_7a7067c80d004d3b = []byte{
-	// 352 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xcf, 0x4f, 0xc2, 0x30,
-	0x14, 0xc7, 0x37, 0xb1, 0x0c, 0xde, 0x82, 0x62, 0x45, 0xb3, 0x8b, 0x09, 0xd6, 0x98, 0x10, 0x0f,
-	0x98, 0x60, 0xbc, 0xe8, 0x0d, 0x31, 0xe2, 0x81, 0x68, 0xea, 0xc1, 0x73, 0x65, 0x0d, 0xce, 0xc0,
-	0x56, 0xd6, 0xfa, 0xf3, 0xaf, 0x37, 0x7d, 0x1d, 0x6e, 0x4b, 0xbc, 0x2c, 0x7b, 0xef, 0xfb, 0xed,
-	0xe7, 0x7d, 0x5f, 0x5a, 0xd8, 0xfd, 0x59, 0xae, 0xde, 0xce, 0xed, 0x67, 0xa8, 0xf2, 0xcc, 0x64,
-	0x74, 0xdb, 0xfe, 0x33, 0x06, 0x70, 0x27, 0x56, 0xf2, 0x41, 0x99, 0x24, 0x4b, 0x69, 0x0f, 0xc8,
-	0xfc, 0x55, 0x0a, 0x13, 0xf9, 0x7d, 0x7f, 0xd0, 0xe2, 0xae, 0x60, 0xcf, 0xd0, 0xb2, 0x9e, 0x89,
-	0x30, 0x82, 0x1e, 0x03, 0xd1, 0x46, 0x18, 0x89, 0x8e, 0x9d, 0x51, 0x38, 0x44, 0xe2, 0x93, 0x6d,
-	0x71, 0xa7, 0xd0, 0x01, 0x34, 0x33, 0xc4, 0x45, 0x5b, 0x7d, 0x7f, 0x10, 0x8e, 0xba, 0xce, 0x53,
-	0x8e, 0xe1, 0x85, 0xce, 0xae, 0x00, 0x1e, 0x97, 0xe2, 0x5b, 0xe6, 0x88, 0x3e, 0x84, 0xe6, 0xbb,
-	0x96, 0xf9, 0x7d, 0x8c, 0x6c, 0xc2, 0x8b, 0xca, 0x86, 0x4a, 0xd2, 0x58, 0x7e, 0x21, 0x8e, 0x70,
-	0x57, 0xb0, 0x4f, 0x08, 0x66, 0x52, 0x6b, 0xb1, 0x90, 0xf4, 0x08, 0x1a, 0xb9, 0x5c, 0xe3, 0xa9,
-	0x70, 0xd4, 0x76, 0xd3, 0xb8, 0x5c, 0x4f, 0x3d, 0x6e, 0xfb, 0x4e, 0xd6, 0x45, 0x98, 0x8d, 0xac,
-	0x95, 0x93, 0x35, 0x3d, 0x01, 0x22, 0x3f, 0x64, 0x6a, 0xa2, 0x06, 0x1a, 0x8a, 0x8d, 0x6e, 0x6d,
-	0x6b, 0xea, 0x71, 0xa7, 0x8d, 0xdb, 0x10, 0xac, 0xdc, 0x34, 0x76, 0x03, 0x0d, 0x2e, 0xd7, 0xf4,
-	0x12, 0xc2, 0x38, 0xd1, 0x73, 0x91, 0xc7, 0x9a, 0xff, 0x0d, 0xdf, 0x73, 0x87, 0x27, 0xa5, 0x30,
-	0xf5, 0x78, 0xd5, 0x37, 0x26, 0x98, 0x15, 0x21, 0x5a, 0xd5, 0x20, 0x5a, 0x45, 0x07, 0xff, 0x42,
-	0x30, 0x6a, 0xd5, 0x87, 0x10, 0xad, 0xd8, 0x0c, 0x08, 0xc6, 0xa4, 0xd7, 0xd0, 0xd9, 0xc8, 0xd8,
-	0x28, 0xd2, 0xec, 0xd7, 0x41, 0x9b, 0x95, 0xea, 0xde, 0x71, 0x50, 0xec, 0xcf, 0x3a, 0x10, 0x56,
-	0x82, 0xd7, 0x4a, 0xad, 0xd8, 0x29, 0x74, 0x6a, 0xa0, 0xf2, 0x5a, 0xfc, 0xca, 0xb5, 0x9c, 0xf5,
-	0x80, 0xe0, 0x63, 0xa0, 0x21, 0x04, 0x49, 0x9a, 0x98, 0x24, 0x5d, 0x74, 0xbd, 0x97, 0x26, 0x3e,
-	0xb9, 0x8b, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x7c, 0x2e, 0xf8, 0x62, 0x85, 0x02, 0x00, 0x00,
+var fileDescriptor_ba28b2cf51ceff1b = []byte{
+	// 371 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x52, 0x4d, 0x4f, 0xe3, 0x30,
+	0x14, 0x4c, 0x36, 0xeb, 0xa6, 0x7d, 0x51, 0x77, 0xbb, 0xde, 0xee, 0x2a, 0x97, 0x95, 0xba, 0x46,
+	0x48, 0x55, 0x0f, 0x45, 0x2a, 0xe2, 0x02, 0xb7, 0x52, 0x44, 0x39, 0x54, 0x20, 0xf3, 0x0b, 0x4c,
+	0x63, 0x95, 0xa0, 0x36, 0x71, 0x63, 0xf3, 0x79, 0xe5, 0x8f, 0x23, 0x3f, 0x27, 0x24, 0x91, 0xb8,
+	0x44, 0x79, 0x33, 0xe3, 0x99, 0x79, 0xb2, 0xe1, 0xe7, 0xdb, 0x76, 0xf7, 0x70, 0x64, 0x3f, 0x53,
+	0x55, 0xe4, 0x26, 0xa7, 0xdf, 0xed, 0x3f, 0x63, 0x00, 0x97, 0x62, 0x27, 0xaf, 0x95, 0x49, 0xf3,
+	0x8c, 0x0e, 0x81, 0xac, 0xef, 0xa5, 0x30, 0xb1, 0x3f, 0xf2, 0xc7, 0x5d, 0xee, 0x06, 0xf6, 0xee,
+	0x43, 0xd7, 0x8a, 0x16, 0xc2, 0x08, 0xfa, 0x1f, 0x88, 0x36, 0xc2, 0x48, 0x94, 0xfc, 0x98, 0x45,
+	0x53, 0xb4, 0xbc, 0xb5, 0x10, 0x77, 0x0c, 0x1d, 0x43, 0x27, 0x47, 0xbf, 0xf8, 0xdb, 0xc8, 0x1f,
+	0x47, 0xb3, 0x81, 0xd3, 0xd4, 0x39, 0xbc, 0xe4, 0xe9, 0x04, 0x42, 0xb5, 0x15, 0xaf, 0xb2, 0xd0,
+	0x71, 0x30, 0x0a, 0x6a, 0xe9, 0x0d, 0x82, 0x36, 0x8f, 0x57, 0x02, 0x76, 0x0a, 0x50, 0xc3, 0xf4,
+	0x2f, 0x74, 0x1e, 0xb5, 0x2c, 0xae, 0x12, 0xec, 0x41, 0x78, 0x39, 0xd9, 0x0d, 0xd2, 0x2c, 0x91,
+	0x2f, 0x18, 0x4d, 0xb8, 0x1b, 0xd8, 0x33, 0x84, 0x2b, 0xa9, 0xb5, 0xd8, 0x48, 0xfa, 0x0f, 0x82,
+	0x42, 0xee, 0xf1, 0x54, 0x34, 0xeb, 0xb9, 0x38, 0x2e, 0xf7, 0x4b, 0x8f, 0x5b, 0xdc, 0xd1, 0xba,
+	0x2c, 0x5e, 0xd1, 0x5a, 0x39, 0x5a, 0xd3, 0x03, 0x20, 0xf2, 0x49, 0x66, 0x26, 0x0e, 0x50, 0x50,
+	0x6e, 0x7f, 0x61, 0xa1, 0xa5, 0xc7, 0x1d, 0x37, 0xef, 0x41, 0xb8, 0x73, 0x69, 0xec, 0x1c, 0x02,
+	0x2e, 0xf7, 0xf4, 0x04, 0xa2, 0x24, 0xd5, 0x6b, 0x51, 0x24, 0x9a, 0x7f, 0x86, 0xff, 0x72, 0x87,
+	0x17, 0x35, 0xb1, 0xf4, 0x78, 0x53, 0x37, 0x27, 0xd8, 0x15, 0x4d, 0xb4, 0x6a, 0x99, 0x68, 0x15,
+	0xff, 0xf9, 0xd2, 0x04, 0xab, 0x36, 0x75, 0x68, 0xa2, 0x15, 0x5b, 0x01, 0xc1, 0x9a, 0xf4, 0x0c,
+	0xfa, 0x15, 0x8d, 0x40, 0xd9, 0xe6, 0x77, 0xdb, 0xa8, 0x5a, 0xa9, 0xad, 0x9d, 0x87, 0xe5, 0xfe,
+	0xac, 0x0f, 0x51, 0xa3, 0x78, 0x6b, 0xd4, 0x8a, 0x1d, 0x42, 0xbf, 0x65, 0x54, 0x5f, 0x8b, 0xdf,
+	0xb8, 0x96, 0xc9, 0x10, 0x08, 0x3e, 0x1c, 0x1a, 0x41, 0x98, 0x66, 0xa9, 0x49, 0xb3, 0xcd, 0xc0,
+	0xbb, 0xeb, 0xe0, 0xfb, 0x3c, 0xfe, 0x08, 0x00, 0x00, 0xff, 0xff, 0x97, 0x56, 0x71, 0x5a, 0xb2,
+	0x02, 0x00, 0x00,
 }

@@ -8,6 +8,7 @@ It is generated from these files:
 	user/user.proto
 
 It has these top-level messages:
+	UserInfo
 	AuthLocalRequest
 	AuthWxH5Request
 	PayloadToken
@@ -20,7 +21,6 @@ It has these top-level messages:
 	AddItemsRequest
 	UserUpdate
 	Item
-	UserInfo
 */
 package user
 

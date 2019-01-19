@@ -8,18 +8,17 @@ It is generated from these files:
 	friendRoom/friendRoom.proto
 
 It has these top-level messages:
-	Message
-	Event
+	RoomOption
+	PlayerData
+	RoomData
 	CreateRoomRequest
 	CreateRoomResponse
 	GetPlayingRequest
 	GetPlayingResponse
-	RoomOption
-	GamePlayer
-	Roomplayer
-	Error
-	RoomData
-	GameData
+	Message
+	Req
+	Rsp
+	Event
 	EnterRoomReq
 	ReadyReq
 	SitdownReq
@@ -30,8 +29,9 @@ It has these top-level messages:
 	UploadLocationReq
 	RequestDissolveReq
 	ReplyDissolveReq
+	ErrorRsp
 	EnterRoomRsp
-	PlayerEnter
+	PlayerEnterEvent
 */
 package friendRoom
 
@@ -39,7 +39,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/cardsGame/qpProto/room"
-import _ "github.com/cardsGame/qpProto/zlmj"
 
 import (
 	context "context"
