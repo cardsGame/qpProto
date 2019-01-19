@@ -62,7 +62,7 @@ message CreateRoomRequest{
     room.GameType gameType = 1;
     RoomOption roomOption = 2;
     oneof gameOption {
-        zlmj.Option zlmjOption = 3;
+        zlmj.Option zlmj = 3;
     }
 }
 
@@ -106,8 +106,6 @@ message Req {
         RequestDissolveReq requestDissolveReq = 9;
         ReplyDissolveReq replyDissolveReq = 10;
     }
-
-    zlmj.Req zlmjReq = 100;
 }
 
 message Rsp {
@@ -115,16 +113,12 @@ message Rsp {
         ErrorRsp errorRsp = 1;
         EnterRoomRsp enterRoomRsp = 2;
     }
-
-    zlmj.Rsp zlmjRsp = 100;
 }
 
 message Event {
     oneof event {
         PlayerEnterEvent playerEnterEvent = 1;
     }
-
-    zlmj.Event zlmjEvent = 100;
 }
 
 
@@ -192,7 +186,7 @@ message ErrorRsp {
 message EnterRoomRsp {
     RoomData room = 1;
     oneof game {
-        zlmj.GameData zlmjGameData = 2;
+        zlmj.GameData zlmj = 2;
     }
 }
 // endregion
@@ -202,7 +196,7 @@ message EnterRoomRsp {
 message PlayerEnterEvent {
     PlayerData roomPlayer = 1;
     oneof gamePlayer{
-        zlmj.PlayerData zlmjPlayerData = 2;
+        zlmj.PlayerData zlmj = 2;
     }
 }
 // endregion
