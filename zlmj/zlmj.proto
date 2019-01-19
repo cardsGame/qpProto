@@ -33,7 +33,8 @@ message Req {
 
 message Rsp {
     oneof rsp {
-        DiscardsRsp discardsRsp = 21;
+        ErrorRsp errorRsp = 1;
+        DiscardsRsp discardsRsp = 2;
     }
 }
 
@@ -52,6 +53,11 @@ message DiscardsReq {
 // endregion
 
 // region 响应
+// 错误响应
+message ErrorRsp {
+
+}
+// 出牌响应
 message DiscardsRsp {
 
 }
