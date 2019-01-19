@@ -8,72 +8,6 @@ service FriendRoom {
     rpc Stream(stream Message) returns(stream Message) {}
 }
 
-// 请求号
-enum ReqId {
-    error = 0; // 错误类型
-    enter = 1; // 进入
-    ready = 2;
-    sit_down = 3; // 坐下
-    stand_up = 4; // 站起
-    change_seat = 5; // 换座位
-    leave = 6; // 离开
-    offline = 7; // 离线
-    upload_location = 8; // 上报位置
-    request_dissolve = 9; // 申请解散
-    reply_dissolve = 10; // 回应解散
-    text_chat = 11; // 文字聊天
-    quick_chat = 12; // 短语聊天
-    emoji_chat = 13; // 表情聊天
-    voice_chat = 14; // 语音聊天
-    zlmj_discards = 101; // 镇赉麻将出牌
-}
-
-// 事件id
-enum EventId {
-    player_enter = 0;
-}
-
-// 双向流传输数据
-message Message {
-    ReqId reqId = 1;
-    string data = 2;
-}
-
-// 房间事件
-message Event {
-    EventId eventId = 1;
-    string data = 2;
-}
-
-// 创建房间请求
-message CreateRoomRequest{
-    room.GameType gameType = 1;
-    RoomOption roomOption = 2;
-    oneof game_option {
-        ZLMJGameOption zlmj_option = 3;
-    }
-}
-
-// 创建房间响应
-message CreateRoomResponse {
-    string roomNo = 1;
-    room.GameType gameType = 2;
-    room.RoomType roomType = 3;
-}
-
-// 获取进行中房间请求
-message GetPlayingRequest {
-
-}
-
-// 获取进行中房间响应
-message GetPlayingResponse {
-    string roomNo = 1;
-    room.GameType gameType = 2;
-    room.RoomType roomType = 3;
-}
-
-
 // 房间选项
 message RoomOption {
     bool autoSit = 1; // 是否自动坐下
@@ -97,12 +31,7 @@ enum RoomLimit {
     limit_time = 1; // 限时
 }
 
-message GamePlayer {
-    int32 userId = 1;
-    int32 index = 2;
-}
-
-message Roomplayer {
+message PlayerData {
     int32 userId = 1;
     string headImgUrl = 2;
     int32 gender = 3;
@@ -112,12 +41,6 @@ message Roomplayer {
     bool isReady = 7;
 }
 
-// 错误结构
-message Error {
-    int32 code = 1;
-    string message = 2;
-}
-
 // 房间数据
 message RoomData {
     string roomNo = 1;
@@ -125,7 +48,7 @@ message RoomData {
     room.RoomType roomType = 3;
     RoomState state = 4;
     bool isStart = 5;
-    repeated Roomplayer players = 6;
+    repeated PlayerData players = 6;
     RoomOption option = 7;
     int32 ownerUserId = 8;
     int32 dissolveLeft = 9;
@@ -133,11 +56,72 @@ message RoomData {
     int32 curRound = 11;
 }
 
-message GameData {
-    repeated GamePlayer players = 1;
+// 创建房间请求
+message CreateRoomRequest{
+    room.GameType gameType = 1;
+    RoomOption roomOption = 2;
+    // oneof game_option {
+    //     ZLMJGameOption zlmj_option = 3;
+    // }
 }
 
-/****************** 消息号请求 *******************/
+// 创建房间响应
+message CreateRoomResponse {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+}
+
+// 获取进行中房间请求
+message GetPlayingRequest {
+
+}
+
+// 获取进行中房间响应
+message GetPlayingResponse {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+}
+
+message Message {
+    oneof message {
+        Req req = 1;
+        Rsp rsp = 2;
+        Event event = 3;
+    }
+}
+
+message Req {
+    oneof req {
+        EnterRoomReq enterRoomReq = 1;
+        ReadyReq readyReq = 2;
+        SitdownReq sitdownReq = 3;
+        StandupReq standupReq = 4;
+        ChangesitReq changesitReq = 5;
+        LeaveReq leaveReq = 6;
+        OfflineReq offlineReq = 7;
+        UploadLocationReq uploadLocationReq = 8;
+        RequestDissolveReq requestDissolveReq = 9;
+        ReplyDissolveReq replyDissolveReq = 10;
+    }
+}
+
+message Rsp {
+    oneof rsp {
+        ErrorRsp errorRsp = 1;
+        EnterRoomRsp enterRoomRsp = 2;
+    }
+}
+
+message Event {
+    oneof event {
+        PlayerEnterEvent playerEnterEvent = 1;
+    }
+}
+
+
+// region 请求
 // 进入请求
 message EnterRoomReq {
     string roomNo = 1;
@@ -170,7 +154,7 @@ message LeaveReq {
 
 // 断线
 message OfflineReq {
-    int32 userId = 1;
+
 }
 
 // 上报位置请求
@@ -188,27 +172,26 @@ message RequestDissolveReq {
 message ReplyDissolveReq {
     bool agree = 1;
 }
+// endregion
 
-/****************** end 消息号请求 *******************/
 
-
-/****************** 消息号响应 *******************/
-
+// region 响应
+// 错误响应
+message ErrorRsp {
+    int32 code = 1;
+    string message = 2;
+}
 // 进入房间响应
 message EnterRoomRsp {
     RoomData room = 1;
     GameData game = 2;
 }
+// endregion
 
-
-/****************** end 消息号响应 *******************/
-
-/****************** 服务端推送数据 *******************/
-
+// region 事件
 // 玩家进入
-message PlayerEnter {
+message PlayerEnterEvent {
     Roomplayer roomPlayer = 1;
     GamePlayer gamePlayer = 2;
 }
-
-/****************** end 服务端推送数据 *******************/
+// endregion
