@@ -3,14 +3,14 @@ syntax = "proto3";
 package zlmj;
 
 // 游戏选项
-message GameOption {
+message Option {
     bool cheat = 1;
 }
 
 // 游戏数据结构
 message GameData {
     State state = 1;
-    GameOption option = 2;
+    Option option = 2;
     repeated PlayerData players = 3;
 }
 
@@ -23,14 +23,6 @@ message PlayerData {
 // 状态
 enum State {
     initing = 0; // 初始化
-}
-
-message Message {
-    oneof message {
-        Req req = 1;
-        Rsp res = 2;
-        Event event = 3;
-    }
 }
 
 message Req {

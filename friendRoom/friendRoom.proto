@@ -1,7 +1,7 @@
 syntax = "proto3";
 package friendRoom;
 import "github.com/cardsGame/qpProto/room/room.proto";
-// import "github.com/cardsGame/qpProto/zlmj/zlmj.proto";
+import "github.com/cardsGame/qpProto/zlmj/zlmj.proto";
 
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
@@ -61,9 +61,9 @@ message RoomData {
 message CreateRoomRequest{
     room.GameType gameType = 1;
     RoomOption roomOption = 2;
-    // oneof game_option {
-    //     ZLMJGameOption zlmj_option = 3;
-    // }
+    oneof gameOption {
+        zlmj.Option zlmjOption = 3;
+    }
 }
 
 // 创建房间响应
@@ -185,7 +185,9 @@ message ErrorRsp {
 // 进入房间响应
 message EnterRoomRsp {
     RoomData room = 1;
-    // GameData game = 2;
+    oneof game {
+        zlmj.GameData zlmjGameData = 2;
+    }
 }
 // endregion
 
@@ -193,6 +195,8 @@ message EnterRoomRsp {
 // 玩家进入
 message PlayerEnterEvent {
     PlayerData roomPlayer = 1;
-    // GamePlayer gamePlayer = 2;
+    oneof gamePlayer{
+        zlmj.PlayerData zlmjPlayerData = 2;
+    }
 }
 // endregion
