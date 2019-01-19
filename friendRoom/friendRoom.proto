@@ -110,7 +110,7 @@ message Req {
     }
 
     oneof gameReq {
-        zlmj.Req zlmj = 1;
+        zlmj.Req zlmj = 100;
     }
 }
 
@@ -121,7 +121,7 @@ message Rsp {
     }
 
     oneof gameRsp {
-        zlmj.Rsp zlmj = 1;
+        zlmj.Rsp zlmj = 100;
     }
 }
 
