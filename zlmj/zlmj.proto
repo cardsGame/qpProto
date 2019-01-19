@@ -23,11 +23,14 @@ message PlayerData {
 // 状态
 enum State {
     initing = 0; // 初始化
+    can_discard = 1; // 能出牌
+    over = 2; // 游戏结束
 }
 
 message Req {
     oneof req {
         DiscardsReq discardsReq = 1;
+        WantHoldsReq wantHoldsReq = 2;
     }
 }
 
@@ -47,6 +50,10 @@ message Event {
 
 // region 请求
 // 出牌请求
+message WantHoldsReq {
+    repeated int32 cards = 1;
+}
+
 message DiscardsReq {
 
 }
