@@ -1,6 +1,24 @@
 syntax = "proto3";
 option go_package = "user";
 
+
+// 用户信息
+message UserInfo {
+    int32 userId = 1;
+    string nickName = 2;
+    string headImgUrl= 3;
+    int32 accountType = 4;
+    int32 gender = 5;
+    int32 diamond = 6;
+    int32 gold = 7;
+    int32 roomCard= 8;
+    int32 vip = 9;
+    int32 vipExpc =10;
+    int32 lvl = 11;
+    int32 lvlExpc = 12;
+    map<string, int32> bag = 13;
+}
+
 // 用户查询服务
 service UserQuery {
     // 获取某个用户的详细信息
@@ -97,21 +115,4 @@ message UserUpdate {
 message Item {
     int32 itemId = 1;
     int32 count = 2;
-}
-
-// 用户信息
-message UserInfo {
-    int32 userId = 1;
-    string nickName = 2;
-    string headImgUrl= 3;
-    int32 accountType = 4;
-    int32 gender = 5;
-    int32 diamond = 6;
-    int32 gold = 7;
-    int32 roomCard= 8;
-    int32 vip = 9;
-    int32 vipExpc =10;
-    int32 lvl = 11;
-    int32 lvlExpc = 12;
-    map<string, int32> bag = 13;
 }
