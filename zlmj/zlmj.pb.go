@@ -44,39 +44,39 @@ func (State) EnumDescriptor() ([]byte, []int) {
 }
 
 // 游戏选项
-type GameOption struct {
+type Option struct {
 	Cheat                bool     `protobuf:"varint,1,opt,name=cheat,proto3" json:"cheat,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GameOption) Reset()         { *m = GameOption{} }
-func (m *GameOption) String() string { return proto.CompactTextString(m) }
-func (*GameOption) ProtoMessage()    {}
-func (*GameOption) Descriptor() ([]byte, []int) {
+func (m *Option) Reset()         { *m = Option{} }
+func (m *Option) String() string { return proto.CompactTextString(m) }
+func (*Option) ProtoMessage()    {}
+func (*Option) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ba28b2cf51ceff1b, []int{0}
 }
 
-func (m *GameOption) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GameOption.Unmarshal(m, b)
+func (m *Option) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Option.Unmarshal(m, b)
 }
-func (m *GameOption) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GameOption.Marshal(b, m, deterministic)
+func (m *Option) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Option.Marshal(b, m, deterministic)
 }
-func (m *GameOption) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GameOption.Merge(m, src)
+func (m *Option) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Option.Merge(m, src)
 }
-func (m *GameOption) XXX_Size() int {
-	return xxx_messageInfo_GameOption.Size(m)
+func (m *Option) XXX_Size() int {
+	return xxx_messageInfo_Option.Size(m)
 }
-func (m *GameOption) XXX_DiscardUnknown() {
-	xxx_messageInfo_GameOption.DiscardUnknown(m)
+func (m *Option) XXX_DiscardUnknown() {
+	xxx_messageInfo_Option.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GameOption proto.InternalMessageInfo
+var xxx_messageInfo_Option proto.InternalMessageInfo
 
-func (m *GameOption) GetCheat() bool {
+func (m *Option) GetCheat() bool {
 	if m != nil {
 		return m.Cheat
 	}
@@ -86,7 +86,7 @@ func (m *GameOption) GetCheat() bool {
 // 游戏数据结构
 type GameData struct {
 	State                State         `protobuf:"varint,1,opt,name=state,proto3,enum=zlmj.State" json:"state,omitempty"`
-	Option               *GameOption   `protobuf:"bytes,2,opt,name=option,proto3" json:"option,omitempty"`
+	Option               *Option       `protobuf:"bytes,2,opt,name=option,proto3" json:"option,omitempty"`
 	Players              []*PlayerData `protobuf:"bytes,3,rep,name=players,proto3" json:"players,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
@@ -125,7 +125,7 @@ func (m *GameData) GetState() State {
 	return State_initing
 }
 
-func (m *GameData) GetOption() *GameOption {
+func (m *GameData) GetOption() *Option {
 	if m != nil {
 		return m.Option
 	}
@@ -187,101 +187,6 @@ func (m *PlayerData) GetIndex() int32 {
 	return 0
 }
 
-type Message struct {
-	// Types that are valid to be assigned to Message:
-	//	*Message_Req
-	//	*Message_Res
-	//	*Message_Event
-	Message              isMessage_Message `protobuf_oneof:"message"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
-}
-
-func (m *Message) Reset()         { *m = Message{} }
-func (m *Message) String() string { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()    {}
-func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ba28b2cf51ceff1b, []int{3}
-}
-
-func (m *Message) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Message.Unmarshal(m, b)
-}
-func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
-}
-func (m *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(m, src)
-}
-func (m *Message) XXX_Size() int {
-	return xxx_messageInfo_Message.Size(m)
-}
-func (m *Message) XXX_DiscardUnknown() {
-	xxx_messageInfo_Message.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Message proto.InternalMessageInfo
-
-type isMessage_Message interface {
-	isMessage_Message()
-}
-
-type Message_Req struct {
-	Req *Req `protobuf:"bytes,1,opt,name=req,proto3,oneof"`
-}
-
-type Message_Res struct {
-	Res *Rsp `protobuf:"bytes,2,opt,name=res,proto3,oneof"`
-}
-
-type Message_Event struct {
-	Event *Event `protobuf:"bytes,3,opt,name=event,proto3,oneof"`
-}
-
-func (*Message_Req) isMessage_Message() {}
-
-func (*Message_Res) isMessage_Message() {}
-
-func (*Message_Event) isMessage_Message() {}
-
-func (m *Message) GetMessage() isMessage_Message {
-	if m != nil {
-		return m.Message
-	}
-	return nil
-}
-
-func (m *Message) GetReq() *Req {
-	if x, ok := m.GetMessage().(*Message_Req); ok {
-		return x.Req
-	}
-	return nil
-}
-
-func (m *Message) GetRes() *Rsp {
-	if x, ok := m.GetMessage().(*Message_Res); ok {
-		return x.Res
-	}
-	return nil
-}
-
-func (m *Message) GetEvent() *Event {
-	if x, ok := m.GetMessage().(*Message_Event); ok {
-		return x.Event
-	}
-	return nil
-}
-
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*Message) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
-		(*Message_Req)(nil),
-		(*Message_Res)(nil),
-		(*Message_Event)(nil),
-	}
-}
-
 type Req struct {
 	// Types that are valid to be assigned to Req:
 	//	*Req_DiscardsReq
@@ -295,7 +200,7 @@ func (m *Req) Reset()         { *m = Req{} }
 func (m *Req) String() string { return proto.CompactTextString(m) }
 func (*Req) ProtoMessage()    {}
 func (*Req) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ba28b2cf51ceff1b, []int{4}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{3}
 }
 
 func (m *Req) XXX_Unmarshal(b []byte) error {
@@ -349,6 +254,7 @@ func (*Req) XXX_OneofWrappers() []interface{} {
 
 type Rsp struct {
 	// Types that are valid to be assigned to Rsp:
+	//	*Rsp_ErrorRsp
 	//	*Rsp_DiscardsRsp
 	Rsp                  isRsp_Rsp `protobuf_oneof:"rsp"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
@@ -360,7 +266,7 @@ func (m *Rsp) Reset()         { *m = Rsp{} }
 func (m *Rsp) String() string { return proto.CompactTextString(m) }
 func (*Rsp) ProtoMessage()    {}
 func (*Rsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ba28b2cf51ceff1b, []int{5}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{4}
 }
 
 func (m *Rsp) XXX_Unmarshal(b []byte) error {
@@ -385,15 +291,28 @@ type isRsp_Rsp interface {
 	isRsp_Rsp()
 }
 
-type Rsp_DiscardsRsp struct {
-	DiscardsRsp *DiscardsRsp `protobuf:"bytes,21,opt,name=discardsRsp,proto3,oneof"`
+type Rsp_ErrorRsp struct {
+	ErrorRsp *ErrorRsp `protobuf:"bytes,1,opt,name=errorRsp,proto3,oneof"`
 }
+
+type Rsp_DiscardsRsp struct {
+	DiscardsRsp *DiscardsRsp `protobuf:"bytes,2,opt,name=discardsRsp,proto3,oneof"`
+}
+
+func (*Rsp_ErrorRsp) isRsp_Rsp() {}
 
 func (*Rsp_DiscardsRsp) isRsp_Rsp() {}
 
 func (m *Rsp) GetRsp() isRsp_Rsp {
 	if m != nil {
 		return m.Rsp
+	}
+	return nil
+}
+
+func (m *Rsp) GetErrorRsp() *ErrorRsp {
+	if x, ok := m.GetRsp().(*Rsp_ErrorRsp); ok {
+		return x.ErrorRsp
 	}
 	return nil
 }
@@ -408,6 +327,7 @@ func (m *Rsp) GetDiscardsRsp() *DiscardsRsp {
 // XXX_OneofWrappers is for the internal use of the proto package.
 func (*Rsp) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
+		(*Rsp_ErrorRsp)(nil),
 		(*Rsp_DiscardsRsp)(nil),
 	}
 }
@@ -425,7 +345,7 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ba28b2cf51ceff1b, []int{6}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{5}
 }
 
 func (m *Event) XXX_Unmarshal(b []byte) error {
@@ -489,7 +409,7 @@ func (m *DiscardsReq) Reset()         { *m = DiscardsReq{} }
 func (m *DiscardsReq) String() string { return proto.CompactTextString(m) }
 func (*DiscardsReq) ProtoMessage()    {}
 func (*DiscardsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ba28b2cf51ceff1b, []int{7}
+	return fileDescriptor_ba28b2cf51ceff1b, []int{6}
 }
 
 func (m *DiscardsReq) XXX_Unmarshal(b []byte) error {
@@ -511,6 +431,39 @@ func (m *DiscardsReq) XXX_DiscardUnknown() {
 var xxx_messageInfo_DiscardsReq proto.InternalMessageInfo
 
 // region 响应
+// 错误响应
+type ErrorRsp struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ErrorRsp) Reset()         { *m = ErrorRsp{} }
+func (m *ErrorRsp) String() string { return proto.CompactTextString(m) }
+func (*ErrorRsp) ProtoMessage()    {}
+func (*ErrorRsp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ba28b2cf51ceff1b, []int{7}
+}
+
+func (m *ErrorRsp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ErrorRsp.Unmarshal(m, b)
+}
+func (m *ErrorRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ErrorRsp.Marshal(b, m, deterministic)
+}
+func (m *ErrorRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ErrorRsp.Merge(m, src)
+}
+func (m *ErrorRsp) XXX_Size() int {
+	return xxx_messageInfo_ErrorRsp.Size(m)
+}
+func (m *ErrorRsp) XXX_DiscardUnknown() {
+	xxx_messageInfo_ErrorRsp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ErrorRsp proto.InternalMessageInfo
+
+// 出牌响应
 type DiscardsRsp struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -585,14 +538,14 @@ func (m *DiscardsEvent) GetIndex() int32 {
 
 func init() {
 	proto.RegisterEnum("zlmj.State", State_name, State_value)
-	proto.RegisterType((*GameOption)(nil), "zlmj.GameOption")
+	proto.RegisterType((*Option)(nil), "zlmj.Option")
 	proto.RegisterType((*GameData)(nil), "zlmj.GameData")
 	proto.RegisterType((*PlayerData)(nil), "zlmj.PlayerData")
-	proto.RegisterType((*Message)(nil), "zlmj.Message")
 	proto.RegisterType((*Req)(nil), "zlmj.Req")
 	proto.RegisterType((*Rsp)(nil), "zlmj.Rsp")
 	proto.RegisterType((*Event)(nil), "zlmj.Event")
 	proto.RegisterType((*DiscardsReq)(nil), "zlmj.DiscardsReq")
+	proto.RegisterType((*ErrorRsp)(nil), "zlmj.ErrorRsp")
 	proto.RegisterType((*DiscardsRsp)(nil), "zlmj.DiscardsRsp")
 	proto.RegisterType((*DiscardsEvent)(nil), "zlmj.DiscardsEvent")
 }
@@ -600,29 +553,27 @@ func init() {
 func init() { proto.RegisterFile("zlmj/zlmj.proto", fileDescriptor_ba28b2cf51ceff1b) }
 
 var fileDescriptor_ba28b2cf51ceff1b = []byte{
-	// 371 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x52, 0x4d, 0x4f, 0xe3, 0x30,
-	0x14, 0x4c, 0x36, 0xeb, 0xa6, 0x7d, 0x51, 0x77, 0xbb, 0xde, 0xee, 0x2a, 0x97, 0x95, 0xba, 0x46,
-	0x48, 0x55, 0x0f, 0x45, 0x2a, 0xe2, 0x02, 0xb7, 0x52, 0x44, 0x39, 0x54, 0x20, 0xf3, 0x0b, 0x4c,
-	0x63, 0x95, 0xa0, 0x36, 0x71, 0x63, 0xf3, 0x79, 0xe5, 0x8f, 0x23, 0x3f, 0x27, 0x24, 0x91, 0xb8,
-	0x44, 0x79, 0x33, 0xe3, 0x99, 0x79, 0xb2, 0xe1, 0xe7, 0xdb, 0x76, 0xf7, 0x70, 0x64, 0x3f, 0x53,
-	0x55, 0xe4, 0x26, 0xa7, 0xdf, 0xed, 0x3f, 0x63, 0x00, 0x97, 0x62, 0x27, 0xaf, 0x95, 0x49, 0xf3,
-	0x8c, 0x0e, 0x81, 0xac, 0xef, 0xa5, 0x30, 0xb1, 0x3f, 0xf2, 0xc7, 0x5d, 0xee, 0x06, 0xf6, 0xee,
-	0x43, 0xd7, 0x8a, 0x16, 0xc2, 0x08, 0xfa, 0x1f, 0x88, 0x36, 0xc2, 0x48, 0x94, 0xfc, 0x98, 0x45,
-	0x53, 0xb4, 0xbc, 0xb5, 0x10, 0x77, 0x0c, 0x1d, 0x43, 0x27, 0x47, 0xbf, 0xf8, 0xdb, 0xc8, 0x1f,
-	0x47, 0xb3, 0x81, 0xd3, 0xd4, 0x39, 0xbc, 0xe4, 0xe9, 0x04, 0x42, 0xb5, 0x15, 0xaf, 0xb2, 0xd0,
-	0x71, 0x30, 0x0a, 0x6a, 0xe9, 0x0d, 0x82, 0x36, 0x8f, 0x57, 0x02, 0x76, 0x0a, 0x50, 0xc3, 0xf4,
-	0x2f, 0x74, 0x1e, 0xb5, 0x2c, 0xae, 0x12, 0xec, 0x41, 0x78, 0x39, 0xd9, 0x0d, 0xd2, 0x2c, 0x91,
-	0x2f, 0x18, 0x4d, 0xb8, 0x1b, 0xd8, 0x33, 0x84, 0x2b, 0xa9, 0xb5, 0xd8, 0x48, 0xfa, 0x0f, 0x82,
-	0x42, 0xee, 0xf1, 0x54, 0x34, 0xeb, 0xb9, 0x38, 0x2e, 0xf7, 0x4b, 0x8f, 0x5b, 0xdc, 0xd1, 0xba,
-	0x2c, 0x5e, 0xd1, 0x5a, 0x39, 0x5a, 0xd3, 0x03, 0x20, 0xf2, 0x49, 0x66, 0x26, 0x0e, 0x50, 0x50,
-	0x6e, 0x7f, 0x61, 0xa1, 0xa5, 0xc7, 0x1d, 0x37, 0xef, 0x41, 0xb8, 0x73, 0x69, 0xec, 0x1c, 0x02,
-	0x2e, 0xf7, 0xf4, 0x04, 0xa2, 0x24, 0xd5, 0x6b, 0x51, 0x24, 0x9a, 0x7f, 0x86, 0xff, 0x72, 0x87,
-	0x17, 0x35, 0xb1, 0xf4, 0x78, 0x53, 0x37, 0x27, 0xd8, 0x15, 0x4d, 0xb4, 0x6a, 0x99, 0x68, 0x15,
-	0xff, 0xf9, 0xd2, 0x04, 0xab, 0x36, 0x75, 0x68, 0xa2, 0x15, 0x5b, 0x01, 0xc1, 0x9a, 0xf4, 0x0c,
-	0xfa, 0x15, 0x8d, 0x40, 0xd9, 0xe6, 0x77, 0xdb, 0xa8, 0x5a, 0xa9, 0xad, 0x9d, 0x87, 0xe5, 0xfe,
-	0xac, 0x0f, 0x51, 0xa3, 0x78, 0x6b, 0xd4, 0x8a, 0x1d, 0x42, 0xbf, 0x65, 0x54, 0x5f, 0x8b, 0xdf,
-	0xb8, 0x96, 0xc9, 0x10, 0x08, 0x3e, 0x1c, 0x1a, 0x41, 0x98, 0x66, 0xa9, 0x49, 0xb3, 0xcd, 0xc0,
-	0xbb, 0xeb, 0xe0, 0xfb, 0x3c, 0xfe, 0x08, 0x00, 0x00, 0xff, 0xff, 0x97, 0x56, 0x71, 0x5a, 0xb2,
-	0x02, 0x00, 0x00,
+	// 348 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x52, 0x51, 0x4b, 0xf3, 0x30,
+	0x14, 0x6d, 0xbf, 0x7e, 0xe9, 0xca, 0x8d, 0x9b, 0x33, 0x0e, 0xd9, 0x93, 0xcc, 0xa0, 0x30, 0x86,
+	0x4c, 0xa8, 0xf8, 0xa2, 0x6f, 0x73, 0xc3, 0xf9, 0x20, 0x4a, 0xfc, 0x05, 0x71, 0x0d, 0x5a, 0xd9,
+	0xda, 0x34, 0x89, 0xa2, 0xbe, 0xf8, 0xd7, 0xa5, 0x49, 0x67, 0x5b, 0x5f, 0xca, 0xbd, 0xe7, 0x9c,
+	0x7b, 0xce, 0xed, 0x6d, 0x61, 0xf7, 0x6b, 0xbd, 0x79, 0x3d, 0x2b, 0x1f, 0x53, 0xa9, 0x72, 0x93,
+	0x93, 0xff, 0x65, 0x4d, 0x0f, 0x21, 0xbc, 0x97, 0x26, 0xcd, 0x33, 0x32, 0x00, 0xb4, 0x7a, 0x11,
+	0xdc, 0x0c, 0xfd, 0x91, 0x3f, 0x8e, 0x98, 0x6b, 0xe8, 0x37, 0x44, 0x37, 0x7c, 0x23, 0xe6, 0xdc,
+	0x70, 0x72, 0x04, 0x48, 0x1b, 0x6e, 0x84, 0x55, 0xf4, 0x62, 0x3c, 0xb5, 0x6e, 0x8f, 0x25, 0xc4,
+	0x1c, 0x43, 0x8e, 0x21, 0xcc, 0xad, 0xdd, 0xf0, 0xdf, 0xc8, 0x1f, 0xe3, 0x78, 0xc7, 0x69, 0x5c,
+	0x04, 0xab, 0x38, 0x32, 0x81, 0x8e, 0x5c, 0xf3, 0x4f, 0xa1, 0xf4, 0x30, 0x18, 0x05, 0x63, 0x1c,
+	0xf7, 0x9d, 0xec, 0xc1, 0x82, 0x65, 0x16, 0xdb, 0x0a, 0xe8, 0x25, 0x40, 0x0d, 0x93, 0x03, 0x08,
+	0xdf, 0xb4, 0x50, 0xb7, 0x89, 0xdd, 0x01, 0xb1, 0xaa, 0x2b, 0x97, 0x4f, 0xb3, 0x44, 0x7c, 0xd8,
+	0x58, 0xc4, 0x5c, 0x43, 0xaf, 0x21, 0x60, 0xa2, 0x20, 0x17, 0x80, 0x93, 0x54, 0xaf, 0xb8, 0x4a,
+	0x34, 0x13, 0x85, 0x9d, 0xc4, 0xf1, 0x9e, 0x8b, 0x9c, 0xd7, 0xc4, 0xd2, 0x63, 0x4d, 0xdd, 0x0c,
+	0x41, 0xa0, 0x44, 0x41, 0x0b, 0x08, 0x98, 0x96, 0xe4, 0x14, 0x22, 0xa1, 0x54, 0xae, 0x98, 0x96,
+	0x95, 0x43, 0xcf, 0x39, 0x2c, 0x2a, 0x74, 0xe9, 0xb1, 0x5f, 0x45, 0x2b, 0x52, 0xcb, 0xea, 0x18,
+	0x7f, 0x23, 0xed, 0x4c, 0x53, 0x67, 0x23, 0xb5, 0xa4, 0x77, 0x80, 0x16, 0xef, 0x22, 0x33, 0xe4,
+	0x0a, 0xba, 0x5b, 0xda, 0x02, 0x55, 0xf2, 0x7e, 0xdb, 0xc8, 0x52, 0x4b, 0x8f, 0xb5, 0xb5, 0xb3,
+	0x0e, 0x20, 0x51, 0x16, 0xb4, 0x0b, 0xb8, 0xf1, 0x9a, 0x14, 0x20, 0xda, 0xee, 0xdc, 0xa2, 0xb4,
+	0xa4, 0x27, 0xd0, 0x6d, 0x99, 0xd6, 0x77, 0xf5, 0x1b, 0x77, 0x9d, 0x0c, 0x00, 0xd9, 0xaf, 0x4e,
+	0x30, 0x74, 0xd2, 0x2c, 0x35, 0x69, 0xf6, 0xdc, 0xf7, 0x9e, 0x42, 0xfb, 0x5f, 0x9d, 0xff, 0x04,
+	0x00, 0x00, 0xff, 0xff, 0xa0, 0x53, 0xf9, 0x9c, 0x6a, 0x02, 0x00, 0x00,
 }

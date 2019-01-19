@@ -39,6 +39,7 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/cardsGame/qpProto/room"
+import _ "github.com/cardsGame/qpProto/zlmj"
 
 import (
 	context "context"

@@ -8,14 +8,14 @@ It is generated from these files:
 	zlmj/zlmj.proto
 
 It has these top-level messages:
-	GameOption
+	Option
 	GameData
 	PlayerData
-	Message
 	Req
 	Rsp
 	Event
 	DiscardsReq
+	ErrorRsp
 	DiscardsRsp
 	DiscardsEvent
 */
