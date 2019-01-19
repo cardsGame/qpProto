@@ -192,7 +192,7 @@ message EnterRoomRsp {
 // region 事件
 // 玩家进入
 message PlayerEnterEvent {
-    Roomplayer roomPlayer = 1;
+    PlayerData roomPlayer = 1;
     // GamePlayer gamePlayer = 2;
 }
 // endregion
