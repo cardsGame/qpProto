@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 message Message {
     oneof message {
@@ -31,9 +32,9 @@ message Event {
 }
 
 message Stream {
-    // oneof stream {
-    //     FriendRoomMessage friendRoomMessage = 400;
-    // }
+    oneof stream {
+        friendRoom.Message friendRoomMessage = 400;
+    }
 }
 
 

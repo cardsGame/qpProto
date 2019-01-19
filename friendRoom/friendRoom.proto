@@ -185,7 +185,7 @@ message ErrorRsp {
 // 进入房间响应
 message EnterRoomRsp {
     RoomData room = 1;
-    GameData game = 2;
+    // GameData game = 2;
 }
 // endregion
 
@@ -193,6 +193,6 @@ message EnterRoomRsp {
 // 玩家进入
 message PlayerEnterEvent {
     Roomplayer roomPlayer = 1;
-    GamePlayer gamePlayer = 2;
+    // GamePlayer gamePlayer = 2;
 }
 // endregion
