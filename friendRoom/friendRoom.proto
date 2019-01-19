@@ -40,6 +40,8 @@ message PlayerData {
     bool isOnline = 5;
     room.RoomPlayerRole role = 6;
     bool isReady = 7;
+    bool dissolveAgreed = 8;
+    bool dissolveAnswered = 9;
 }
 
 // 房间数据
@@ -122,6 +124,23 @@ message Rsp {
 message Event {
     oneof event {
         PlayerEnterEvent playerEnterEvent = 1;
+        PlayerOfflineEvent playerOfflineEvent = 2;
+        PlayerOnlineEvent playerOnlineEvent = 3;
+        PlayerLeaveEvent playerLeaveEvent = 4;
+        PlayerSitDownEvent playerSitDownEvent = 5;
+        PlayerStandUpEvent playerStandUpEvent = 6;
+        PlayerChangeSeatEvent playerChangeSeatEvent = 7;
+        PlayerUploadLocationEvent playerUploadLocationEvent = 8;
+        PlayerReady playerReady = 9;
+        PlayerRequestDissolveEvent playerRequestDissolveEvent = 10;
+        PlayerReplyDissolveEvent playerReplyDissolveEvent = 11;
+        CancelDissolveEvent cancelDissolveEvent = 12;
+        PlayerTextChatEvent playerTextChatEvent = 13;
+        PlayerQuickChatEvent playerQuickChatEvent = 14;
+        PlayerEmojiChatEvent playerEmojiChatEvent = 15;
+        PlayerVoiceChatEvent playerVoiceChatEvent = 16;
+        RoomReadyEvent roomReadyEvent = 17;
+        RoomOverEvent roomOverEvent = 18;
     }
 
     zlmj.Event zlmjEvent = 100;
@@ -188,6 +207,7 @@ message ErrorRsp {
     int32 code = 1;
     string message = 2;
 }
+
 // 进入房间响应
 message EnterRoomRsp {
     RoomData room = 1;
@@ -198,11 +218,108 @@ message EnterRoomRsp {
 // endregion
 
 // region 事件
-// 玩家进入
+// 玩家进入事件
 message PlayerEnterEvent {
     PlayerData roomPlayer = 1;
     oneof gamePlayer{
         zlmj.PlayerData zlmjPlayerData = 2;
     }
+}
+
+// 玩家离线事件
+message PlayerOfflineEvent {
+    int32 userId = 1;
+}
+
+// 玩家上线事件
+message PlayerOnlineEvent {
+    int32 userId = 1;
+}
+
+// 玩家离开事件
+message PlayerLeaveEvent {
+    int32 userId = 1;
+}
+
+// 玩家坐下事件
+message PlayerSitDownEvent {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+// 玩家站起事件
+message PlayerStandUpEvent {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+// 玩家换座位事件
+message PlayerChangeSeatEvent {
+    int32 userId = 1;
+    int32 index = 2;
+}
+
+// 玩家上传位置事件
+message PlayerUploadLocationEvent {
+    int32 userId = 1;
+    float latitude = 2;
+    float longitude = 3;
+}
+
+// 玩家准备事件
+message PlayerReady {
+    int32 userId = 1;
+}
+
+// 玩家请求解散事件
+message PlayerRequestDissolveEvent {
+    int32 userId = 1;
+    int32 dissolveLeft = 2;
+}
+
+// 玩家回应解散事件
+message PlayerReplyDissolveEvent {
+    int32 userId = 1;
+    bool agree = 2;
+}
+
+// 解散被取消事件
+message CancelDissolveEvent {
+
+}
+
+// 玩家文字聊天事件
+message PlayerTextChatEvent {
+    int32 userId = 1;
+    string text = 2;
+}
+
+// 玩家快捷短语聊天事件
+message PlayerQuickChatEvent {
+    int32 userId = 1;
+    int32 chatId = 2;
+}
+
+// 玩家表情聊天事件
+message PlayerEmojiChatEvent {
+    int32 userId = 1;
+    int32 emojiId = 2;
+}
+
+// 玩家语音聊天事件
+message PlayerVoiceChatEvent {
+    int32 userId = 1;
+    int32 voiceId = 2;
+    int32 seconds = 3;
+}
+
+// 房间准备开始事件
+message RoomReadyEvent {
+    RoomState state = 1;
+}
+
+// 房间结束事件
+message RoomOverEvent {
+
 }
 // endregion
