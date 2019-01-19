@@ -44,6 +44,7 @@ message Rsp {
 message Event {
     oneof event {
         DiscardsEvent discardsEvent = 1;
+        GameStartEvent gameStartEvent = 2;
     }
 }
 
@@ -71,6 +72,12 @@ message DiscardsRsp {
 // endregion
 
 // region 事件
+message GameStartEvent {
+    State state = 1; // 游戏状态
+    repeated int32 cards = 2; // 牌池
+    int32 drawCount = 3; // 抓牌数量
+}
+
 // 玩家打牌事件
 message DiscardsEvent {
     int32 index = 1;
