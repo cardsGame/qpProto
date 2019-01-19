@@ -32,6 +32,23 @@ It has these top-level messages:
 	ErrorRsp
 	EnterRoomRsp
 	PlayerEnterEvent
+	PlayerOfflineEvent
+	PlayerOnlineEvent
+	PlayerLeaveEvent
+	PlayerSitDownEvent
+	PlayerStandUpEvent
+	PlayerChangeSeatEvent
+	PlayerUploadLocationEvent
+	PlayerReady
+	PlayerRequestDissolveEvent
+	PlayerReplyDissolveEvent
+	CancelDissolveEvent
+	PlayerTextChatEvent
+	PlayerQuickChatEvent
+	PlayerEmojiChatEvent
+	PlayerVoiceChatEvent
+	RoomReadyEvent
+	RoomOverEvent
 */
 package friendRoom
 
