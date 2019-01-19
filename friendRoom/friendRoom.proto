@@ -148,7 +148,7 @@ message Event {
     }
 
     oneof gameEvent {
-        zlmj.Event zlmj = 1;
+        zlmj.Event zlmj = 100;
     }
 }
 
