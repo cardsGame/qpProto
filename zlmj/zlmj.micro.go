@@ -14,9 +14,11 @@ It has these top-level messages:
 	Req
 	Rsp
 	Event
+	WantHoldsReq
 	DiscardsReq
 	ErrorRsp
 	DiscardsRsp
+	GameStartEvent
 	DiscardsEvent
 */
 package zlmj

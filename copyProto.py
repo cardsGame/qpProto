@@ -1,13 +1,12 @@
 import os
 import shutil
-targetDir = '.clientProto'
+targetDir = '../clientProto'
 
 def copyProto():
         fileList = os.listdir()
         isExists = os.path.exists(targetDir)
-        if isExists :
-                os.rmdir(targetDir)
-        os.makedirs(targetDir)
+        if not isExists :
+                os.makedirs(targetDir)
         for fileName in fileList :
                 if fileName.find('.') < 0 and fileName != targetDir:
                         for protoName in os.listdir(fileName) :
