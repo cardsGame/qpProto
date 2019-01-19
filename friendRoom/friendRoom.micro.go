@@ -39,7 +39,7 @@ It has these top-level messages:
 	PlayerStandUpEvent
 	PlayerChangeSeatEvent
 	PlayerUploadLocationEvent
-	PlayerReady
+	PlayerReadyEvent
 	PlayerRequestDissolveEvent
 	PlayerReplyDissolveEvent
 	CancelDissolveEvent
