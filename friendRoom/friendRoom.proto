@@ -109,7 +109,9 @@ message Req {
         ReplyDissolveReq replyDissolveReq = 10;
     }
 
-    zlmj.Req zlmjReq = 100;
+    oneof gameReq {
+        zlmj.Req zlmj = 1;
+    }
 }
 
 message Rsp {
@@ -118,7 +120,9 @@ message Rsp {
         EnterRoomRsp enterRoomRsp = 2;
     }
 
-    zlmj.Rsp zlmjRsp = 100;
+    oneof gameRsp {
+        zlmj.Rsp zlmj = 1;
+    }
 }
 
 message Event {
@@ -143,7 +147,9 @@ message Event {
         RoomOverEvent roomOverEvent = 18;
     }
 
-    zlmj.Event zlmjEvent = 100;
+    oneof gameEvent {
+        zlmj.Event zlmj = 1;
+    }
 }
 
 
