@@ -11,6 +11,7 @@ It has these top-level messages:
 	Option
 	GameData
 	PlayerData
+	Action
 	Req
 	Rsp
 	Event
@@ -23,6 +24,7 @@ It has these top-level messages:
 	DealCardsEvent
 	ResumeEvent
 	DrawCardEvent
+	NewAction
 */
 package zlmj
 
