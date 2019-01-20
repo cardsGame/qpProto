@@ -21,6 +21,7 @@ It has these top-level messages:
 	GameStartEvent
 	DiscardsEvent
 	DealCardsEvent
+	ResumeEvent
 */
 package zlmj
 
