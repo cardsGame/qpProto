@@ -18,6 +18,8 @@ message GameData {
 message PlayerData {
     int32 userId = 1;
     int32 index = 2;
+    int32 holdsCount = 3;
+    repeated int32 holds = 4;
 }
 
 // 状态
@@ -45,6 +47,7 @@ message Event {
     oneof event {
         DiscardsEvent discardsEvent = 1;
         GameStartEvent gameStartEvent = 2;
+        DealCardsEvent dealCardsEvent = 3;
     }
 }
 
@@ -81,5 +84,10 @@ message GameStartEvent {
 // 玩家打牌事件
 message DiscardsEvent {
     int32 index = 1;
+}
+
+// 发牌事件
+message DealCardsEvent {
+    repeated PlayerData players = 1;
 }
 // endregion
