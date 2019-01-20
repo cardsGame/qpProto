@@ -48,6 +48,7 @@ message Event {
         DiscardsEvent discardsEvent = 1;
         GameStartEvent gameStartEvent = 2;
         DealCardsEvent dealCardsEvent = 3;
+        ResumeEvent resumeEvent = 4;
     }
 }
 
