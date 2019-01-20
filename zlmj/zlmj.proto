@@ -4,7 +4,22 @@ package zlmj;
 
 // 游戏选项
 message Option {
-    bool cheat = 1;
+    bool cheat = 1; // 作弊模式
+    bool xiDingXi = 2; // 喜顶喜
+    bool yaoJiuGang = 3; // 幺九杠
+    bool yaoJiuJiaFan = 4; // 幺九喜加番
+    bool qiangTing = 5; // 抢听
+    bool guaDaFeng = 6; // 刮大风
+    bool xiaDaYu = 7; // 下大雨
+    bool kuaiBao = 8; // 快宝
+    bool baoGang = 9; // 宝杠
+    bool qiDui = 10; // 七对
+    bool beiKaoBei = 11; // 背靠背
+    bool xiBuGuaFeng = 12; // 喜不刮风
+    bool noChiCha =  13; // 禁供吃叉
+    bool dianPaoFirst = 14; // 点炮优先
+    bool ming5an10 = 15; // 明5暗10
+    bool xiaoFan = 16;// 小番
 }
 
 // 游戏数据结构

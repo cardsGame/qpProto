@@ -16,6 +16,7 @@ message RoomOption {
     int32 totalRound = 3; // 总局数
     int32 totalTime = 4; // 总时长
     bool needReady = 5; // 是否需要准备
+    bool gpsIp = 6; // ip测距
 }
 
 // 房间状态
