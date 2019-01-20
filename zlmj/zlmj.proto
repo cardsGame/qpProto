@@ -60,7 +60,7 @@ message WantHoldsReq {
 }
 
 message DiscardsReq {
-
+    int32 card = 1;
 }
 // endregion
 
@@ -71,7 +71,7 @@ message ErrorRsp {
 }
 // 出牌响应
 message DiscardsRsp {
-    int32 card = 1;
+    
 }
 // endregion
 
