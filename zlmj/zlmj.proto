@@ -39,8 +39,9 @@ message PlayerData {
 // 状态
 enum State {
     initing = 0; // 初始化
-    can_discard = 1; // 能出牌
-    over = 2; // 游戏结束
+    cheating= 1;
+    can_discard = 2; // 能出牌
+    over = 3; // 游戏结束
 }
 
 message Req {
