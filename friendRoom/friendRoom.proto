@@ -318,7 +318,7 @@ message PlayerEmojiChatEvent {
 // 玩家语音聊天事件
 message PlayerVoiceChatEvent {
     int32 userId = 1;
-    int32 voiceId = 2;
+    string voiceId = 2;
     int32 seconds = 3;
 }
 
