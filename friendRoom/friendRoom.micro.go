@@ -19,6 +19,10 @@ It has these top-level messages:
 	Req
 	Rsp
 	Event
+	TextChatReq
+	QuickChatReq
+	EmojiChatReq
+	VoiceChatReq
 	EnterRoomReq
 	ReadyReq
 	SitdownReq
