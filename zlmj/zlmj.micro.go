@@ -20,6 +20,7 @@ It has these top-level messages:
 	DiscardsRsp
 	GameStartEvent
 	DiscardsEvent
+	DealCardsEvent
 */
 package zlmj
 
