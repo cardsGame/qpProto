@@ -110,6 +110,10 @@ message Req {
         UploadLocationReq uploadLocationReq = 8;
         RequestDissolveReq requestDissolveReq = 9;
         ReplyDissolveReq replyDissolveReq = 10;
+        TextChatReq textChatReq = 11;
+        QuickChatReq quickChatReq = 12;
+        EmojiChatReq emojiChatReq = 13;
+        VoiceChatReq voiceChatReq = 14;
     }
 
     oneof gameReq {
@@ -157,6 +161,31 @@ message Event {
 
 
 // region 请求
+// 文字聊天请求
+message TextChatReq {
+    int32 userId = 1;
+    string text = 2;
+}
+
+// 快捷聊天请求
+message QuickChatReq {
+    int32 userId = 1;
+    int32 chatId = 2;
+}
+
+// 表情聊天请求
+message EmojiChatReq {
+    int32 userId = 1;
+    int32 emojiId = 2;
+}
+
+// 语音聊天请求
+message VoiceChatReq {
+    int32 userId = 1;
+    string voiceId = 2;
+    int32 seconds = 3;
+}
+
 // 进入请求
 message EnterRoomReq {
     string roomNo = 1;
