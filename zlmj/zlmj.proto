@@ -64,6 +64,7 @@ message Event {
         GameStartEvent gameStartEvent = 2;
         DealCardsEvent dealCardsEvent = 3;
         ResumeEvent resumeEvent = 4;
+        DrawCardEvent drawCardEvent = 5;
     }
 }
 
@@ -113,5 +114,12 @@ message ResumeEvent {
     int32 index = 1; // 座位号
     int32 discardLeft = 2; // 打牌剩余时间
     bool isNewRound = 3; // 是否是新的一轮
+}
+
+// 玩家抓牌事件
+message DrawCardEvent {
+    int32 index = 1;
+    int32 card = 2;
+    bool back = 3;
 }
 // endregion
