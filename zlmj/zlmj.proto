@@ -34,6 +34,7 @@ message PlayerData {
     int32 curCard = 10;
     repeated int32 disableCards = 11;
     repeated bool isReportTing = 12;
+    repeated Action actions = 13;
 }
 
 // 状态
@@ -42,6 +43,26 @@ enum State {
     cheating= 1;
     can_discard = 2; // 能出牌
     over = 3; // 游戏结束
+}
+
+// 操作码
+enum ActionId {
+    pass = 0; // 过
+    chi = 1; // 吃
+    peng = 2; // 碰
+    gang = 3; // 名杠
+    an_gang = 4; // 暗杠
+    guolu_gang = 5; // 过路杠
+    ting = 6; // 听牌
+}
+
+// 玩家操作
+message Action {
+    ActionId actionId = 1;
+    int32 index = 2; // 座位号
+    int32 from = 3; // 操作对象的index 来源
+    int32 card = 4; // 触发action的牌
+    repeated int32 cards = 5; // 可选的牌
 }
 
 message Req {
@@ -121,5 +142,10 @@ message DrawCardEvent {
     int32 index = 1;
     int32 card = 2;
     bool back = 3;
+}
+
+// 玩家有新的操作
+message NewAction {
+    repeated Action actions = 1;
 }
 // endregion
