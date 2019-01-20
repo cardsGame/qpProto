@@ -22,6 +22,7 @@ It has these top-level messages:
 	DiscardsEvent
 	DealCardsEvent
 	ResumeEvent
+	DrawCardEvent
 */
 package zlmj
 
