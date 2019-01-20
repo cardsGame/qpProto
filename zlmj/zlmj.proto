@@ -33,7 +33,7 @@ message PlayerData {
     bool isMaster = 9;
     int32 curCard = 10;
     repeated int32 disableCards = 11;
-    repeated bool isReportTing = 12;
+    bool isReportTing = 12;
     repeated Action actions = 13;
 }
 
