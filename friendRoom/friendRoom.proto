@@ -42,6 +42,9 @@ message PlayerData {
     bool isReady = 7;
     bool dissolveAgreed = 8;
     bool dissolveAnswered = 9;
+    float longitude = 10;
+    float latitude = 11;
+    string ip = 12;
 }
 
 // 房间数据

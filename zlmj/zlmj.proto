@@ -9,9 +9,15 @@ message Option {
 
 // 游戏数据结构
 message GameData {
-    State state = 1;
-    Option option = 2;
-    repeated PlayerData players = 3;
+    State state = 1; // 状态
+    Option option = 2; // option选项
+    repeated PlayerData players = 3; // 玩家数据
+    int32 backCardCount = 4; // 从后面起的牌的数量
+    repeated int32 cards = 5; // 牌池
+    int32 lastDisCard = 6; // 最后一张出的牌
+    int32 curDiscardIndex = 7; // 当前出牌的座位号
+    int32 lastDiscardIndex = 8; // 上个出牌的座位号
+    int32 cardCount = 9; // 当前牌池剩余的牌
 }
 
 // 玩家数据结构
@@ -20,6 +26,14 @@ message PlayerData {
     int32 index = 2;
     int32 holdsCount = 3;
     repeated int32 holds = 4;
+    repeated int32 folds = 5;
+    bool canChupai = 6;
+    int32 score = 7;
+    int32 totalScore = 8;
+    bool isMaster = 9;
+    int32 curCard = 10;
+    repeated int32 disableCards = 11;
+    repeated bool isReportTing = 12;
 }
 
 // 状态
