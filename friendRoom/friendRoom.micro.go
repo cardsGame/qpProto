@@ -15,6 +15,7 @@ It has these top-level messages:
 	CreateRoomResponse
 	GetPlayingRequest
 	GetPlayingResponse
+	PlayingRoom
 	Message
 	Req
 	Rsp
