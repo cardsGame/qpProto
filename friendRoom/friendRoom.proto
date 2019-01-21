@@ -92,7 +92,9 @@ message GetPlayingResponse {
 
 // 进行中的房间
 message PlayingRoom {
-
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
 }
 
 message Message {
