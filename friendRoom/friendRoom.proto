@@ -87,9 +87,12 @@ message GetPlayingRequest {
 
 // 获取进行中房间响应
 message GetPlayingResponse {
-    string roomNo = 1;
-    room.GameType gameType = 2;
-    room.RoomType roomType = 3;
+    repeated PlayingRoom rooms = 1;
+}
+
+// 进行中的房间
+message PlayingRoom {
+
 }
 
 message Message {
