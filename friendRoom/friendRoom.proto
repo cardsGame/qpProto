@@ -121,6 +121,7 @@ message Req {
         QuickChatReq quickChatReq = 12;
         EmojiChatReq emojiChatReq = 13;
         VoiceChatReq voiceChatReq = 14;
+        StartReq startReq = 15;
     }
 
     oneof gameReq {
@@ -200,6 +201,11 @@ message EnterRoomReq {
 
 // 准备请求
 message ReadyReq {
+
+}
+
+// 开始房间请求
+message StartReq {
 
 }
 
