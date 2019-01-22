@@ -84,6 +84,7 @@ message Req {
     oneof req {
         DiscardsReq discardsReq = 1;
         WantHoldsReq wantHoldsReq = 2;
+        DoActionReq doActionReq = 3;
     }
 }
 
@@ -108,13 +109,19 @@ message Event {
 
 
 // region 请求
-// 出牌请求
+// 替换想要的牌请求
 message WantHoldsReq {
     repeated int32 cards = 1;
 }
 
+// 出牌请求
 message DiscardsReq {
-    int32 card = 1;
+    int32 card = 1; // action的数组索引
+}
+
+// 做action请求
+message DoActionReq {
+    int32 index = 1;
 }
 // endregion
 
