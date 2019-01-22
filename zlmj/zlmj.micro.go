@@ -27,6 +27,7 @@ It has these top-level messages:
 	DrawCardEvent
 	NewActionEvent
 	RemoveActionEvent
+	DispatchActionEvent
 */
 package zlmj
 
