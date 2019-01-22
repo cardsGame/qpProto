@@ -101,6 +101,7 @@ message Event {
         DealCardsEvent dealCardsEvent = 3;
         ResumeEvent resumeEvent = 4;
         DrawCardEvent drawCardEvent = 5;
+        NewActionEvent newActionEvent = 6;
     }
 }
 
@@ -160,7 +161,7 @@ message DrawCardEvent {
 }
 
 // 玩家有新的操作
-message NewAction {
+message NewActionEvent {
     repeated Action actions = 1;
 }
 // endregion
