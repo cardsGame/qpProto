@@ -104,6 +104,7 @@ message Event {
         DrawCardEvent drawCardEvent = 5;
         NewActionEvent newActionEvent = 6;
         RemoveActionEvent removeActionEvent = 7;
+        DispatchActionEvent dispatchActionEvent = 8;
     }
 }
 
@@ -176,5 +177,10 @@ message NewActionEvent {
 // 取消玩家的action
 message RemoveActionEvent {
 
+}
+
+// 操作分发事件 即别人做了操作
+message DispatchActionEvent {
+    Action action = 1;
 }
 // endregion
