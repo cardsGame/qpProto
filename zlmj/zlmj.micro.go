@@ -17,6 +17,7 @@ It has these top-level messages:
 	Event
 	WantHoldsReq
 	DiscardsReq
+	DoActionReq
 	ErrorRsp
 	DiscardsRsp
 	GameStartEvent
@@ -25,6 +26,7 @@ It has these top-level messages:
 	ResumeEvent
 	DrawCardEvent
 	NewActionEvent
+	RemoveActionEvent
 */
 package zlmj
 
