@@ -26,6 +26,7 @@ It has these top-level messages:
 	VoiceChatReq
 	EnterRoomReq
 	ReadyReq
+	StartReq
 	SitdownReq
 	StandupReq
 	ChangesitReq
