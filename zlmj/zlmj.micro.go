@@ -24,7 +24,7 @@ It has these top-level messages:
 	DealCardsEvent
 	ResumeEvent
 	DrawCardEvent
-	NewAction
+	NewActionEvent
 */
 package zlmj
 
