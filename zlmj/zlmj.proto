@@ -102,6 +102,7 @@ message Event {
         ResumeEvent resumeEvent = 4;
         DrawCardEvent drawCardEvent = 5;
         NewActionEvent newActionEvent = 6;
+        RemoveActionEvent removeActionEvent = 7;
     }
 }
 
@@ -163,5 +164,10 @@ message DrawCardEvent {
 // 玩家有新的操作
 message NewActionEvent {
     repeated Action actions = 1;
+}
+
+// 取消玩家的action
+message RemoveActionEvent {
+
 }
 // endregion
