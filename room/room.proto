@@ -27,10 +27,10 @@ enum RoomPay {
 
 // 房间结束类型
 enum RoomOverType {
-    none_over= 0; // 占位符
-    not_over = 1; // 未结束
+    not_over= 0; // 占位符 未结束
     normal = 2; // 正常结束
     force_over = 3; // 强制结束
+    dissolve_over = 4; // 解散结束
 }
 
 // 房间玩家角色

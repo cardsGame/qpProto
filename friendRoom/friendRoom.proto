@@ -26,6 +26,7 @@ enum RoomState {
     in_game = 1; // 游戏中
     wait_ready = 2; // 小结算等待准备
     over = 3; // 结束
+    dissolve = 4; // 解散
 }
 
 // 房间限制类型
@@ -371,6 +372,7 @@ message RoomReadyEvent {
 
 // 房间结束事件
 message RoomOverEvent {
-
+    RoomState state = 1;
+    room.RoomOverType overType = 2;
 }
 // endregion
