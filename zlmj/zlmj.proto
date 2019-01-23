@@ -69,6 +69,8 @@ enum ActionId {
     an_gang = 4; // 暗杠
     guolu_gang = 5; // 过路杠
     ting = 6; // 听牌
+    xi_gang = 7; // 喜杠
+    yaojiu_gang = 8; // 幺九杠
 }
 
 // 玩家操作
@@ -85,6 +87,7 @@ message Req {
         DiscardsReq discardsReq = 1;
         WantHoldsReq wantHoldsReq = 2;
         DoActionReq doActionReq = 3;
+        PassReq passReq = 4;
     }
 }
 
@@ -123,6 +126,11 @@ message DiscardsReq {
 // 做action请求
 message DoActionReq {
     int32 index = 1;
+}
+
+// 过请求
+message PassReq {
+
 }
 // endregion
 

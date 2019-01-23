@@ -18,6 +18,7 @@ It has these top-level messages:
 	WantHoldsReq
 	DiscardsReq
 	DoActionReq
+	PassReq
 	ErrorRsp
 	DiscardsRsp
 	GameStartEvent
