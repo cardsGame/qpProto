@@ -12,6 +12,7 @@ It has these top-level messages:
 	GameData
 	PlayerData
 	Action
+	Combination
 	Req
 	Rsp
 	Event

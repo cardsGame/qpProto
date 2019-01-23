@@ -82,6 +82,24 @@ message Action {
     repeated int32 cards = 5; // 可选的牌
 }
 
+// 组合码
+enum CombinationId {
+    c_pass = 0; // 过
+    c_chi = 1;
+    c_peng = 2;
+    c_gang = 3; // 名杠
+    c_an_gang = 4; // 暗杠
+    c_yaojiu_gang = 5; // 幺九杠
+}
+
+// 组合
+message Combination {
+    CombinationId combinationId = 1;
+    int32 from = 2; // 操作对象的index 来源
+    int32 card = 3; // 触发action的牌
+    repeated int32 cards = 4; // 可选的牌
+}
+
 message Req {
     oneof req {
         DiscardsReq discardsReq = 1;
