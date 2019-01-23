@@ -26,7 +26,6 @@ enum RoomState {
     in_game = 1; // 游戏中
     wait_ready = 2; // 小结算等待准备
     over = 3; // 结束
-    dissolve = 4; // 解散
 }
 
 // 房间限制类型
