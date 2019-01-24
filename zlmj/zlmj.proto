@@ -91,7 +91,8 @@ enum CombinationId {
     c_peng = 2;
     c_gang = 3; // 名杠
     c_an_gang = 4; // 暗杠
-    c_yaojiu_gang = 5; // 幺九杠
+    c_yao_gang = 5; // 幺杠
+    c_jiu_gang = 6; // 九杠
 }
 
 // 组合
