@@ -90,13 +90,13 @@ message Action {
 
 // 组合码
 enum CombinationId {
-    c_pass = 0; // 过
-    c_chi = 1;
-    c_peng = 2;
-    c_gang = 3; // 名杠
-    c_an_gang = 4; // 暗杠
-    c_yao_gang = 5; // 幺杠
-    c_jiu_gang = 6; // 九杠
+    c_pass = 0; // 站位
+    c_chi = 1;// 吃组合
+    c_peng = 2;// 碰组合
+    c_gang = 3; // 名杠组合
+    c_an_gang = 4; // 暗杠组合
+    c_yao_gang = 5; // 幺杠组合
+    c_jiu_gang = 6; // 九杠组合
     c_an_xi_gang = 7; // 暗喜杠组合
     c_ming_xi_gang = 8; // 明喜杠组合
 }
