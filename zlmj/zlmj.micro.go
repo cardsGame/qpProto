@@ -30,6 +30,7 @@ It has these top-level messages:
 	NewActionEvent
 	RemoveActionEvent
 	DispatchActionEvent
+	ChangeBaoCardEvent
 */
 package zlmj
 

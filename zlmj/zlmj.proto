@@ -135,6 +135,7 @@ message Event {
         NewActionEvent newActionEvent = 6;
         RemoveActionEvent removeActionEvent = 7;
         DispatchActionEvent dispatchActionEvent = 8;
+        ChangeBaoCardEvent changeBaoCardEvent = 9;
     }
 }
 
@@ -217,5 +218,10 @@ message RemoveActionEvent {
 // 操作分发事件 即别人做了操作
 message DispatchActionEvent {
     Action action = 1;
+}
+
+// 宝牌更换事件
+message ChangeBaoCardEvent {
+
 }
 // endregion
