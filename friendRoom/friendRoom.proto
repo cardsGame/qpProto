@@ -18,6 +18,7 @@ message RoomOption {
     bool needReady = 5; // 是否需要准备
     bool ipRaging = 6; // ip测距
     bool gpsRaging = 7; // gps测距
+    int32 totalPlayerCount = 8;
 }
 
 // 房间状态
