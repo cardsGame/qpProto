@@ -75,6 +75,8 @@ enum ActionId {
     bu_jiu_gang = 10; // 补九杠
     an_xi_gang = 11; // 暗喜杠
     ming_xi_gang = 12; // 明喜杠
+    bu_an_xi_gang = 13; // 补暗喜杠
+    bu_ming_xi_gang = 14; // 补明喜杠
 }
 
 // 玩家操作
