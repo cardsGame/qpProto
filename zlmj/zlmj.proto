@@ -69,8 +69,10 @@ enum ActionId {
     an_gang = 4; // 暗杠
     guolu_gang = 5; // 过路杠
     ting = 6; // 听牌
-    xi_gang = 7; // 喜杠
-    yaojiu_gang = 8; // 幺九杠
+    yao_gang = 7; // 幺杠
+    jiu_gang = 8; // 九杠
+    bu_yao_gang = 9; // 补幺杠
+    bu_jiu_gang = 10; // 补九杠
 }
 
 // 玩家操作
