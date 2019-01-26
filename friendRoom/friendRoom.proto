@@ -19,6 +19,7 @@ message RoomOption {
     bool ipRaging = 6; // ip测距
     bool gpsRaging = 7; // gps测距
     int32 totalPlayerCount = 8;
+    int32 totalCircle = 9; // 圈数
 }
 
 // 房间状态
