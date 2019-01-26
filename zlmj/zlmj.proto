@@ -137,6 +137,7 @@ message Event {
         DispatchActionEvent dispatchActionEvent = 8;
         ChangeBaoCardEvent changeBaoCardEvent = 9;
         ChangeMasterEvent changeMasterEvent = 10;
+        CanTingEvent canTingEvent = 11;
     }
 }
 
@@ -229,5 +230,15 @@ message ChangeBaoCardEvent {
 // 庄家更改事件
 message ChangeMasterEvent {
     int32 index = 1; // 座位号
+}
+
+message tingCard {
+    int32 card = 1;
+    repeated int32 cards = 2;
+}
+
+// 可以听牌了
+message CanTingEvent {
+    repeated tingCard map_tingCards = 1;
 }
 // endregion
