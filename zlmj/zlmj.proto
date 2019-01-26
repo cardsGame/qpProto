@@ -239,6 +239,6 @@ message tingCard {
 
 // 可以听牌了
 message CanTingEvent {
-    repeated tingCard map_tingCards = 1;
+    repeated tingCard tingCards = 1;
 }
 // endregion
