@@ -115,6 +115,7 @@ message Req {
         WantHoldsReq wantHoldsReq = 2;
         DoActionReq doActionReq = 3;
         PassReq passReq = 4;
+        TingReq tingReq = 5;
     }
 }
 
@@ -138,6 +139,7 @@ message Event {
         ChangeBaoCardEvent changeBaoCardEvent = 9;
         ChangeMasterEvent changeMasterEvent = 10;
         CanTingEvent canTingEvent = 11;
+        TingEvent tingEvent = 12;
     }
 }
 
@@ -161,6 +163,11 @@ message DoActionReq {
 // 过请求
 message PassReq {
 
+}
+
+// 报听请求
+message TingReq {
+    int32 card = 1;
 }
 // endregion
 
@@ -246,5 +253,11 @@ message tingCards {
 // 可以听牌了
 message CanTingEvent {
     repeated tingCards tingCards = 1;
+}
+
+// 玩家报停
+message TingEvent {
+    int32 index = 1; // 座位号
+    int32 card = 2; // 听时打出的牌
 }
 // endregion
