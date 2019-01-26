@@ -136,6 +136,7 @@ message Event {
         RemoveActionEvent removeActionEvent = 7;
         DispatchActionEvent dispatchActionEvent = 8;
         ChangeBaoCardEvent changeBaoCardEvent = 9;
+        ChangeMasterEvent changeMasterEvent = 10;
     }
 }
 
@@ -223,5 +224,10 @@ message DispatchActionEvent {
 // 宝牌更换事件
 message ChangeBaoCardEvent {
 
+}
+
+// 庄家更改事件
+message ChangeMasterEvent {
+    int32 index = 1; // 座位号
 }
 // endregion
