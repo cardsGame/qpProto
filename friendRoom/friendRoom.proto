@@ -124,6 +124,7 @@ message Req {
         EmojiChatReq emojiChatReq = 13;
         VoiceChatReq voiceChatReq = 14;
         StartReq startReq = 15;
+        CreateRoomRequest createRoomRequest = 16;
     }
 
     oneof gameReq {
@@ -135,6 +136,7 @@ message Rsp {
     oneof rsp {
         ErrorRsp errorRsp = 1;
         EnterRoomRsp enterRoomRsp = 2;
+        CreateRoomResponse createRoomResponse = 3;
     }
 
     oneof gameRsp {
