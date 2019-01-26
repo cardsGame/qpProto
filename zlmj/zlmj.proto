@@ -77,6 +77,12 @@ enum ActionId {
     ming_xi_gang = 12; // 明喜杠
     bu_an_xi_gang = 13; // 补暗喜杠
     bu_ming_xi_gang = 14; // 补明喜杠
+    chi_ting = 15; // 吃听
+    peng_ting = 16; // 碰听
+    gang_ting = 17; // 杠听
+    hu = 18; // 胡 点炮
+    zimo = 19;// 自摸
+    qiang_gang_hu = 20; // 抢杠胡
 }
 
 // 玩家操作
