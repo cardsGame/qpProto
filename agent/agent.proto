@@ -1,0 +1,115 @@
+syntax = "proto3";
+package agent;
+//代理服务 Agent service
+service AgentService {
+    // Create an agent and return the created one.
+    rpc Create(CreateAgentRequest) returns (Agent) {}
+
+    // Get an agent's info in Agent Server
+    rpc GetInfoByUserID(GetInfoByUserIDRequest) returns (Agent) {}
+
+    // Get an agent's info in Agent Server by agent id
+    rpc GetInfoByID(GetInfoByIDRequest) returns (Agent) {}
+
+    // Get an agents list in Agent Server
+    rpc GetAgentList(GetAgentListRequest) returns (GetAgentListResponse) {}
+
+    // ChangeAvaliable
+    rpc ChangeAvaliable(ChangeAvaliableRequest) returns (ChangeAvaliableResponse) {}
+
+
+}
+
+// Request of Creating an agent. 
+// Prerequisite: User Must be already Created in Game Server
+message CreateAgentRequest {
+    string NickName = 1;
+    string WxAccount = 2;
+    int32 UserID = 3;
+    string Phone = 4;
+    string HeadImg = 5;
+}
+
+// Request of getting an angent's personal info.
+message GetInfoByUserIDRequest {
+    int32 UserID = 1;
+}
+
+
+// Request of getting an angent's personal info.
+message GetInfoByIDRequest {
+    int32 ID = 1;
+}
+
+message GetAgentListRequest {
+    string Order = 1;
+    int32 Limit = 2;
+    int32 Offset = 3;
+}
+
+message GetAgentListResponse {
+    repeated Agent List = 1;
+    int32 Count = 2;
+}
+
+message ChangeAvaliableRequest {
+    int32 AgentID = 1;
+    enum Types  {
+        Unknonwn = 0;
+        Blocked = 1;
+        Avaliable = 2;
+    }
+    Types Type = 2;
+}
+
+message ChangeAvaliableResponse {
+    string result = 1;
+}
+
+// Information of single agent
+message Agent {
+    int32 ID = 1;
+    string Name = 2;
+	string NickName = 3;
+	string HeadImg = 4;
+	string Phone = 5;
+    bool Avaliable = 6;
+	double Balance = 7;
+	string WxAccount = 8;
+	string Scode = 9;
+    int32 AgentLevel = 10;
+    string WithdrawPassword = 11;
+    string PayPassword = 12;
+    int32 UserID= 13;
+    Agent Father = 14;
+    string CreatedAt = 15;
+    string UpdatedAt = 16;
+    string DelatedAt = 17;
+    Link Link = 18;
+    int32 TotalSon = 19;
+    double TotalIncome = 20;
+}
+
+// Link
+
+message Link {
+    int32 ID = 1;
+    int32 FatherID = 2;
+    int32 GrandFatherID = 3;
+    string FatherBindAt = 4;
+    string GrandFatherBindAt = 5;
+    string CreatedAt = 6;
+    string UpdatedAt = 7;
+    string DeleatedAt = 8;
+}
+
+
+
+
+
+
+
+
+
+
+
