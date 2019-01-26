@@ -4,7 +4,6 @@ service ShopUserService {
     // 获取商城货物列表
     rpc GetGoodsList(GetGoodsListRequest) returns (GetGoodsListResponse){}
 
-
     // 购买单个物品(可以调节数量)
     rpc BuyOneGood(BuyOneGoodRequest) returns (BuyOneGoodResponse) {}
 }
@@ -16,11 +15,17 @@ service ShopAdminService {
     // 新增一个货物到商城
     rpc AddOneGood(AddOneGoodRequest) returns (AddOneGoodResponse) {}
 
+    // 得到一个物品的详细信息
+    rpc GetOneGood(GetOneGoodRequest) returns (GetOneGoodResponse) {}
+
     // 更新一个
     rpc UpdateOneGood(UpdateOneGoodRequest) returns (UpdateOneGoodResponse) {}
 
     // 购买单个物品(可以调节数量)
     rpc BuyOneGood(BuyOneGoodRequest) returns (BuyOneGoodResponse) {}
+
+    // 删除一个物品
+    rpc DeleteOneGood(DelOneGoodRequest) returns(DelOneGoodResponse) {}
 }
 
 // 单件物品
@@ -107,9 +112,26 @@ message BuyOneGoodRequest {
 
 message BuyOneGoodResponse {
     repeated Item items =1;
-    repeated Item userUpdate = 2;
+    map<string, int32> userUpdate = 2;
     Good goodUpdate = 3;
     bool success = 4;
     string msg = 5;
+}
 
+message GetOneGoodRequest {
+    int32 goodId = 1;
+}
+
+message GetOneGoodResponse {
+    Good good = 1;
+}
+
+
+message DelOneGoodRequest {
+    int32 goodId = 1;
+}
+
+message DelOneGoodResponse {
+    bool suncess = 1;
+    string msg = 2;
 }
