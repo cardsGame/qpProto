@@ -1,0 +1,134 @@
+syntax = "proto3";
+package balance;
+//代理钱包服务 Balance Service
+service BalanceService {
+    // Notice the agent Server after some user purchasing.
+    rpc PurchaseNotice(NoticeRequest) returns (NoticeResponse) {}
+
+    //GetBalanceRecordList
+    rpc GetBalanceRecordList(GetBalanceRecordListRequest) returns (GetBalanceRecordListResponse) {}
+
+    //GetMoneyRecordList
+    rpc GetMoneyRecordList(GetMoneyRecordListRequest) returns (GetMoneyRecordListResponse) {}
+
+    //GetSumOfRecord
+    rpc GetSumOfRecord(GetSumOfRecordRequest) returns (GetSumOfRecordResponse) {}
+
+    //GetSumOfMoney
+    rpc GetSumOfMoney(GetSumOfMoneyRequest) returns (GetSumOfMoneyResponse) {}
+
+    //CreateWithdraw
+    rpc CreateWithdraw(CreateWithdrawRequest) returns (CreateWithdrawResponse) {}
+
+}
+
+// Request of noticing the agent server user buy cards.
+// UserID为game server中记录的UserID，Amount是实际支付的人民币
+message NoticeRequest {
+    int32 UserID = 1;
+    double Amount = 2;
+}
+
+// Response of noticing the agent server user buy cards.
+message NoticeResponse {
+    string result = 1;
+}
+
+//Can Order, condition by AgentID, FatherID, GrandFatherID, IsDirect, Type
+message GetBalanceRecordListRequest {
+    string Order = 1;
+    int32 Limit = 2;
+    int32 Offset = 3;
+    int32 AgentID = 4;
+    int32 SubAgentID = 5;
+    string Type = 6;
+    bool IsDirect = 7;
+    string StartAt = 8;
+    string EndAt = 9;
+    string Result = 10;
+}
+
+message GetBalanceRecordListResponse {
+    repeated BalanceRecord List = 1;
+    int32 Count = 2;
+}
+
+//Can Order, condition by AgentID, FatherID, GrandFatherID, IsDirect, Type
+message GetMoneyRecordListRequest {
+    string Order = 1;
+    int32 Limit = 2;
+    int32 Offset = 3;
+    int32 AgentID = 4;
+    string Type = 5;
+    string StartAt = 6;
+    string EndAt = 7;
+}
+
+//GetMoneyRecordListResponse
+message GetMoneyRecordListResponse{
+    repeated MoneyRecord List = 1;
+    int32 Count = 2;
+}
+
+message GetSumOfRecordRequest {
+    int32 AgentID = 1;
+    int32 SubAgentID = 2;
+    string Type = 3;
+    bool IsDirect = 4;
+    string StartAt = 5;
+    string EndAt = 6;
+}
+
+message GetSumOfRecordResponse {
+    float Total = 1;
+}
+
+message GetSumOfMoneyRequest {
+    int32 AgentID = 4;
+    string Type = 5;
+    string StartAt = 6;
+    string EndAt = 7;
+}
+
+message GetSumOfMoneyResponse {
+    float Total = 1;
+}
+
+
+message CreateWithdrawRequest {
+    int32 AgentID = 1;
+    double Amount = 2;
+}
+
+message CreateWithdrawResponse {
+    string Result = 1;
+}
+
+
+message BalanceRecord {
+    string Type = 1;
+    float Amount = 2;
+    float ActualAmount = 3;
+    bool IsDirect = 4;
+    string Description = 5;
+    int32 AgentID = 6;
+    string AgentNickName = 7;
+    int32 SubAgentID = 8;
+    string SubAgentNickName = 9;
+    int32 ActualAgentID = 11;
+    string ActualAgentNickName = 12;
+    string CreatedAt = 10;
+}
+
+message MoneyRecord {
+    float Amount = 1;
+    int32 AgentID = 2;
+    string AgentNickName = 3;
+    string Type = 4;
+}
+
+
+
+
+
+

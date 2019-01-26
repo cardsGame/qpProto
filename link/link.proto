@@ -1,0 +1,96 @@
+syntax = "proto3";
+package link;
+// 代理关系服务
+service LinkService {
+    //LinkAgent Bind two agent with link
+    rpc LinkAgent(LinkAgentRequest) returns (Link) {}
+
+    //UpAgentLevel Up an agent from Level 2 to Level 1
+    rpc UpAgentLevel(UpAgentLevelRequest) returns (Link) {}
+
+    //DownAgentLevel Down an agent from Level 1 to Level 2, but this agent don't have an Father agent
+    rpc DownAgentLevel(DownAgentLevelRequest) returns (Link) {}
+
+    //GetSuperior get the superior info of the agent
+    rpc GetSuperior(GetSuperiorRequest) returns (GetSuperiorResponse) {}
+
+    //GetInferior get all the inferior of the agent,will return a list.
+    rpc GetInferior(GetInferiorRequest) returns (GetInferiorResponse) {}
+
+}
+
+//LinkAgentRequest the songAgentID and FatherAgentID are the agent id in the agent server
+message LinkAgentRequest {
+    int32 SonAgentID = 1;
+    int32 FatherAgentID = 2;
+}
+
+message UpAgentLevelRequest {
+    int32 AgentID = 1;
+    int32 AdminID = 2;
+}
+
+message DownAgentLevelRequest {
+    int32 AgentID = 1;
+    int32 AdminID = 2;
+}
+
+message GetSuperiorRequest {
+    int32 AgentID = 1;
+    bool All = 2;
+}
+
+message GetSuperiorResponse {
+    int32 AgentID = 1;
+    Agent Agent = 2;
+    int32 FatherID = 3;
+    Agent Father = 4;
+    string FatherBindAt = 5;
+    int32 GrandFatherID =6;
+    Agent GrandFather = 7;
+    string GrandFatherBindAt = 8;
+}
+
+message GetInferiorRequest {
+    int32 AgentID = 1;
+    int32 Offset = 2;
+    int32 Limit = 3;
+    string Order = 5;
+    string BindStartAt = 6;
+    string BindEndAt = 7;
+}
+
+message GetInferiorResponse {
+    repeated Agent List = 1;
+    int32 Count = 2;
+}
+
+
+message Link {
+    int32 FatherID = 2;
+    int32 GrandFatherID = 3;
+    string FatherBindAt = 4;
+    string GrandFatherBindAt = 5;
+    string CreatedAt = 6;
+    string UpdatedAt = 7;
+    int32 AgentID = 9;
+    string AgentNickName = 10;
+    string FatherNickName = 11;
+    string GrandFatherNickName = 12;   
+    int32   AgentLevel = 13;
+}
+
+message Agent {
+    int32 ID = 1;
+    string NickName = 2;
+    string HeadImg = 3;
+	string Phone = 5;
+    int32 AgentLevel = 10;
+    int32 UserID = 13;
+    string Scode = 15;
+    string FatherBindAt = 14;
+}
+
+
+
+
