@@ -232,13 +232,19 @@ message ChangeMasterEvent {
     int32 index = 1; // 座位号
 }
 
+// 听牌结构
 message tingCard {
     int32 card = 1;
-    repeated int32 cards = 2;
+    int32 left = 2;
+}
+
+message tingCards {
+    int32 card = 1;
+    repeated tingCard cards = 2;
 }
 
 // 可以听牌了
 message CanTingEvent {
-    repeated tingCard tingCards = 1;
+    repeated tingCards tingCards = 1;
 }
 // endregion

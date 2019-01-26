@@ -33,6 +33,7 @@ It has these top-level messages:
 	ChangeBaoCardEvent
 	ChangeMasterEvent
 	TingCard
+	TingCards
 	CanTingEvent
 */
 package zlmj
