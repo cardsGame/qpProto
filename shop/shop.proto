@@ -48,6 +48,7 @@ message Good {
     int32 state = 10;
     int32 currencyType = 11;
     repeated Item items = 12;
+    repeated string tag = 13;
 }
 
 message GetGoodsListRequest {
@@ -70,6 +71,7 @@ message GetGoodsListResponse {
         int32 state = 10;
         int32 currencyType = 11;
         repeated Item items = 12;
+        repeated string tag = 13;
     }
     repeated good Goods = 1;
 }
@@ -86,6 +88,7 @@ message AddOneGoodRequest {
     int32 state = 9;
     int32 currencyType = 10;
     repeated Item items = 11;
+    repeated string  tag = 12;
 }
 
 
