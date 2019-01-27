@@ -50,6 +50,10 @@ message PlayerData {
     repeated int32 disableCards = 11;
     bool isReportTing = 12;
     repeated Action actions = 13;
+    repeated Combination combinations = 14; // 组合
+    bool isTing = 15; // 是否已经停了
+    repeated tingCards tingCards = 16; // 能听的牌
+    bool canTing= 17; // 是否可以听
 }
 
 // 状态
@@ -77,6 +81,12 @@ enum ActionId {
     ming_xi_gang = 12; // 明喜杠
     bu_an_xi_gang = 13; // 补暗喜杠
     bu_ming_xi_gang = 14; // 补明喜杠
+    chi_ting = 15; // 吃听
+    peng_ting = 16; // 碰听
+    gang_ting = 17; // 杠听
+    hu = 18; // 胡 点炮
+    zimo = 19;// 自摸
+    qiang_gang_hu = 20; // 抢杠胡
 }
 
 // 玩家操作
@@ -115,6 +125,7 @@ message Req {
         WantHoldsReq wantHoldsReq = 2;
         DoActionReq doActionReq = 3;
         PassReq passReq = 4;
+        TingReq tingReq = 5;
     }
 }
 
@@ -136,6 +147,9 @@ message Event {
         RemoveActionEvent removeActionEvent = 7;
         DispatchActionEvent dispatchActionEvent = 8;
         ChangeBaoCardEvent changeBaoCardEvent = 9;
+        ChangeMasterEvent changeMasterEvent = 10;
+        CanTingEvent canTingEvent = 11;
+        TingEvent tingEvent = 12;
     }
 }
 
@@ -159,6 +173,11 @@ message DoActionReq {
 // 过请求
 message PassReq {
 
+}
+
+// 报听请求
+message TingReq {
+    int32 card = 1;
 }
 // endregion
 
@@ -223,5 +242,32 @@ message DispatchActionEvent {
 // 宝牌更换事件
 message ChangeBaoCardEvent {
 
+}
+
+// 庄家更改事件
+message ChangeMasterEvent {
+    int32 index = 1; // 座位号
+}
+
+// 听牌结构
+message tingCard {
+    int32 card = 1;
+    int32 left = 2;
+}
+
+message tingCards {
+    int32 card = 1;
+    repeated tingCard cards = 2;
+}
+
+// 可以听牌了
+message CanTingEvent {
+    repeated tingCards tingCards = 1;
+}
+
+// 玩家报停
+message TingEvent {
+    int32 index = 1; // 座位号
+    int32 card = 2; // 听时打出的牌
 }
 // endregion

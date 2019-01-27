@@ -17,6 +17,11 @@ message UserInfo {
     int32 lvl = 11;
     int32 lvlExpc = 12;
     map<string, int32> bag = 13;
+    bool realNameCertification = 14; // 是否完成了实名认证
+    bool phoneCertification = 15; // 是否完成了手机认证
+    string phone = 16;// 手机号
+    string idNo = 17; // 身份证号
+    string realName = 18; // 真实姓名
 }
 
 // 用户查询服务
@@ -43,6 +48,10 @@ service UserAuth{
     rpc SignInGame(SignInGameRequest) returns (UserInfo) {}
     // 验证token
     rpc VerifyToken(VerifyTokenRequest) returns(PayloadToken) {}
+    // 申请实名认证
+    rpc RealNameCertification(RealNameCertificationRequest) returns (RealNameCertificationResponse) {}
+    // 申请手机认证
+    rpc PhoneCertification (PhoneCertificationRequest) returns(PhoneCertificationResponse) {}
 }
 
 // 本地登录认证请求
@@ -109,6 +118,30 @@ message AddItemsRequest {
 message UserUpdate {
     repeated Item getItems = 1;
     UserInfo userUpdate = 2;
+}
+
+// 申请实名认证请求
+message RealNameCertificationRequest {
+    string idNo = 1;
+    string realName = 2;
+}
+
+// 申请实名认证响应
+message RealNameCertificationResponse {
+    string idNo = 1;
+    string realName = 2;
+    bool realNameCertification = 3;
+}
+
+// 申请手机认证请求
+message PhoneCertificationRequest {
+    string phone =  1;
+}
+
+// 申请手机认证响应
+message PhoneCertificationResponse {
+    string phone =  1;
+    bool phoneCertification = 2;
 }
 
 // 物品

@@ -19,6 +19,7 @@ message RoomOption {
     bool ipRaging = 6; // ip测距
     bool gpsRaging = 7; // gps测距
     int32 totalPlayerCount = 8;
+    int32 totalCircle = 9; // 圈数
 }
 
 // 房间状态
@@ -123,6 +124,7 @@ message Req {
         EmojiChatReq emojiChatReq = 13;
         VoiceChatReq voiceChatReq = 14;
         StartReq startReq = 15;
+        CreateRoomRequest createRoomRequest = 16;
     }
 
     oneof gameReq {
@@ -134,6 +136,7 @@ message Rsp {
     oneof rsp {
         ErrorRsp errorRsp = 1;
         EnterRoomRsp enterRoomRsp = 2;
+        CreateRoomResponse createRoomResponse = 3;
     }
 
     oneof gameRsp {

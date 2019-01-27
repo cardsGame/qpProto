@@ -20,6 +20,7 @@ It has these top-level messages:
 	DiscardsReq
 	DoActionReq
 	PassReq
+	TingReq
 	ErrorRsp
 	DiscardsRsp
 	GameStartEvent
@@ -31,6 +32,11 @@ It has these top-level messages:
 	RemoveActionEvent
 	DispatchActionEvent
 	ChangeBaoCardEvent
+	ChangeMasterEvent
+	TingCard
+	TingCards
+	CanTingEvent
+	TingEvent
 */
 package zlmj
 

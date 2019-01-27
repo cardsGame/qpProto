@@ -18,6 +18,10 @@ It has these top-level messages:
 	UpdateOneGoodResponse
 	BuyOneGoodRequest
 	BuyOneGoodResponse
+	GetOneGoodRequest
+	GetOneGoodResponse
+	DelOneGoodRequest
+	DelOneGoodResponse
 */
 package shop
 
@@ -134,10 +138,14 @@ type ShopAdminService interface {
 	GetGoodsList(ctx context.Context, in *GetGoodsListRequest, opts ...client.CallOption) (*GetGoodsListResponse, error)
 	// 新增一个货物到商城
 	AddOneGood(ctx context.Context, in *AddOneGoodRequest, opts ...client.CallOption) (*AddOneGoodResponse, error)
+	// 得到一个物品的详细信息
+	GetOneGood(ctx context.Context, in *GetOneGoodRequest, opts ...client.CallOption) (*GetOneGoodResponse, error)
 	// 更新一个
 	UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, opts ...client.CallOption) (*UpdateOneGoodResponse, error)
 	// 购买单个物品(可以调节数量)
 	BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, opts ...client.CallOption) (*BuyOneGoodResponse, error)
+	// 删除一个物品
+	DeleteOneGood(ctx context.Context, in *DelOneGoodRequest, opts ...client.CallOption) (*DelOneGoodResponse, error)
 }
 
 type shopAdminService struct {
@@ -178,6 +186,16 @@ func (c *shopAdminService) AddOneGood(ctx context.Context, in *AddOneGoodRequest
 	return out, nil
 }
 
+func (c *shopAdminService) GetOneGood(ctx context.Context, in *GetOneGoodRequest, opts ...client.CallOption) (*GetOneGoodResponse, error) {
+	req := c.c.NewRequest(c.name, "ShopAdminService.GetOneGood", in)
+	out := new(GetOneGoodResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *shopAdminService) UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, opts ...client.CallOption) (*UpdateOneGoodResponse, error) {
 	req := c.c.NewRequest(c.name, "ShopAdminService.UpdateOneGood", in)
 	out := new(UpdateOneGoodResponse)
@@ -198,6 +216,16 @@ func (c *shopAdminService) BuyOneGood(ctx context.Context, in *BuyOneGoodRequest
 	return out, nil
 }
 
+func (c *shopAdminService) DeleteOneGood(ctx context.Context, in *DelOneGoodRequest, opts ...client.CallOption) (*DelOneGoodResponse, error) {
+	req := c.c.NewRequest(c.name, "ShopAdminService.DeleteOneGood", in)
+	out := new(DelOneGoodResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ShopAdminService service
 
 type ShopAdminServiceHandler interface {
@@ -205,18 +233,24 @@ type ShopAdminServiceHandler interface {
 	GetGoodsList(context.Context, *GetGoodsListRequest, *GetGoodsListResponse) error
 	// 新增一个货物到商城
 	AddOneGood(context.Context, *AddOneGoodRequest, *AddOneGoodResponse) error
+	// 得到一个物品的详细信息
+	GetOneGood(context.Context, *GetOneGoodRequest, *GetOneGoodResponse) error
 	// 更新一个
 	UpdateOneGood(context.Context, *UpdateOneGoodRequest, *UpdateOneGoodResponse) error
 	// 购买单个物品(可以调节数量)
 	BuyOneGood(context.Context, *BuyOneGoodRequest, *BuyOneGoodResponse) error
+	// 删除一个物品
+	DeleteOneGood(context.Context, *DelOneGoodRequest, *DelOneGoodResponse) error
 }
 
 func RegisterShopAdminServiceHandler(s server.Server, hdlr ShopAdminServiceHandler, opts ...server.HandlerOption) error {
 	type shopAdminService interface {
 		GetGoodsList(ctx context.Context, in *GetGoodsListRequest, out *GetGoodsListResponse) error
 		AddOneGood(ctx context.Context, in *AddOneGoodRequest, out *AddOneGoodResponse) error
+		GetOneGood(ctx context.Context, in *GetOneGoodRequest, out *GetOneGoodResponse) error
 		UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, out *UpdateOneGoodResponse) error
 		BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, out *BuyOneGoodResponse) error
+		DeleteOneGood(ctx context.Context, in *DelOneGoodRequest, out *DelOneGoodResponse) error
 	}
 	type ShopAdminService struct {
 		shopAdminService
@@ -237,10 +271,18 @@ func (h *shopAdminServiceHandler) AddOneGood(ctx context.Context, in *AddOneGood
 	return h.ShopAdminServiceHandler.AddOneGood(ctx, in, out)
 }
 
+func (h *shopAdminServiceHandler) GetOneGood(ctx context.Context, in *GetOneGoodRequest, out *GetOneGoodResponse) error {
+	return h.ShopAdminServiceHandler.GetOneGood(ctx, in, out)
+}
+
 func (h *shopAdminServiceHandler) UpdateOneGood(ctx context.Context, in *UpdateOneGoodRequest, out *UpdateOneGoodResponse) error {
 	return h.ShopAdminServiceHandler.UpdateOneGood(ctx, in, out)
 }
 
 func (h *shopAdminServiceHandler) BuyOneGood(ctx context.Context, in *BuyOneGoodRequest, out *BuyOneGoodResponse) error {
 	return h.ShopAdminServiceHandler.BuyOneGood(ctx, in, out)
+}
+
+func (h *shopAdminServiceHandler) DeleteOneGood(ctx context.Context, in *DelOneGoodRequest, out *DelOneGoodResponse) error {
+	return h.ShopAdminServiceHandler.DeleteOneGood(ctx, in, out)
 }
