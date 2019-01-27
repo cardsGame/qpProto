@@ -34,6 +34,7 @@ enum RoomState {
 enum RoomLimit {
     limit_round = 0; // 限局
     limit_time = 1; // 限时
+    limit_circle = 2; // 限圈
 }
 
 message PlayerData {
