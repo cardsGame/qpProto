@@ -77,8 +77,25 @@ message CreateRoomRequest{
     }
 }
 
+// 创建亲友圈房间请求
+message CreateCircleRoomRequest {
+    room.GameType gameType = 1;
+    RoomOption roomOption = 2;
+    oneof gameOption {
+        zlmj.Option zlmj = 3;
+    }
+    string circleNo = 4; // 亲友圈号
+}
+
 // 创建房间响应
 message CreateRoomResponse {
+    string roomNo = 1;
+    room.GameType gameType = 2;
+    room.RoomType roomType = 3;
+}
+
+// 创建亲友圈房间响应
+message CreateCircleRoomResponse {
     string roomNo = 1;
     room.GameType gameType = 2;
     room.RoomType roomType = 3;
@@ -127,6 +144,7 @@ message Req {
         VoiceChatReq voiceChatReq = 14;
         StartReq startReq = 15;
         CreateRoomRequest createRoomRequest = 16;
+        CreateCircleRoomRequest createCircleRoomRequest = 17;
     }
 
     oneof gameReq {
@@ -139,6 +157,7 @@ message Rsp {
         ErrorRsp errorRsp = 1;
         EnterRoomRsp enterRoomRsp = 2;
         CreateRoomResponse createRoomResponse = 3;
+        CreateCircleRoomResponse createCircleRoomResponse = 4;
     }
 
     oneof gameRsp {
