@@ -7,14 +7,17 @@ service CircleMasterService {
     // 更新
     rpc UpdateCircle(UpdateCircleRequest) returns (UpdateCircleResponse) {}
 
-    // 获取列表
+    // 获取圈子列表
     rpc GetCircleList(GetCircleListRequest) returns (GetCircleListResponse) {}
+
+    // 获取成员列表
+    rpc GetCircleMembers(GetCircleMembersRequest) returns (GetCircleMembersResponse) {}
 
     // 删除圈子
     rpc DelCircle(DelCircleRequest) returns (DelCircleResponse) {}
 
-    // 获取圈子的消息
-    rpc GetCircleMessage(GetCircleMsgRequest) returns (GetCircleMsgResponse) {}
+    // 获取圈子的日志
+    rpc GetCircleLog(GetCircleLogRequest) returns (GetCircleLogResponse) {}
 
     // 处理圈子消息
     rpc DealMessage(DealMessageRequest) returns (DealMessageResponse) {}
@@ -22,27 +25,39 @@ service CircleMasterService {
     // 处理申请
     rpc DealApply(DealApplyRequest) returns (DealApplyResponse) {}
 
-    // 获取申请
+    // 获取加入圈子申请
     rpc GetApplyList(GetApplyListRequest) returns (GetApplyListResponse) {}
+
+    // 获取退出圈子申请
+    rpc GetQuiteList(GetQuiteListRequest) returns (GetQuiteListResponse) {}
+
+    // 处理用户退出申请
+    rpc DealQuit(DealQuitRequest) returns (DealQuitResponse) {}
 
 }
 
 
 service CircleUserService {
-    // 获取列表
+    // 获取圈子列表
     rpc GetCircleList(GetCircleListRequest) returns (GetCircleListResponse) {}
 
     // 申请加入圈子
     rpc ApplyJoinCircle(ApplyJoinCircleRequest) returns (ApplyJoinCircleResponse) {}
 
-    // 获取圈子的消息
-    rpc GetCircleMessage(GetCircleMsgRequest) returns (GetCircleMsgResponse) {}
+    // 获取圈子的日志
+    rpc GetCircleLog(GetCircleLogRequest) returns (GetCircleLogResponse) {}
+
+    // 玩家申请离开圈子
+    rpc ApplyQuitCircle(ApplyQuitCircleRequest) returns (ApplyQuitCircleResponse) {}
+
+    //    // 获取圈子详细信息
+    //    rpc GerCircleDetail(GerCircleDetailRequest) returns (GerCircleDetailResponse) {}
 }
 
 message BuildCircleRequest {
-    string Name = 1;
-    string Notice = 2;
-    User U = 3;
+    string name = 1;
+    string notice = 2;
+    User u = 3;
 }
 
 message BuildCircleResponse {
@@ -51,8 +66,8 @@ message BuildCircleResponse {
 
 
 message UpdateCircleRequest {
-    int32 CircleId = 1;
-    int32 OwnerId = 2;
+    int32 circleId = 1;
+    int32 ownerId = 2;
     map<string, string> update = 3;
 }
 
@@ -61,17 +76,17 @@ message UpdateCircleResponse {
 }
 
 message GetCircleListRequest {
-    int32 OwnerId = 1;
+    int32 uid = 1;
 }
 
 message GetCircleListResponse {
-    repeated Circle Circles = 1;
+    repeated Circle circles = 1;
 }
 
 
 message DelCircleRequest {
-    int32 OwnerId = 1;
-    int32 CircleId = 2;
+    int32 ownerId = 1;
+    int32 circleId = 2;
 }
 
 message DelCircleResponse {
@@ -79,42 +94,34 @@ message DelCircleResponse {
 }
 
 message ApplyJoinCircleRequest {
-    int32 CircleId = 1;
-    int32 UId = 2;
+    int32 circleId = 1;
+    User user =2 ;
+
 }
 
 message ApplyJoinCircleResponse {
     bool success  = 1;
-    string Message = 2;
+    CircleMsg message = 2;
 }
 
-message GetCircleMsgRequest {
-    int32 OwnerId = 1;
-    int32 CircleId = 2;
-    Tp T = 3;
-    int32 Page = 4;
-    int32 Limit = 5;
-
-    enum Tp {
-        UNIVERSAL = 0;
-        JOIN = 1;  // 加入圈子
-        QUIT = 2;  // 退出圈子
-        KICK = 3;  // 踢出圈子
-        APPLY = 4; // 申请加入圈子
-    }
+message GetCircleLogRequest {
+    int32 circleId = 1;
+    int32 page = 2;
+    int32 limit = 3;
+    int32 userId = 4;
 }
 
-message GetCircleMsgResponse {
-    repeated CircleMsg ApplyMsgs = 1;
+message GetCircleLogResponse {
+    repeated CircleMsg applyMsgs = 1;
 }
 
 message DealApplyRequest {
-    User U = 1;
-    int32 CircleId = 2;
-    int32 OwnerId = 3;
-    int32 MsgId = 4;
-    int32 UserId = 5;
-    bool Agree = 6;
+    User u = 1;
+    int32 circleId = 2;
+    int32 ownerId = 3;
+    int32 msgId = 4;
+    int32 userId = 5;
+    bool agree = 6;
 }
 
 message DealApplyResponse {
@@ -124,9 +131,9 @@ message DealApplyResponse {
 
 
 message DealMessageRequest {
-    int32 MsgId = 1;
-    int32 OwnerId = 2;
-    int32 CircleId = 3;
+    int32 msgId = 1;
+    int32 ownerId = 2;
+    int32 circleId = 3;
 }
 
 message DealMessageResponse {
@@ -134,56 +141,123 @@ message DealMessageResponse {
 }
 
 message GetApplyListRequest {
-    int32 CircleId = 1;
-    int32 OwnerId = 2;
-    int32 Page = 3;
-    int32 Limit = 4;
+    int32 circleId = 1;
+    int32 ownerId = 2;
+    int32 page = 3;
+    int32 limit = 4;
 }
 
 message GetApplyListResponse {
-    repeated CircleMsg ApplyMsgs = 1;
+    repeated CircleMsg applyMsgs = 1;
+}
+
+
+message GetQuiteListRequest {
+    int32 circleId = 1;
+    int32 ownerId = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+
+message GetQuiteListResponse {
+    repeated CircleMsg applyMsgs = 1;
+}
+
+message DealQuitRequest {
+    int32 circleId = 1;
+    int32 ownerId = 2;
+    int32 msgId = 3;
+    int32 userId = 4;
+    bool agree = 5;
+}
+
+message DealQuitResponse {
+    bool success = 1;
+    CircleUser user = 2;
+}
+
+
+message ApplyQuitCircleRequest {
+    int32 circleId = 1;
+    int32 uid = 2;
+}
+
+message ApplyQuitCircleResponse {
+    bool success = 1;
+}
+
+
+
+message GerCircleDetailRequest {
+    int32 circleId = 1;
+}
+
+message GerCircleDetailResponse {
+    int32 ownerId = 1;
+    string createAt = 2;
+    string updateAt = 3;
+    string notice = 4;
+    string name = 5;
+    int32 circleId = 6;
+    int32 memberCount = 7;
+}
+
+message GetCircleMembersRequest {
+    int32 circleId = 1;
+    int32 ownerId = 2;
+}
+
+message GetCircleMembersResponse {
+    repeated CircleUser users =1;
 }
 
 message CircleUser {
-    int32 Id = 1;
-    string Name = 2;
-    string ImgUrl = 3;
-    int32 UserId = 4;
-    string JoinAt = 5;
-    int32 CircleId = 6;
+    int32 id = 1;
+    string name = 2;
+    string imgUrl = 3;
+    int32 userId = 4;
+    string joinAt = 5;
+    int32 circleId = 6;
+    string remark = 7;
+    int32 totalGameCount = 8;
+    int32 preGameCount = 9;
 }
 
 message User {
-    int32 Id = 1;
-    string ImgUrl = 2;
-    string Name = 3;
+    int32 id = 1;
+    string imgUrl = 2;
+    string name = 3;
 }
 
 message CircleMsg {
-    int32 Id = 1;
-    string Content = 2;
-    Tp T = 3;
-    string UpdateAt = 4;
-    string CreateAt = 5;
-    int32 UserId = 6;
-    User U = 7;
+    int32 id = 1;
+    string content = 2;
+    Tp t = 3;
+    string updateAt = 4;
+    string createAt = 5;
+    int32 userId = 6;
+    User u = 7;
 
     enum Tp {
         UNIVERSAL = 0;
-        JOIN = 1;  // 加入圈子
-        QUIT = 2;  // 退出圈子
-        KICK = 3;  // 踢出圈子
-        APPLY = 4; // 申请加入圈子
+        JOIN = 1;       // 加入圈子
+        QUIT = 2;       // 退出圈子
+        KICK = 3;       // 踢出圈子
+        APPLY = 4;      // 申请加入圈子
+        APPLY_QUIT = 5; // 申请退出圈子
     }
 }
 
 message Circle {
-    int32 OwnerId = 1;
-    string CreateAt = 2;
-    string UpdateAt = 3;
-    string Notice = 4;
-    string Name = 5;
-    int32 CircleId = 6;
-    int32 MemberCount = 7;
+    int32 ownerId = 1;
+    string createAt = 2;
+    string updateAt = 3;
+    //    string Notice = 4;
+    string name = 4;
+    int32 circleId = 5;
+    int32 memberCount = 6;
 }
+
+
 
