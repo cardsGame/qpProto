@@ -85,7 +85,7 @@ message CreateCircleRoomRequest {
     oneof gameOption {
         zlmj.Option zlmj = 3;
     }
-    string circleNo = 4; // 亲友圈号
+    string circleId = 4; // 亲友圈号
 }
 
 // 创建房间响应
@@ -114,7 +114,7 @@ message GetPlayingResponse {
 
 // 获取亲友圈进行中的房间
 message GetCirclePlayingRequest {
-    string circleNo = 1; // 亲友圈号
+    string circleId = 1; // 亲友圈号
 }
 
 // 获取亲友圈进行中的房间响应
