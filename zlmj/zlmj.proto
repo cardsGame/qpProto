@@ -55,6 +55,7 @@ message PlayerData {
     repeated tingCards tingCards = 16; // 能听的牌
     bool canTing= 17; // 是否可以听
     repeated HuType huTypes = 18; // 胡的种类
+    WinType winType = 19; // 赢的类型
 }
 
 // 状态
@@ -116,6 +117,15 @@ enum CombinationId {
 enum HuType {
     none = 0; // 占位符
     qi_xiao_dui = 1; // 七对
+}
+
+// 赢的类型
+enum WinType {
+    win_empty = 0; // 占位符
+    win_dianpao = 1; // 点炮
+    win_zimo = 2; // 自摸
+    win_hu = 3; // 点炮赢了
+    win_qiangganghu = 4;// 抢杠胡
 }
 
 // 组合
