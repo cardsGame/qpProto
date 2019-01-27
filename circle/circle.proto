@@ -34,6 +34,7 @@ service CircleMasterService {
     // 处理用户退出申请
     rpc DealQuit(DealQuitRequest) returns (DealQuitResponse) {}
 
+
 }
 
 
@@ -44,14 +45,18 @@ service CircleUserService {
     // 申请加入圈子
     rpc ApplyJoinCircle(ApplyJoinCircleRequest) returns (ApplyJoinCircleResponse) {}
 
+    // 获取成员列表
+    rpc GetCircleMembers(GetCircleMembersRequest) returns (GetCircleMembersResponse) {}
+
     // 获取圈子的日志
     rpc GetCircleLog(GetCircleLogRequest) returns (GetCircleLogResponse) {}
 
     // 玩家申请离开圈子
     rpc ApplyQuitCircle(ApplyQuitCircleRequest) returns (ApplyQuitCircleResponse) {}
 
-    //    // 获取圈子详细信息
-    //    rpc GerCircleDetail(GerCircleDetailRequest) returns (GerCircleDetailResponse) {}
+    // 获取圈子详细信息
+    rpc GerCircleDetail(GerCircleDetailRequest) returns (GerCircleDetailResponse) {}
+
 }
 
 message BuildCircleRequest {
@@ -197,10 +202,10 @@ message GerCircleDetailResponse {
     int32 ownerId = 1;
     string createAt = 2;
     string updateAt = 3;
-    string notice = 4;
-    string name = 5;
-    int32 circleId = 6;
-    int32 memberCount = 7;
+    string name = 4;
+    int32 circleId = 5;
+    int32 memberCount = 6;
+    int32 roomCard = 7;
 }
 
 message GetCircleMembersRequest {
