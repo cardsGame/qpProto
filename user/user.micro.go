@@ -20,6 +20,10 @@ It has these top-level messages:
 	GetAllUserResponse
 	AddItemsRequest
 	UserUpdate
+	RealNameCertificationRequest
+	RealNameCertificationResponse
+	PhoneCertificationRequest
+	PhoneCertificationResponse
 	Item
 */
 package user
@@ -202,6 +206,10 @@ type UserAuthService interface {
 	SignInGame(ctx context.Context, in *SignInGameRequest, opts ...client.CallOption) (*UserInfo, error)
 	// 验证token
 	VerifyToken(ctx context.Context, in *VerifyTokenRequest, opts ...client.CallOption) (*PayloadToken, error)
+	// 申请实名认证
+	RealNameCertification(ctx context.Context, in *RealNameCertificationRequest, opts ...client.CallOption) (*RealNameCertificationResponse, error)
+	// 申请手机认证
+	PhoneCertification(ctx context.Context, in *PhoneCertificationRequest, opts ...client.CallOption) (*PhoneCertificationResponse, error)
 }
 
 type userAuthService struct {
@@ -262,6 +270,26 @@ func (c *userAuthService) VerifyToken(ctx context.Context, in *VerifyTokenReques
 	return out, nil
 }
 
+func (c *userAuthService) RealNameCertification(ctx context.Context, in *RealNameCertificationRequest, opts ...client.CallOption) (*RealNameCertificationResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAuth.RealNameCertification", in)
+	out := new(RealNameCertificationResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthService) PhoneCertification(ctx context.Context, in *PhoneCertificationRequest, opts ...client.CallOption) (*PhoneCertificationResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAuth.PhoneCertification", in)
+	out := new(PhoneCertificationResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAuth service
 
 type UserAuthHandler interface {
@@ -273,6 +301,10 @@ type UserAuthHandler interface {
 	SignInGame(context.Context, *SignInGameRequest, *UserInfo) error
 	// 验证token
 	VerifyToken(context.Context, *VerifyTokenRequest, *PayloadToken) error
+	// 申请实名认证
+	RealNameCertification(context.Context, *RealNameCertificationRequest, *RealNameCertificationResponse) error
+	// 申请手机认证
+	PhoneCertification(context.Context, *PhoneCertificationRequest, *PhoneCertificationResponse) error
 }
 
 func RegisterUserAuthHandler(s server.Server, hdlr UserAuthHandler, opts ...server.HandlerOption) error {
@@ -281,6 +313,8 @@ func RegisterUserAuthHandler(s server.Server, hdlr UserAuthHandler, opts ...serv
 		AuthWxH5(ctx context.Context, in *AuthWxH5Request, out *PayloadToken) error
 		SignInGame(ctx context.Context, in *SignInGameRequest, out *UserInfo) error
 		VerifyToken(ctx context.Context, in *VerifyTokenRequest, out *PayloadToken) error
+		RealNameCertification(ctx context.Context, in *RealNameCertificationRequest, out *RealNameCertificationResponse) error
+		PhoneCertification(ctx context.Context, in *PhoneCertificationRequest, out *PhoneCertificationResponse) error
 	}
 	type UserAuth struct {
 		userAuth
@@ -307,4 +341,12 @@ func (h *userAuthHandler) SignInGame(ctx context.Context, in *SignInGameRequest,
 
 func (h *userAuthHandler) VerifyToken(ctx context.Context, in *VerifyTokenRequest, out *PayloadToken) error {
 	return h.UserAuthHandler.VerifyToken(ctx, in, out)
+}
+
+func (h *userAuthHandler) RealNameCertification(ctx context.Context, in *RealNameCertificationRequest, out *RealNameCertificationResponse) error {
+	return h.UserAuthHandler.RealNameCertification(ctx, in, out)
+}
+
+func (h *userAuthHandler) PhoneCertification(ctx context.Context, in *PhoneCertificationRequest, out *PhoneCertificationResponse) error {
+	return h.UserAuthHandler.PhoneCertification(ctx, in, out)
 }

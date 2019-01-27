@@ -1,4 +1,6 @@
 syntax = "proto3";
+package history;
+import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 service History {
     rpc GetUserHistroy(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
@@ -12,43 +14,7 @@ message GetUserHistoryRequest {
 
 // 获取用户战绩响应
 message GetUserHistoryResponse {
-
-}
-
-// 游戏记录
-message GameRecord {
-    int32 state = 1;
-    string createAt = 3; // 创建时间
-    string overAt = 4; // 结束时间
-}
-
-// 游戏玩家
-message GamePlayerData {
-    int32 userId = 1;
-    int32 score = 2;
-    int32 index = 4;
-    int32 totalScore = 5;
-}
-
-// 房间记录
-message RoomRecordData {
-    string roomNo = 1; // 房间号
-    string realRoomNo = 2; // 真实房间号
-    int32 gameType = 3; // 游戏类型
-    int32 roomType = 4; // 房间类型
-    int32 state = 5; // 状态
-    string createAt = 6; // 创建时间
-    string overAt = 7; // 结束时间
-    string familyCircleNo= 8; // 亲友圈号
-    int32 overType = 9; // 结束类型
-    repeated RoomPlayerData players = 10; // 房间的玩家
-}
-
-// 房间玩家
-message RoomPlayerData {
-    int32 userId = 1;
-    string headimgUrl = 2;
-    int32 gender = 3;
-    string nickName= 4;
-    int32 role = 5;
+    oneof room {
+        friendRoom.RoomData friendRoomData  = 1;
+    }
 }
