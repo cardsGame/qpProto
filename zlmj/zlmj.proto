@@ -54,6 +54,7 @@ message PlayerData {
     bool isTing = 15; // 是否已经停了
     repeated tingCards tingCards = 16; // 能听的牌
     bool canTing= 17; // 是否可以听
+    repeated HuType huTypes = 18; // 胡的种类
 }
 
 // 状态
@@ -111,6 +112,12 @@ enum CombinationId {
     c_ming_xi_gang = 8; // 明喜杠组合
 }
 
+// 胡的种类
+enum HuType {
+    none = 0; // 占位符
+    qi_xiao_dui = 1; // 七对
+}
+
 // 组合
 message Combination {
     CombinationId combinationId = 1;
@@ -150,6 +157,7 @@ message Event {
         ChangeMasterEvent changeMasterEvent = 10;
         CanTingEvent canTingEvent = 11;
         TingEvent tingEvent = 12;
+        GameOverEvent gameOverEvent = 13;
     }
 }
 
@@ -247,6 +255,12 @@ message ChangeBaoCardEvent {
 // 庄家更改事件
 message ChangeMasterEvent {
     int32 index = 1; // 座位号
+}
+
+// 游戏结束
+message GameOverEvent {
+    repeated PlayerData players = 1;
+    State state = 2;
 }
 
 // 听牌结构
