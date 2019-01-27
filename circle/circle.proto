@@ -73,7 +73,7 @@ message BuildCircleResponse {
 
 
 message UpdateCircleRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 ownerId = 2;
     map<string, string> update = 3;
 }
@@ -93,7 +93,7 @@ message GetCircleListResponse {
 
 message DelCircleRequest {
     int32 ownerId = 1;
-    int32 circleId = 2;
+    string circleId = 2;
 }
 
 message DelCircleResponse {
@@ -101,7 +101,7 @@ message DelCircleResponse {
 }
 
 message ApplyJoinCircleRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     User user =2 ;
 
 }
@@ -112,7 +112,7 @@ message ApplyJoinCircleResponse {
 }
 
 message GetCircleLogRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 page = 2;
     int32 limit = 3;
     int32 userId = 4;
@@ -124,7 +124,7 @@ message GetCircleLogResponse {
 
 message DealApplyRequest {
     User u = 1;
-    int32 circleId = 2;
+    string circleId = 2;
     int32 ownerId = 3;
     int32 msgId = 4;
     int32 userId = 5;
@@ -140,7 +140,7 @@ message DealApplyResponse {
 message DealMessageRequest {
     int32 msgId = 1;
     int32 ownerId = 2;
-    int32 circleId = 3;
+    string circleId = 3;
 }
 
 message DealMessageResponse {
@@ -148,7 +148,7 @@ message DealMessageResponse {
 }
 
 message GetApplyListRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 ownerId = 2;
     int32 page = 3;
     int32 limit = 4;
@@ -160,7 +160,7 @@ message GetApplyListResponse {
 
 
 message GetQuiteListRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 ownerId = 2;
     int32 page = 3;
     int32 limit = 4;
@@ -172,7 +172,7 @@ message GetQuiteListResponse {
 }
 
 message DealQuitRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 ownerId = 2;
     int32 msgId = 3;
     int32 userId = 4;
@@ -186,7 +186,7 @@ message DealQuitResponse {
 
 
 message ApplyQuitCircleRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 uid = 2;
 }
 
@@ -196,7 +196,7 @@ message ApplyQuitCircleResponse {
 
 
 message GerCircleDetailRequest {
-    int32 circleId = 1;
+    string circleId = 1;
 }
 
 message GerCircleDetailResponse {
@@ -204,13 +204,13 @@ message GerCircleDetailResponse {
     string createAt = 2;
     string updateAt = 3;
     string name = 4;
-    int32 circleId = 5;
+    string circleId = 5;
     int32 memberCount = 6;
     int32 roomCard = 7;
 }
 
 message GetCircleMembersRequest {
-    int32 circleId = 1;
+    string circleId = 1;
     int32 ownerId = 2;
 }
 
@@ -219,7 +219,7 @@ message GetCircleMembersResponse {
 }
 
 message GetCircleInfoRequest {
-    int32 circleId = 1;
+    string circleId = 1;
 }
 
 message GetCircleInfoResponse {
@@ -233,7 +233,7 @@ message CircleUser {
     string imgUrl = 3;
     int32 userId = 4;
     string joinAt = 5;
-    int32 circleId = 6;
+    string circleId = 6;
     string remark = 7;
     int32 totalGameCount = 8;
     int32 preGameCount = 9;
@@ -270,9 +270,6 @@ message Circle {
     string updateAt = 3;
     //    string Notice = 4;
     string name = 4;
-    int32 circleId = 5;
+    string circleId = 5;
     int32 memberCount = 6;
 }
-
-
-
