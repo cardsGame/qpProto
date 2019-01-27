@@ -33,6 +33,7 @@ It has these top-level messages:
 	DispatchActionEvent
 	ChangeBaoCardEvent
 	ChangeMasterEvent
+	GameOverEvent
 	TingCard
 	TingCards
 	CanTingEvent
