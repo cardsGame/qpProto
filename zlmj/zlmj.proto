@@ -50,6 +50,10 @@ message PlayerData {
     repeated int32 disableCards = 11;
     bool isReportTing = 12;
     repeated Action actions = 13;
+    repeated Combination combinations = 14; // 组合
+    bool isTing = 15; // 是否已经停了
+    repeated tingCards tingCards = 16; // 能听的牌
+    bool canTing= 17; // 是否可以听
 }
 
 // 状态
