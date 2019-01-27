@@ -36,6 +36,8 @@ It has these top-level messages:
 	GerCircleDetailResponse
 	GetCircleMembersRequest
 	GetCircleMembersResponse
+	GetCircleInfoRequest
+	GetCircleInfoResponse
 	CircleUser
 	User
 	CircleMsg
@@ -94,6 +96,8 @@ type CircleMasterService interface {
 	GetQuiteList(ctx context.Context, in *GetQuiteListRequest, opts ...client.CallOption) (*GetQuiteListResponse, error)
 	// 处理用户退出申请
 	DealQuit(ctx context.Context, in *DealQuitRequest, opts ...client.CallOption) (*DealQuitResponse, error)
+	// 详细信息
+	GetCircleInfo(ctx context.Context, in *GetCircleInfoRequest, opts ...client.CallOption) (*GetCircleInfoResponse, error)
 }
 
 type circleMasterService struct {
@@ -224,6 +228,16 @@ func (c *circleMasterService) DealQuit(ctx context.Context, in *DealQuitRequest,
 	return out, nil
 }
 
+func (c *circleMasterService) GetCircleInfo(ctx context.Context, in *GetCircleInfoRequest, opts ...client.CallOption) (*GetCircleInfoResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleMasterService.GetCircleInfo", in)
+	out := new(GetCircleInfoResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CircleMasterService service
 
 type CircleMasterServiceHandler interface {
@@ -249,6 +263,8 @@ type CircleMasterServiceHandler interface {
 	GetQuiteList(context.Context, *GetQuiteListRequest, *GetQuiteListResponse) error
 	// 处理用户退出申请
 	DealQuit(context.Context, *DealQuitRequest, *DealQuitResponse) error
+	// 详细信息
+	GetCircleInfo(context.Context, *GetCircleInfoRequest, *GetCircleInfoResponse) error
 }
 
 func RegisterCircleMasterServiceHandler(s server.Server, hdlr CircleMasterServiceHandler, opts ...server.HandlerOption) error {
@@ -264,6 +280,7 @@ func RegisterCircleMasterServiceHandler(s server.Server, hdlr CircleMasterServic
 		GetApplyList(ctx context.Context, in *GetApplyListRequest, out *GetApplyListResponse) error
 		GetQuiteList(ctx context.Context, in *GetQuiteListRequest, out *GetQuiteListResponse) error
 		DealQuit(ctx context.Context, in *DealQuitRequest, out *DealQuitResponse) error
+		GetCircleInfo(ctx context.Context, in *GetCircleInfoRequest, out *GetCircleInfoResponse) error
 	}
 	type CircleMasterService struct {
 		circleMasterService
@@ -318,6 +335,10 @@ func (h *circleMasterServiceHandler) GetQuiteList(ctx context.Context, in *GetQu
 
 func (h *circleMasterServiceHandler) DealQuit(ctx context.Context, in *DealQuitRequest, out *DealQuitResponse) error {
 	return h.CircleMasterServiceHandler.DealQuit(ctx, in, out)
+}
+
+func (h *circleMasterServiceHandler) GetCircleInfo(ctx context.Context, in *GetCircleInfoRequest, out *GetCircleInfoResponse) error {
+	return h.CircleMasterServiceHandler.GetCircleInfo(ctx, in, out)
 }
 
 // Client API for CircleUserService service
