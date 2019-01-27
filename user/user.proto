@@ -128,7 +128,9 @@ message RealNameCertificationRequest {
 
 // 申请实名认证响应
 message RealNameCertificationResponse {
-
+    string idNo = 1;
+    string realName = 2;
+    bool realNameCertification = 3;
 }
 
 // 申请手机认证请求
@@ -138,7 +140,8 @@ message PhoneCertificationRequest {
 
 // 申请手机认证响应
 message PhoneCertificationResponse {
-
+    string phone =  1;
+    bool phoneCertification = 2;
 }
 
 // 物品
