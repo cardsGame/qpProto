@@ -6,6 +6,7 @@ import "github.com/cardsGame/qpProto/zlmj/zlmj.proto";
 service FriendRoom {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
     rpc GetPlaying(GetPlayingRequest) returns(GetPlayingResponse) {}
+    rpc GetCirclePlaying(GetCirclePlayingRequest) returns (GetCirclePlayingResponse) {}
     rpc Stream(stream Message) returns(stream Message) {}
 }
 
@@ -110,6 +111,17 @@ message GetPlayingRequest {
 message GetPlayingResponse {
     repeated PlayingRoom rooms = 1;
 }
+
+// 获取亲友圈进行中的房间
+message GetCirclePlayingRequest {
+    string circleNo = 1; // 亲友圈号
+}
+
+// 获取亲友圈进行中的房间响应
+message GetCirclePlayingResponse {
+    repeated RoomData rooms = 1;
+}
+
 
 // 进行中的房间
 message PlayingRoom {
