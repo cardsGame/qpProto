@@ -10,16 +10,13 @@ It is generated from these files:
 It has these top-level messages:
 	GetUserHistoryRequest
 	GetUserHistoryResponse
-	GameRecord
-	GamePlayerData
-	RoomRecordData
-	RoomPlayerData
 */
 package history
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import _ "github.com/cardsGame/qpProto/friendRoom"
 
 import (
 	context "context"
