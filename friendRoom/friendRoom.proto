@@ -64,7 +64,8 @@ message RoomData {
     int32 ownerUserId = 8;
     int32 dissolveLeft = 9;
     int32 dissolveStartUserId = 10;
-    int32 curRound = 11;
+    int32 curRound = 11; // 当前局数
+    int32 curCircle = 12; // 当前圈数
 }
 
 // 创建房间请求
