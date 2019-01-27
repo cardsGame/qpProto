@@ -18,14 +18,24 @@ It has these top-level messages:
 	DelCircleResponse
 	ApplyJoinCircleRequest
 	ApplyJoinCircleResponse
-	GetCircleMsgRequest
-	GetCircleMsgResponse
+	GetCircleLogRequest
+	GetCircleLogResponse
 	DealApplyRequest
 	DealApplyResponse
 	DealMessageRequest
 	DealMessageResponse
 	GetApplyListRequest
 	GetApplyListResponse
+	GetQuiteListRequest
+	GetQuiteListResponse
+	DealQuitRequest
+	DealQuitResponse
+	ApplyQuitCircleRequest
+	ApplyQuitCircleResponse
+	GerCircleDetailRequest
+	GerCircleDetailResponse
+	GetCircleMembersRequest
+	GetCircleMembersResponse
 	CircleUser
 	User
 	CircleMsg
@@ -66,18 +76,24 @@ type CircleMasterService interface {
 	BuildCircle(ctx context.Context, in *BuildCircleRequest, opts ...client.CallOption) (*BuildCircleResponse, error)
 	// 更新
 	UpdateCircle(ctx context.Context, in *UpdateCircleRequest, opts ...client.CallOption) (*UpdateCircleResponse, error)
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(ctx context.Context, in *GetCircleListRequest, opts ...client.CallOption) (*GetCircleListResponse, error)
+	// 获取成员列表
+	GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, opts ...client.CallOption) (*GetCircleMembersResponse, error)
 	// 删除圈子
 	DelCircle(ctx context.Context, in *DelCircleRequest, opts ...client.CallOption) (*DelCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...client.CallOption) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...client.CallOption) (*GetCircleLogResponse, error)
 	// 处理圈子消息
 	DealMessage(ctx context.Context, in *DealMessageRequest, opts ...client.CallOption) (*DealMessageResponse, error)
 	// 处理申请
 	DealApply(ctx context.Context, in *DealApplyRequest, opts ...client.CallOption) (*DealApplyResponse, error)
-	// 获取申请
+	// 获取加入圈子申请
 	GetApplyList(ctx context.Context, in *GetApplyListRequest, opts ...client.CallOption) (*GetApplyListResponse, error)
+	// 获取退出圈子申请
+	GetQuiteList(ctx context.Context, in *GetQuiteListRequest, opts ...client.CallOption) (*GetQuiteListResponse, error)
+	// 处理用户退出申请
+	DealQuit(ctx context.Context, in *DealQuitRequest, opts ...client.CallOption) (*DealQuitResponse, error)
 }
 
 type circleMasterService struct {
@@ -128,6 +144,16 @@ func (c *circleMasterService) GetCircleList(ctx context.Context, in *GetCircleLi
 	return out, nil
 }
 
+func (c *circleMasterService) GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, opts ...client.CallOption) (*GetCircleMembersResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleMasterService.GetCircleMembers", in)
+	out := new(GetCircleMembersResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *circleMasterService) DelCircle(ctx context.Context, in *DelCircleRequest, opts ...client.CallOption) (*DelCircleResponse, error) {
 	req := c.c.NewRequest(c.name, "CircleMasterService.DelCircle", in)
 	out := new(DelCircleResponse)
@@ -138,9 +164,9 @@ func (c *circleMasterService) DelCircle(ctx context.Context, in *DelCircleReques
 	return out, nil
 }
 
-func (c *circleMasterService) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...client.CallOption) (*GetCircleMsgResponse, error) {
-	req := c.c.NewRequest(c.name, "CircleMasterService.GetCircleMessage", in)
-	out := new(GetCircleMsgResponse)
+func (c *circleMasterService) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...client.CallOption) (*GetCircleLogResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleMasterService.GetCircleLog", in)
+	out := new(GetCircleLogResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -178,6 +204,26 @@ func (c *circleMasterService) GetApplyList(ctx context.Context, in *GetApplyList
 	return out, nil
 }
 
+func (c *circleMasterService) GetQuiteList(ctx context.Context, in *GetQuiteListRequest, opts ...client.CallOption) (*GetQuiteListResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleMasterService.GetQuiteList", in)
+	out := new(GetQuiteListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *circleMasterService) DealQuit(ctx context.Context, in *DealQuitRequest, opts ...client.CallOption) (*DealQuitResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleMasterService.DealQuit", in)
+	out := new(DealQuitResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CircleMasterService service
 
 type CircleMasterServiceHandler interface {
@@ -185,18 +231,24 @@ type CircleMasterServiceHandler interface {
 	BuildCircle(context.Context, *BuildCircleRequest, *BuildCircleResponse) error
 	// 更新
 	UpdateCircle(context.Context, *UpdateCircleRequest, *UpdateCircleResponse) error
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(context.Context, *GetCircleListRequest, *GetCircleListResponse) error
+	// 获取成员列表
+	GetCircleMembers(context.Context, *GetCircleMembersRequest, *GetCircleMembersResponse) error
 	// 删除圈子
 	DelCircle(context.Context, *DelCircleRequest, *DelCircleResponse) error
-	// 获取圈子的消息
-	GetCircleMessage(context.Context, *GetCircleMsgRequest, *GetCircleMsgResponse) error
+	// 获取圈子的日志
+	GetCircleLog(context.Context, *GetCircleLogRequest, *GetCircleLogResponse) error
 	// 处理圈子消息
 	DealMessage(context.Context, *DealMessageRequest, *DealMessageResponse) error
 	// 处理申请
 	DealApply(context.Context, *DealApplyRequest, *DealApplyResponse) error
-	// 获取申请
+	// 获取加入圈子申请
 	GetApplyList(context.Context, *GetApplyListRequest, *GetApplyListResponse) error
+	// 获取退出圈子申请
+	GetQuiteList(context.Context, *GetQuiteListRequest, *GetQuiteListResponse) error
+	// 处理用户退出申请
+	DealQuit(context.Context, *DealQuitRequest, *DealQuitResponse) error
 }
 
 func RegisterCircleMasterServiceHandler(s server.Server, hdlr CircleMasterServiceHandler, opts ...server.HandlerOption) error {
@@ -204,11 +256,14 @@ func RegisterCircleMasterServiceHandler(s server.Server, hdlr CircleMasterServic
 		BuildCircle(ctx context.Context, in *BuildCircleRequest, out *BuildCircleResponse) error
 		UpdateCircle(ctx context.Context, in *UpdateCircleRequest, out *UpdateCircleResponse) error
 		GetCircleList(ctx context.Context, in *GetCircleListRequest, out *GetCircleListResponse) error
+		GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, out *GetCircleMembersResponse) error
 		DelCircle(ctx context.Context, in *DelCircleRequest, out *DelCircleResponse) error
-		GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, out *GetCircleMsgResponse) error
+		GetCircleLog(ctx context.Context, in *GetCircleLogRequest, out *GetCircleLogResponse) error
 		DealMessage(ctx context.Context, in *DealMessageRequest, out *DealMessageResponse) error
 		DealApply(ctx context.Context, in *DealApplyRequest, out *DealApplyResponse) error
 		GetApplyList(ctx context.Context, in *GetApplyListRequest, out *GetApplyListResponse) error
+		GetQuiteList(ctx context.Context, in *GetQuiteListRequest, out *GetQuiteListResponse) error
+		DealQuit(ctx context.Context, in *DealQuitRequest, out *DealQuitResponse) error
 	}
 	type CircleMasterService struct {
 		circleMasterService
@@ -233,12 +288,16 @@ func (h *circleMasterServiceHandler) GetCircleList(ctx context.Context, in *GetC
 	return h.CircleMasterServiceHandler.GetCircleList(ctx, in, out)
 }
 
+func (h *circleMasterServiceHandler) GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, out *GetCircleMembersResponse) error {
+	return h.CircleMasterServiceHandler.GetCircleMembers(ctx, in, out)
+}
+
 func (h *circleMasterServiceHandler) DelCircle(ctx context.Context, in *DelCircleRequest, out *DelCircleResponse) error {
 	return h.CircleMasterServiceHandler.DelCircle(ctx, in, out)
 }
 
-func (h *circleMasterServiceHandler) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, out *GetCircleMsgResponse) error {
-	return h.CircleMasterServiceHandler.GetCircleMessage(ctx, in, out)
+func (h *circleMasterServiceHandler) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, out *GetCircleLogResponse) error {
+	return h.CircleMasterServiceHandler.GetCircleLog(ctx, in, out)
 }
 
 func (h *circleMasterServiceHandler) DealMessage(ctx context.Context, in *DealMessageRequest, out *DealMessageResponse) error {
@@ -253,15 +312,25 @@ func (h *circleMasterServiceHandler) GetApplyList(ctx context.Context, in *GetAp
 	return h.CircleMasterServiceHandler.GetApplyList(ctx, in, out)
 }
 
+func (h *circleMasterServiceHandler) GetQuiteList(ctx context.Context, in *GetQuiteListRequest, out *GetQuiteListResponse) error {
+	return h.CircleMasterServiceHandler.GetQuiteList(ctx, in, out)
+}
+
+func (h *circleMasterServiceHandler) DealQuit(ctx context.Context, in *DealQuitRequest, out *DealQuitResponse) error {
+	return h.CircleMasterServiceHandler.DealQuit(ctx, in, out)
+}
+
 // Client API for CircleUserService service
 
 type CircleUserService interface {
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(ctx context.Context, in *GetCircleListRequest, opts ...client.CallOption) (*GetCircleListResponse, error)
 	// 申请加入圈子
 	ApplyJoinCircle(ctx context.Context, in *ApplyJoinCircleRequest, opts ...client.CallOption) (*ApplyJoinCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...client.CallOption) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...client.CallOption) (*GetCircleLogResponse, error)
+	// 玩家申请离开圈子
+	ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, opts ...client.CallOption) (*ApplyQuitCircleResponse, error)
 }
 
 type circleUserService struct {
@@ -302,9 +371,19 @@ func (c *circleUserService) ApplyJoinCircle(ctx context.Context, in *ApplyJoinCi
 	return out, nil
 }
 
-func (c *circleUserService) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...client.CallOption) (*GetCircleMsgResponse, error) {
-	req := c.c.NewRequest(c.name, "CircleUserService.GetCircleMessage", in)
-	out := new(GetCircleMsgResponse)
+func (c *circleUserService) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...client.CallOption) (*GetCircleLogResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleUserService.GetCircleLog", in)
+	out := new(GetCircleLogResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *circleUserService) ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, opts ...client.CallOption) (*ApplyQuitCircleResponse, error) {
+	req := c.c.NewRequest(c.name, "CircleUserService.ApplyQuitCircle", in)
+	out := new(ApplyQuitCircleResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -315,19 +394,22 @@ func (c *circleUserService) GetCircleMessage(ctx context.Context, in *GetCircleM
 // Server API for CircleUserService service
 
 type CircleUserServiceHandler interface {
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(context.Context, *GetCircleListRequest, *GetCircleListResponse) error
 	// 申请加入圈子
 	ApplyJoinCircle(context.Context, *ApplyJoinCircleRequest, *ApplyJoinCircleResponse) error
-	// 获取圈子的消息
-	GetCircleMessage(context.Context, *GetCircleMsgRequest, *GetCircleMsgResponse) error
+	// 获取圈子的日志
+	GetCircleLog(context.Context, *GetCircleLogRequest, *GetCircleLogResponse) error
+	// 玩家申请离开圈子
+	ApplyQuitCircle(context.Context, *ApplyQuitCircleRequest, *ApplyQuitCircleResponse) error
 }
 
 func RegisterCircleUserServiceHandler(s server.Server, hdlr CircleUserServiceHandler, opts ...server.HandlerOption) error {
 	type circleUserService interface {
 		GetCircleList(ctx context.Context, in *GetCircleListRequest, out *GetCircleListResponse) error
 		ApplyJoinCircle(ctx context.Context, in *ApplyJoinCircleRequest, out *ApplyJoinCircleResponse) error
-		GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, out *GetCircleMsgResponse) error
+		GetCircleLog(ctx context.Context, in *GetCircleLogRequest, out *GetCircleLogResponse) error
+		ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, out *ApplyQuitCircleResponse) error
 	}
 	type CircleUserService struct {
 		circleUserService
@@ -348,6 +430,10 @@ func (h *circleUserServiceHandler) ApplyJoinCircle(ctx context.Context, in *Appl
 	return h.CircleUserServiceHandler.ApplyJoinCircle(ctx, in, out)
 }
 
-func (h *circleUserServiceHandler) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, out *GetCircleMsgResponse) error {
-	return h.CircleUserServiceHandler.GetCircleMessage(ctx, in, out)
+func (h *circleUserServiceHandler) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, out *GetCircleLogResponse) error {
+	return h.CircleUserServiceHandler.GetCircleLog(ctx, in, out)
+}
+
+func (h *circleUserServiceHandler) ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, out *ApplyQuitCircleResponse) error {
+	return h.CircleUserServiceHandler.ApplyQuitCircle(ctx, in, out)
 }

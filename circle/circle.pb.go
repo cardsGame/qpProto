@@ -22,48 +22,15 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type GetCircleMsgRequest_Tp int32
-
-const (
-	GetCircleMsgRequest_UNIVERSAL GetCircleMsgRequest_Tp = 0
-	GetCircleMsgRequest_JOIN      GetCircleMsgRequest_Tp = 1
-	GetCircleMsgRequest_QUIT      GetCircleMsgRequest_Tp = 2
-	GetCircleMsgRequest_KICK      GetCircleMsgRequest_Tp = 3
-	GetCircleMsgRequest_APPLY     GetCircleMsgRequest_Tp = 4
-)
-
-var GetCircleMsgRequest_Tp_name = map[int32]string{
-	0: "UNIVERSAL",
-	1: "JOIN",
-	2: "QUIT",
-	3: "KICK",
-	4: "APPLY",
-}
-
-var GetCircleMsgRequest_Tp_value = map[string]int32{
-	"UNIVERSAL": 0,
-	"JOIN":      1,
-	"QUIT":      2,
-	"KICK":      3,
-	"APPLY":     4,
-}
-
-func (x GetCircleMsgRequest_Tp) String() string {
-	return proto.EnumName(GetCircleMsgRequest_Tp_name, int32(x))
-}
-
-func (GetCircleMsgRequest_Tp) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{10, 0}
-}
-
 type CircleMsg_Tp int32
 
 const (
-	CircleMsg_UNIVERSAL CircleMsg_Tp = 0
-	CircleMsg_JOIN      CircleMsg_Tp = 1
-	CircleMsg_QUIT      CircleMsg_Tp = 2
-	CircleMsg_KICK      CircleMsg_Tp = 3
-	CircleMsg_APPLY     CircleMsg_Tp = 4
+	CircleMsg_UNIVERSAL  CircleMsg_Tp = 0
+	CircleMsg_JOIN       CircleMsg_Tp = 1
+	CircleMsg_QUIT       CircleMsg_Tp = 2
+	CircleMsg_KICK       CircleMsg_Tp = 3
+	CircleMsg_APPLY      CircleMsg_Tp = 4
+	CircleMsg_APPLY_QUIT CircleMsg_Tp = 5
 )
 
 var CircleMsg_Tp_name = map[int32]string{
@@ -72,14 +39,16 @@ var CircleMsg_Tp_name = map[int32]string{
 	2: "QUIT",
 	3: "KICK",
 	4: "APPLY",
+	5: "APPLY_QUIT",
 }
 
 var CircleMsg_Tp_value = map[string]int32{
-	"UNIVERSAL": 0,
-	"JOIN":      1,
-	"QUIT":      2,
-	"KICK":      3,
-	"APPLY":     4,
+	"UNIVERSAL":  0,
+	"JOIN":       1,
+	"QUIT":       2,
+	"KICK":       3,
+	"APPLY":      4,
+	"APPLY_QUIT": 5,
 }
 
 func (x CircleMsg_Tp) String() string {
@@ -87,13 +56,13 @@ func (x CircleMsg_Tp) String() string {
 }
 
 func (CircleMsg_Tp) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{20, 0}
+	return fileDescriptor_bb5c720f4490ca94, []int{30, 0}
 }
 
 type BuildCircleRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
-	Notice               string   `protobuf:"bytes,2,opt,name=Notice,proto3" json:"Notice,omitempty"`
-	U                    *User    `protobuf:"bytes,3,opt,name=U,proto3" json:"U,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Notice               string   `protobuf:"bytes,2,opt,name=notice,proto3" json:"notice,omitempty"`
+	U                    *User    `protobuf:"bytes,3,opt,name=u,proto3" json:"u,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -185,8 +154,8 @@ func (m *BuildCircleResponse) GetSuccess() bool {
 }
 
 type UpdateCircleRequest struct {
-	CircleId             int32             `protobuf:"varint,1,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	OwnerId              int32             `protobuf:"varint,2,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
+	CircleId             int32             `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32             `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
 	Update               map[string]string `protobuf:"bytes,3,rep,name=update,proto3" json:"update,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
@@ -279,7 +248,7 @@ func (m *UpdateCircleResponse) GetSuccess() bool {
 }
 
 type GetCircleListRequest struct {
-	OwnerId              int32    `protobuf:"varint,1,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
+	Uid                  int32    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -310,15 +279,15 @@ func (m *GetCircleListRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetCircleListRequest proto.InternalMessageInfo
 
-func (m *GetCircleListRequest) GetOwnerId() int32 {
+func (m *GetCircleListRequest) GetUid() int32 {
 	if m != nil {
-		return m.OwnerId
+		return m.Uid
 	}
 	return 0
 }
 
 type GetCircleListResponse struct {
-	Circles              []*Circle `protobuf:"bytes,1,rep,name=Circles,proto3" json:"Circles,omitempty"`
+	Circles              []*Circle `protobuf:"bytes,1,rep,name=circles,proto3" json:"circles,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -357,8 +326,8 @@ func (m *GetCircleListResponse) GetCircles() []*Circle {
 }
 
 type DelCircleRequest struct {
-	OwnerId              int32    `protobuf:"varint,1,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	CircleId             int32    `protobuf:"varint,2,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	CircleId             int32    `protobuf:"varint,2,opt,name=circleId,proto3" json:"circleId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -443,8 +412,8 @@ func (m *DelCircleResponse) GetSuccess() bool {
 }
 
 type ApplyJoinCircleRequest struct {
-	CircleId             int32    `protobuf:"varint,1,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	UId                  int32    `protobuf:"varint,2,opt,name=UId,proto3" json:"UId,omitempty"`
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	User                 *User    `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -482,19 +451,19 @@ func (m *ApplyJoinCircleRequest) GetCircleId() int32 {
 	return 0
 }
 
-func (m *ApplyJoinCircleRequest) GetUId() int32 {
+func (m *ApplyJoinCircleRequest) GetUser() *User {
 	if m != nil {
-		return m.UId
+		return m.User
 	}
-	return 0
+	return nil
 }
 
 type ApplyJoinCircleResponse struct {
-	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=Message,proto3" json:"Message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Success              bool       `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message              *CircleMsg `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *ApplyJoinCircleResponse) Reset()         { *m = ApplyJoinCircleResponse{} }
@@ -529,117 +498,109 @@ func (m *ApplyJoinCircleResponse) GetSuccess() bool {
 	return false
 }
 
-func (m *ApplyJoinCircleResponse) GetMessage() string {
+func (m *ApplyJoinCircleResponse) GetMessage() *CircleMsg {
 	if m != nil {
 		return m.Message
 	}
-	return ""
+	return nil
 }
 
-type GetCircleMsgRequest struct {
-	OwnerId              int32                  `protobuf:"varint,1,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	CircleId             int32                  `protobuf:"varint,2,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	T                    GetCircleMsgRequest_Tp `protobuf:"varint,3,opt,name=T,proto3,enum=GetCircleMsgRequest_Tp" json:"T,omitempty"`
-	Page                 int32                  `protobuf:"varint,4,opt,name=Page,proto3" json:"Page,omitempty"`
-	Limit                int32                  `protobuf:"varint,5,opt,name=Limit,proto3" json:"Limit,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
-	XXX_unrecognized     []byte                 `json:"-"`
-	XXX_sizecache        int32                  `json:"-"`
+type GetCircleLogRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	Page                 int32    `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Limit                int32    `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	UserId               int32    `protobuf:"varint,4,opt,name=userId,proto3" json:"userId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetCircleMsgRequest) Reset()         { *m = GetCircleMsgRequest{} }
-func (m *GetCircleMsgRequest) String() string { return proto.CompactTextString(m) }
-func (*GetCircleMsgRequest) ProtoMessage()    {}
-func (*GetCircleMsgRequest) Descriptor() ([]byte, []int) {
+func (m *GetCircleLogRequest) Reset()         { *m = GetCircleLogRequest{} }
+func (m *GetCircleLogRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCircleLogRequest) ProtoMessage()    {}
+func (*GetCircleLogRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_bb5c720f4490ca94, []int{10}
 }
 
-func (m *GetCircleMsgRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetCircleMsgRequest.Unmarshal(m, b)
+func (m *GetCircleLogRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleLogRequest.Unmarshal(m, b)
 }
-func (m *GetCircleMsgRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetCircleMsgRequest.Marshal(b, m, deterministic)
+func (m *GetCircleLogRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleLogRequest.Marshal(b, m, deterministic)
 }
-func (m *GetCircleMsgRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCircleMsgRequest.Merge(m, src)
+func (m *GetCircleLogRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleLogRequest.Merge(m, src)
 }
-func (m *GetCircleMsgRequest) XXX_Size() int {
-	return xxx_messageInfo_GetCircleMsgRequest.Size(m)
+func (m *GetCircleLogRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCircleLogRequest.Size(m)
 }
-func (m *GetCircleMsgRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetCircleMsgRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetCircleMsgRequest proto.InternalMessageInfo
-
-func (m *GetCircleMsgRequest) GetOwnerId() int32 {
-	if m != nil {
-		return m.OwnerId
-	}
-	return 0
+func (m *GetCircleLogRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleLogRequest.DiscardUnknown(m)
 }
 
-func (m *GetCircleMsgRequest) GetCircleId() int32 {
+var xxx_messageInfo_GetCircleLogRequest proto.InternalMessageInfo
+
+func (m *GetCircleLogRequest) GetCircleId() int32 {
 	if m != nil {
 		return m.CircleId
 	}
 	return 0
 }
 
-func (m *GetCircleMsgRequest) GetT() GetCircleMsgRequest_Tp {
-	if m != nil {
-		return m.T
-	}
-	return GetCircleMsgRequest_UNIVERSAL
-}
-
-func (m *GetCircleMsgRequest) GetPage() int32 {
+func (m *GetCircleLogRequest) GetPage() int32 {
 	if m != nil {
 		return m.Page
 	}
 	return 0
 }
 
-func (m *GetCircleMsgRequest) GetLimit() int32 {
+func (m *GetCircleLogRequest) GetLimit() int32 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-type GetCircleMsgResponse struct {
-	ApplyMsgs            []*CircleMsg `protobuf:"bytes,1,rep,name=ApplyMsgs,proto3" json:"ApplyMsgs,omitempty"`
+func (m *GetCircleLogRequest) GetUserId() int32 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+type GetCircleLogResponse struct {
+	ApplyMsgs            []*CircleMsg `protobuf:"bytes,1,rep,name=applyMsgs,proto3" json:"applyMsgs,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *GetCircleMsgResponse) Reset()         { *m = GetCircleMsgResponse{} }
-func (m *GetCircleMsgResponse) String() string { return proto.CompactTextString(m) }
-func (*GetCircleMsgResponse) ProtoMessage()    {}
-func (*GetCircleMsgResponse) Descriptor() ([]byte, []int) {
+func (m *GetCircleLogResponse) Reset()         { *m = GetCircleLogResponse{} }
+func (m *GetCircleLogResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCircleLogResponse) ProtoMessage()    {}
+func (*GetCircleLogResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_bb5c720f4490ca94, []int{11}
 }
 
-func (m *GetCircleMsgResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetCircleMsgResponse.Unmarshal(m, b)
+func (m *GetCircleLogResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleLogResponse.Unmarshal(m, b)
 }
-func (m *GetCircleMsgResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetCircleMsgResponse.Marshal(b, m, deterministic)
+func (m *GetCircleLogResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleLogResponse.Marshal(b, m, deterministic)
 }
-func (m *GetCircleMsgResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCircleMsgResponse.Merge(m, src)
+func (m *GetCircleLogResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleLogResponse.Merge(m, src)
 }
-func (m *GetCircleMsgResponse) XXX_Size() int {
-	return xxx_messageInfo_GetCircleMsgResponse.Size(m)
+func (m *GetCircleLogResponse) XXX_Size() int {
+	return xxx_messageInfo_GetCircleLogResponse.Size(m)
 }
-func (m *GetCircleMsgResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetCircleMsgResponse.DiscardUnknown(m)
+func (m *GetCircleLogResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleLogResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetCircleMsgResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetCircleLogResponse proto.InternalMessageInfo
 
-func (m *GetCircleMsgResponse) GetApplyMsgs() []*CircleMsg {
+func (m *GetCircleLogResponse) GetApplyMsgs() []*CircleMsg {
 	if m != nil {
 		return m.ApplyMsgs
 	}
@@ -647,12 +608,12 @@ func (m *GetCircleMsgResponse) GetApplyMsgs() []*CircleMsg {
 }
 
 type DealApplyRequest struct {
-	U                    *User    `protobuf:"bytes,1,opt,name=U,proto3" json:"U,omitempty"`
-	CircleId             int32    `protobuf:"varint,2,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	OwnerId              int32    `protobuf:"varint,3,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	MsgId                int32    `protobuf:"varint,4,opt,name=MsgId,proto3" json:"MsgId,omitempty"`
-	UserId               int32    `protobuf:"varint,5,opt,name=UserId,proto3" json:"UserId,omitempty"`
-	Agree                bool     `protobuf:"varint,6,opt,name=Agree,proto3" json:"Agree,omitempty"`
+	U                    *User    `protobuf:"bytes,1,opt,name=u,proto3" json:"u,omitempty"`
+	CircleId             int32    `protobuf:"varint,2,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,3,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	MsgId                int32    `protobuf:"varint,4,opt,name=msgId,proto3" json:"msgId,omitempty"`
+	UserId               int32    `protobuf:"varint,5,opt,name=userId,proto3" json:"userId,omitempty"`
+	Agree                bool     `protobuf:"varint,6,opt,name=agree,proto3" json:"agree,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -773,9 +734,9 @@ func (m *DealApplyResponse) GetUser() *CircleUser {
 }
 
 type DealMessageRequest struct {
-	MsgId                int32    `protobuf:"varint,1,opt,name=MsgId,proto3" json:"MsgId,omitempty"`
-	OwnerId              int32    `protobuf:"varint,2,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	CircleId             int32    `protobuf:"varint,3,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
+	MsgId                int32    `protobuf:"varint,1,opt,name=msgId,proto3" json:"msgId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	CircleId             int32    `protobuf:"varint,3,opt,name=circleId,proto3" json:"circleId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -867,10 +828,10 @@ func (m *DealMessageResponse) GetSuccess() bool {
 }
 
 type GetApplyListRequest struct {
-	CircleId             int32    `protobuf:"varint,1,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	OwnerId              int32    `protobuf:"varint,2,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	Page                 int32    `protobuf:"varint,3,opt,name=Page,proto3" json:"Page,omitempty"`
-	Limit                int32    `protobuf:"varint,4,opt,name=Limit,proto3" json:"Limit,omitempty"`
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	Page                 int32    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -930,7 +891,7 @@ func (m *GetApplyListRequest) GetLimit() int32 {
 }
 
 type GetApplyListResponse struct {
-	ApplyMsgs            []*CircleMsg `protobuf:"bytes,1,rep,name=ApplyMsgs,proto3" json:"ApplyMsgs,omitempty"`
+	ApplyMsgs            []*CircleMsg `protobuf:"bytes,1,rep,name=applyMsgs,proto3" json:"applyMsgs,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
@@ -968,13 +929,534 @@ func (m *GetApplyListResponse) GetApplyMsgs() []*CircleMsg {
 	return nil
 }
 
+type GetQuiteListRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	Page                 int32    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetQuiteListRequest) Reset()         { *m = GetQuiteListRequest{} }
+func (m *GetQuiteListRequest) String() string { return proto.CompactTextString(m) }
+func (*GetQuiteListRequest) ProtoMessage()    {}
+func (*GetQuiteListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{18}
+}
+
+func (m *GetQuiteListRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetQuiteListRequest.Unmarshal(m, b)
+}
+func (m *GetQuiteListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetQuiteListRequest.Marshal(b, m, deterministic)
+}
+func (m *GetQuiteListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetQuiteListRequest.Merge(m, src)
+}
+func (m *GetQuiteListRequest) XXX_Size() int {
+	return xxx_messageInfo_GetQuiteListRequest.Size(m)
+}
+func (m *GetQuiteListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetQuiteListRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetQuiteListRequest proto.InternalMessageInfo
+
+func (m *GetQuiteListRequest) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+func (m *GetQuiteListRequest) GetOwnerId() int32 {
+	if m != nil {
+		return m.OwnerId
+	}
+	return 0
+}
+
+func (m *GetQuiteListRequest) GetPage() int32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+func (m *GetQuiteListRequest) GetLimit() int32 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+type GetQuiteListResponse struct {
+	ApplyMsgs            []*CircleMsg `protobuf:"bytes,1,rep,name=applyMsgs,proto3" json:"applyMsgs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *GetQuiteListResponse) Reset()         { *m = GetQuiteListResponse{} }
+func (m *GetQuiteListResponse) String() string { return proto.CompactTextString(m) }
+func (*GetQuiteListResponse) ProtoMessage()    {}
+func (*GetQuiteListResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{19}
+}
+
+func (m *GetQuiteListResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetQuiteListResponse.Unmarshal(m, b)
+}
+func (m *GetQuiteListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetQuiteListResponse.Marshal(b, m, deterministic)
+}
+func (m *GetQuiteListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetQuiteListResponse.Merge(m, src)
+}
+func (m *GetQuiteListResponse) XXX_Size() int {
+	return xxx_messageInfo_GetQuiteListResponse.Size(m)
+}
+func (m *GetQuiteListResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetQuiteListResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetQuiteListResponse proto.InternalMessageInfo
+
+func (m *GetQuiteListResponse) GetApplyMsgs() []*CircleMsg {
+	if m != nil {
+		return m.ApplyMsgs
+	}
+	return nil
+}
+
+type DealQuitRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	MsgId                int32    `protobuf:"varint,3,opt,name=msgId,proto3" json:"msgId,omitempty"`
+	UserId               int32    `protobuf:"varint,4,opt,name=userId,proto3" json:"userId,omitempty"`
+	Agree                bool     `protobuf:"varint,5,opt,name=agree,proto3" json:"agree,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DealQuitRequest) Reset()         { *m = DealQuitRequest{} }
+func (m *DealQuitRequest) String() string { return proto.CompactTextString(m) }
+func (*DealQuitRequest) ProtoMessage()    {}
+func (*DealQuitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{20}
+}
+
+func (m *DealQuitRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DealQuitRequest.Unmarshal(m, b)
+}
+func (m *DealQuitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DealQuitRequest.Marshal(b, m, deterministic)
+}
+func (m *DealQuitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DealQuitRequest.Merge(m, src)
+}
+func (m *DealQuitRequest) XXX_Size() int {
+	return xxx_messageInfo_DealQuitRequest.Size(m)
+}
+func (m *DealQuitRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DealQuitRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DealQuitRequest proto.InternalMessageInfo
+
+func (m *DealQuitRequest) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+func (m *DealQuitRequest) GetOwnerId() int32 {
+	if m != nil {
+		return m.OwnerId
+	}
+	return 0
+}
+
+func (m *DealQuitRequest) GetMsgId() int32 {
+	if m != nil {
+		return m.MsgId
+	}
+	return 0
+}
+
+func (m *DealQuitRequest) GetUserId() int32 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *DealQuitRequest) GetAgree() bool {
+	if m != nil {
+		return m.Agree
+	}
+	return false
+}
+
+type DealQuitResponse struct {
+	Success              bool        `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	User                 *CircleUser `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *DealQuitResponse) Reset()         { *m = DealQuitResponse{} }
+func (m *DealQuitResponse) String() string { return proto.CompactTextString(m) }
+func (*DealQuitResponse) ProtoMessage()    {}
+func (*DealQuitResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{21}
+}
+
+func (m *DealQuitResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DealQuitResponse.Unmarshal(m, b)
+}
+func (m *DealQuitResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DealQuitResponse.Marshal(b, m, deterministic)
+}
+func (m *DealQuitResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DealQuitResponse.Merge(m, src)
+}
+func (m *DealQuitResponse) XXX_Size() int {
+	return xxx_messageInfo_DealQuitResponse.Size(m)
+}
+func (m *DealQuitResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DealQuitResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DealQuitResponse proto.InternalMessageInfo
+
+func (m *DealQuitResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
+func (m *DealQuitResponse) GetUser() *CircleUser {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
+
+type ApplyQuitCircleRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	Uid                  int32    `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ApplyQuitCircleRequest) Reset()         { *m = ApplyQuitCircleRequest{} }
+func (m *ApplyQuitCircleRequest) String() string { return proto.CompactTextString(m) }
+func (*ApplyQuitCircleRequest) ProtoMessage()    {}
+func (*ApplyQuitCircleRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{22}
+}
+
+func (m *ApplyQuitCircleRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ApplyQuitCircleRequest.Unmarshal(m, b)
+}
+func (m *ApplyQuitCircleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ApplyQuitCircleRequest.Marshal(b, m, deterministic)
+}
+func (m *ApplyQuitCircleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApplyQuitCircleRequest.Merge(m, src)
+}
+func (m *ApplyQuitCircleRequest) XXX_Size() int {
+	return xxx_messageInfo_ApplyQuitCircleRequest.Size(m)
+}
+func (m *ApplyQuitCircleRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ApplyQuitCircleRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ApplyQuitCircleRequest proto.InternalMessageInfo
+
+func (m *ApplyQuitCircleRequest) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+func (m *ApplyQuitCircleRequest) GetUid() int32 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+type ApplyQuitCircleResponse struct {
+	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ApplyQuitCircleResponse) Reset()         { *m = ApplyQuitCircleResponse{} }
+func (m *ApplyQuitCircleResponse) String() string { return proto.CompactTextString(m) }
+func (*ApplyQuitCircleResponse) ProtoMessage()    {}
+func (*ApplyQuitCircleResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{23}
+}
+
+func (m *ApplyQuitCircleResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ApplyQuitCircleResponse.Unmarshal(m, b)
+}
+func (m *ApplyQuitCircleResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ApplyQuitCircleResponse.Marshal(b, m, deterministic)
+}
+func (m *ApplyQuitCircleResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApplyQuitCircleResponse.Merge(m, src)
+}
+func (m *ApplyQuitCircleResponse) XXX_Size() int {
+	return xxx_messageInfo_ApplyQuitCircleResponse.Size(m)
+}
+func (m *ApplyQuitCircleResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ApplyQuitCircleResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ApplyQuitCircleResponse proto.InternalMessageInfo
+
+func (m *ApplyQuitCircleResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
+type GerCircleDetailRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GerCircleDetailRequest) Reset()         { *m = GerCircleDetailRequest{} }
+func (m *GerCircleDetailRequest) String() string { return proto.CompactTextString(m) }
+func (*GerCircleDetailRequest) ProtoMessage()    {}
+func (*GerCircleDetailRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{24}
+}
+
+func (m *GerCircleDetailRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GerCircleDetailRequest.Unmarshal(m, b)
+}
+func (m *GerCircleDetailRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GerCircleDetailRequest.Marshal(b, m, deterministic)
+}
+func (m *GerCircleDetailRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GerCircleDetailRequest.Merge(m, src)
+}
+func (m *GerCircleDetailRequest) XXX_Size() int {
+	return xxx_messageInfo_GerCircleDetailRequest.Size(m)
+}
+func (m *GerCircleDetailRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GerCircleDetailRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GerCircleDetailRequest proto.InternalMessageInfo
+
+func (m *GerCircleDetailRequest) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+type GerCircleDetailResponse struct {
+	OwnerId              int32    `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	CreateAt             string   `protobuf:"bytes,2,opt,name=createAt,proto3" json:"createAt,omitempty"`
+	UpdateAt             string   `protobuf:"bytes,3,opt,name=updateAt,proto3" json:"updateAt,omitempty"`
+	Notice               string   `protobuf:"bytes,4,opt,name=notice,proto3" json:"notice,omitempty"`
+	Name                 string   `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	CircleId             int32    `protobuf:"varint,6,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	MemberCount          int32    `protobuf:"varint,7,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GerCircleDetailResponse) Reset()         { *m = GerCircleDetailResponse{} }
+func (m *GerCircleDetailResponse) String() string { return proto.CompactTextString(m) }
+func (*GerCircleDetailResponse) ProtoMessage()    {}
+func (*GerCircleDetailResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{25}
+}
+
+func (m *GerCircleDetailResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GerCircleDetailResponse.Unmarshal(m, b)
+}
+func (m *GerCircleDetailResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GerCircleDetailResponse.Marshal(b, m, deterministic)
+}
+func (m *GerCircleDetailResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GerCircleDetailResponse.Merge(m, src)
+}
+func (m *GerCircleDetailResponse) XXX_Size() int {
+	return xxx_messageInfo_GerCircleDetailResponse.Size(m)
+}
+func (m *GerCircleDetailResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GerCircleDetailResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GerCircleDetailResponse proto.InternalMessageInfo
+
+func (m *GerCircleDetailResponse) GetOwnerId() int32 {
+	if m != nil {
+		return m.OwnerId
+	}
+	return 0
+}
+
+func (m *GerCircleDetailResponse) GetCreateAt() string {
+	if m != nil {
+		return m.CreateAt
+	}
+	return ""
+}
+
+func (m *GerCircleDetailResponse) GetUpdateAt() string {
+	if m != nil {
+		return m.UpdateAt
+	}
+	return ""
+}
+
+func (m *GerCircleDetailResponse) GetNotice() string {
+	if m != nil {
+		return m.Notice
+	}
+	return ""
+}
+
+func (m *GerCircleDetailResponse) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GerCircleDetailResponse) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+func (m *GerCircleDetailResponse) GetMemberCount() int32 {
+	if m != nil {
+		return m.MemberCount
+	}
+	return 0
+}
+
+type GetCircleMembersRequest struct {
+	CircleId             int32    `protobuf:"varint,1,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	OwnerId              int32    `protobuf:"varint,2,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetCircleMembersRequest) Reset()         { *m = GetCircleMembersRequest{} }
+func (m *GetCircleMembersRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCircleMembersRequest) ProtoMessage()    {}
+func (*GetCircleMembersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{26}
+}
+
+func (m *GetCircleMembersRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleMembersRequest.Unmarshal(m, b)
+}
+func (m *GetCircleMembersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleMembersRequest.Marshal(b, m, deterministic)
+}
+func (m *GetCircleMembersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleMembersRequest.Merge(m, src)
+}
+func (m *GetCircleMembersRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCircleMembersRequest.Size(m)
+}
+func (m *GetCircleMembersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleMembersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCircleMembersRequest proto.InternalMessageInfo
+
+func (m *GetCircleMembersRequest) GetCircleId() int32 {
+	if m != nil {
+		return m.CircleId
+	}
+	return 0
+}
+
+func (m *GetCircleMembersRequest) GetOwnerId() int32 {
+	if m != nil {
+		return m.OwnerId
+	}
+	return 0
+}
+
+type GetCircleMembersResponse struct {
+	Users                []*CircleUser `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *GetCircleMembersResponse) Reset()         { *m = GetCircleMembersResponse{} }
+func (m *GetCircleMembersResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCircleMembersResponse) ProtoMessage()    {}
+func (*GetCircleMembersResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5c720f4490ca94, []int{27}
+}
+
+func (m *GetCircleMembersResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleMembersResponse.Unmarshal(m, b)
+}
+func (m *GetCircleMembersResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleMembersResponse.Marshal(b, m, deterministic)
+}
+func (m *GetCircleMembersResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleMembersResponse.Merge(m, src)
+}
+func (m *GetCircleMembersResponse) XXX_Size() int {
+	return xxx_messageInfo_GetCircleMembersResponse.Size(m)
+}
+func (m *GetCircleMembersResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleMembersResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCircleMembersResponse proto.InternalMessageInfo
+
+func (m *GetCircleMembersResponse) GetUsers() []*CircleUser {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
 type CircleUser struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Name                 string   `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
-	ImgUrl               string   `protobuf:"bytes,3,opt,name=ImgUrl,proto3" json:"ImgUrl,omitempty"`
-	UserId               int32    `protobuf:"varint,4,opt,name=UserId,proto3" json:"UserId,omitempty"`
-	JoinAt               string   `protobuf:"bytes,5,opt,name=JoinAt,proto3" json:"JoinAt,omitempty"`
-	CircleId             int32    `protobuf:"varint,6,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ImgUrl               string   `protobuf:"bytes,3,opt,name=imgUrl,proto3" json:"imgUrl,omitempty"`
+	UserId               int32    `protobuf:"varint,4,opt,name=userId,proto3" json:"userId,omitempty"`
+	JoinAt               string   `protobuf:"bytes,5,opt,name=joinAt,proto3" json:"joinAt,omitempty"`
+	CircleId             int32    `protobuf:"varint,6,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	Remark               string   `protobuf:"bytes,7,opt,name=remark,proto3" json:"remark,omitempty"`
+	TotalGameCount       int32    `protobuf:"varint,8,opt,name=totalGameCount,proto3" json:"totalGameCount,omitempty"`
+	PreGameCount         int32    `protobuf:"varint,9,opt,name=preGameCount,proto3" json:"preGameCount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -984,7 +1466,7 @@ func (m *CircleUser) Reset()         { *m = CircleUser{} }
 func (m *CircleUser) String() string { return proto.CompactTextString(m) }
 func (*CircleUser) ProtoMessage()    {}
 func (*CircleUser) Descriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{18}
+	return fileDescriptor_bb5c720f4490ca94, []int{28}
 }
 
 func (m *CircleUser) XXX_Unmarshal(b []byte) error {
@@ -1047,10 +1529,31 @@ func (m *CircleUser) GetCircleId() int32 {
 	return 0
 }
 
+func (m *CircleUser) GetRemark() string {
+	if m != nil {
+		return m.Remark
+	}
+	return ""
+}
+
+func (m *CircleUser) GetTotalGameCount() int32 {
+	if m != nil {
+		return m.TotalGameCount
+	}
+	return 0
+}
+
+func (m *CircleUser) GetPreGameCount() int32 {
+	if m != nil {
+		return m.PreGameCount
+	}
+	return 0
+}
+
 type User struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	ImgUrl               string   `protobuf:"bytes,2,opt,name=ImgUrl,proto3" json:"ImgUrl,omitempty"`
-	Name                 string   `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ImgUrl               string   `protobuf:"bytes,2,opt,name=imgUrl,proto3" json:"imgUrl,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1060,7 +1563,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{19}
+	return fileDescriptor_bb5c720f4490ca94, []int{29}
 }
 
 func (m *User) XXX_Unmarshal(b []byte) error {
@@ -1103,13 +1606,13 @@ func (m *User) GetName() string {
 }
 
 type CircleMsg struct {
-	Id                   int32        `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Content              string       `protobuf:"bytes,2,opt,name=Content,proto3" json:"Content,omitempty"`
-	T                    CircleMsg_Tp `protobuf:"varint,3,opt,name=T,proto3,enum=CircleMsg_Tp" json:"T,omitempty"`
-	UpdateAt             string       `protobuf:"bytes,4,opt,name=UpdateAt,proto3" json:"UpdateAt,omitempty"`
-	CreateAt             string       `protobuf:"bytes,5,opt,name=CreateAt,proto3" json:"CreateAt,omitempty"`
-	UserId               int32        `protobuf:"varint,6,opt,name=UserId,proto3" json:"UserId,omitempty"`
-	U                    *User        `protobuf:"bytes,7,opt,name=U,proto3" json:"U,omitempty"`
+	Id                   int32        `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Content              string       `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	T                    CircleMsg_Tp `protobuf:"varint,3,opt,name=t,proto3,enum=CircleMsg_Tp" json:"t,omitempty"`
+	UpdateAt             string       `protobuf:"bytes,4,opt,name=updateAt,proto3" json:"updateAt,omitempty"`
+	CreateAt             string       `protobuf:"bytes,5,opt,name=createAt,proto3" json:"createAt,omitempty"`
+	UserId               int32        `protobuf:"varint,6,opt,name=userId,proto3" json:"userId,omitempty"`
+	U                    *User        `protobuf:"bytes,7,opt,name=u,proto3" json:"u,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
@@ -1119,7 +1622,7 @@ func (m *CircleMsg) Reset()         { *m = CircleMsg{} }
 func (m *CircleMsg) String() string { return proto.CompactTextString(m) }
 func (*CircleMsg) ProtoMessage()    {}
 func (*CircleMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{20}
+	return fileDescriptor_bb5c720f4490ca94, []int{30}
 }
 
 func (m *CircleMsg) XXX_Unmarshal(b []byte) error {
@@ -1190,13 +1693,13 @@ func (m *CircleMsg) GetU() *User {
 }
 
 type Circle struct {
-	OwnerId              int32    `protobuf:"varint,1,opt,name=OwnerId,proto3" json:"OwnerId,omitempty"`
-	CreateAt             string   `protobuf:"bytes,2,opt,name=CreateAt,proto3" json:"CreateAt,omitempty"`
-	UpdateAt             string   `protobuf:"bytes,3,opt,name=UpdateAt,proto3" json:"UpdateAt,omitempty"`
-	Notice               string   `protobuf:"bytes,4,opt,name=Notice,proto3" json:"Notice,omitempty"`
-	Name                 string   `protobuf:"bytes,5,opt,name=Name,proto3" json:"Name,omitempty"`
-	CircleId             int32    `protobuf:"varint,6,opt,name=CircleId,proto3" json:"CircleId,omitempty"`
-	MemberCount          int32    `protobuf:"varint,7,opt,name=MemberCount,proto3" json:"MemberCount,omitempty"`
+	OwnerId  int32  `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`
+	CreateAt string `protobuf:"bytes,2,opt,name=createAt,proto3" json:"createAt,omitempty"`
+	UpdateAt string `protobuf:"bytes,3,opt,name=updateAt,proto3" json:"updateAt,omitempty"`
+	//    string Notice = 4;
+	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	CircleId             int32    `protobuf:"varint,5,opt,name=circleId,proto3" json:"circleId,omitempty"`
+	MemberCount          int32    `protobuf:"varint,6,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1206,7 +1709,7 @@ func (m *Circle) Reset()         { *m = Circle{} }
 func (m *Circle) String() string { return proto.CompactTextString(m) }
 func (*Circle) ProtoMessage()    {}
 func (*Circle) Descriptor() ([]byte, []int) {
-	return fileDescriptor_bb5c720f4490ca94, []int{21}
+	return fileDescriptor_bb5c720f4490ca94, []int{31}
 }
 
 func (m *Circle) XXX_Unmarshal(b []byte) error {
@@ -1248,13 +1751,6 @@ func (m *Circle) GetUpdateAt() string {
 	return ""
 }
 
-func (m *Circle) GetNotice() string {
-	if m != nil {
-		return m.Notice
-	}
-	return ""
-}
-
 func (m *Circle) GetName() string {
 	if m != nil {
 		return m.Name
@@ -1277,7 +1773,6 @@ func (m *Circle) GetMemberCount() int32 {
 }
 
 func init() {
-	proto.RegisterEnum("GetCircleMsgRequest_Tp", GetCircleMsgRequest_Tp_name, GetCircleMsgRequest_Tp_value)
 	proto.RegisterEnum("CircleMsg_Tp", CircleMsg_Tp_name, CircleMsg_Tp_value)
 	proto.RegisterType((*BuildCircleRequest)(nil), "BuildCircleRequest")
 	proto.RegisterType((*BuildCircleResponse)(nil), "BuildCircleResponse")
@@ -1290,14 +1785,24 @@ func init() {
 	proto.RegisterType((*DelCircleResponse)(nil), "DelCircleResponse")
 	proto.RegisterType((*ApplyJoinCircleRequest)(nil), "ApplyJoinCircleRequest")
 	proto.RegisterType((*ApplyJoinCircleResponse)(nil), "ApplyJoinCircleResponse")
-	proto.RegisterType((*GetCircleMsgRequest)(nil), "GetCircleMsgRequest")
-	proto.RegisterType((*GetCircleMsgResponse)(nil), "GetCircleMsgResponse")
+	proto.RegisterType((*GetCircleLogRequest)(nil), "GetCircleLogRequest")
+	proto.RegisterType((*GetCircleLogResponse)(nil), "GetCircleLogResponse")
 	proto.RegisterType((*DealApplyRequest)(nil), "DealApplyRequest")
 	proto.RegisterType((*DealApplyResponse)(nil), "DealApplyResponse")
 	proto.RegisterType((*DealMessageRequest)(nil), "DealMessageRequest")
 	proto.RegisterType((*DealMessageResponse)(nil), "DealMessageResponse")
 	proto.RegisterType((*GetApplyListRequest)(nil), "GetApplyListRequest")
 	proto.RegisterType((*GetApplyListResponse)(nil), "GetApplyListResponse")
+	proto.RegisterType((*GetQuiteListRequest)(nil), "GetQuiteListRequest")
+	proto.RegisterType((*GetQuiteListResponse)(nil), "GetQuiteListResponse")
+	proto.RegisterType((*DealQuitRequest)(nil), "DealQuitRequest")
+	proto.RegisterType((*DealQuitResponse)(nil), "DealQuitResponse")
+	proto.RegisterType((*ApplyQuitCircleRequest)(nil), "ApplyQuitCircleRequest")
+	proto.RegisterType((*ApplyQuitCircleResponse)(nil), "ApplyQuitCircleResponse")
+	proto.RegisterType((*GerCircleDetailRequest)(nil), "GerCircleDetailRequest")
+	proto.RegisterType((*GerCircleDetailResponse)(nil), "GerCircleDetailResponse")
+	proto.RegisterType((*GetCircleMembersRequest)(nil), "GetCircleMembersRequest")
+	proto.RegisterType((*GetCircleMembersResponse)(nil), "GetCircleMembersResponse")
 	proto.RegisterType((*CircleUser)(nil), "CircleUser")
 	proto.RegisterType((*User)(nil), "User")
 	proto.RegisterType((*CircleMsg)(nil), "CircleMsg")
@@ -1307,69 +1812,84 @@ func init() {
 func init() { proto.RegisterFile("circle/circle.proto", fileDescriptor_bb5c720f4490ca94) }
 
 var fileDescriptor_bb5c720f4490ca94 = []byte{
-	// 986 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xcd, 0x72, 0xe3, 0x44,
-	0x10, 0xf6, 0x48, 0xfe, 0x89, 0xdb, 0x64, 0x51, 0x46, 0x4e, 0xa2, 0x12, 0x07, 0xcc, 0x54, 0x51,
-	0x95, 0x0b, 0x93, 0x2d, 0xc3, 0x61, 0x49, 0x41, 0xd5, 0x7a, 0xc3, 0x2e, 0x68, 0x37, 0xf6, 0x06,
-	0xad, 0x45, 0x15, 0x37, 0xbc, 0xf6, 0x94, 0xcb, 0x85, 0x63, 0x1b, 0x49, 0x5e, 0x2a, 0xef, 0xc1,
-	0x0b, 0xf0, 0x26, 0x1c, 0x78, 0x0a, 0x4e, 0xbc, 0x04, 0x37, 0x0e, 0xd4, 0xfc, 0x48, 0x9a, 0x91,
-	0x95, 0x35, 0x90, 0x3d, 0x59, 0x3d, 0x92, 0xbb, 0xbf, 0xfe, 0xba, 0xe7, 0xeb, 0x06, 0x77, 0xba,
-	0x88, 0xa7, 0x4b, 0x76, 0x2e, 0x7f, 0xe8, 0x26, 0x5e, 0xa7, 0x6b, 0x12, 0x01, 0x7e, 0xb2, 0x5d,
-	0x2c, 0x67, 0x97, 0xe2, 0x30, 0x64, 0x3f, 0x6d, 0x59, 0x92, 0x62, 0x0c, 0xf5, 0xd1, 0xe4, 0x86,
-	0x79, 0xa8, 0x87, 0xce, 0xda, 0xa1, 0x78, 0xc6, 0x27, 0xd0, 0x1c, 0xad, 0xd3, 0xc5, 0x94, 0x79,
-	0x96, 0x38, 0x55, 0x16, 0x76, 0x01, 0x45, 0x9e, 0xdd, 0x43, 0x67, 0x9d, 0x7e, 0x83, 0x46, 0x09,
-	0x8b, 0x43, 0x14, 0x91, 0x73, 0x70, 0x0d, 0xb7, 0xc9, 0x66, 0xbd, 0x4a, 0x18, 0xf6, 0xa0, 0x95,
-	0x6c, 0xa7, 0x53, 0x96, 0x24, 0xc2, 0xf5, 0x41, 0x98, 0x99, 0xe4, 0x37, 0x04, 0x6e, 0xb4, 0x99,
-	0x4d, 0x52, 0x66, 0x22, 0xf1, 0xe1, 0x40, 0x1e, 0x04, 0x33, 0xf1, 0x97, 0x46, 0x98, 0xdb, 0xdc,
-	0xdb, 0xcb, 0x9f, 0x57, 0x2c, 0x0e, 0x66, 0x02, 0x52, 0x23, 0xcc, 0x4c, 0xfc, 0x08, 0x9a, 0x5b,
-	0xe1, 0xcc, 0xb3, 0x7b, 0xf6, 0x59, 0xa7, 0xdf, 0xa3, 0x15, 0xbe, 0xd5, 0xd9, 0xd3, 0x55, 0x1a,
-	0xdf, 0x86, 0xea, 0x7b, 0xff, 0x73, 0xe8, 0x68, 0xc7, 0xd8, 0x01, 0xfb, 0x47, 0x76, 0xab, 0x78,
-	0xe0, 0x8f, 0xb8, 0x0b, 0x8d, 0x37, 0x93, 0xe5, 0x36, 0x63, 0x41, 0x1a, 0x17, 0xd6, 0x23, 0x44,
-	0x1e, 0x42, 0xd7, 0x8c, 0xb2, 0x37, 0xe9, 0x87, 0xd0, 0xfd, 0x9a, 0xa5, 0xf2, 0xf3, 0xab, 0x45,
-	0x92, 0x66, 0x49, 0x6b, 0x89, 0x21, 0x23, 0x31, 0x72, 0x01, 0xc7, 0xa5, 0x7f, 0xa8, 0x20, 0x1f,
-	0x41, 0x4b, 0x9e, 0xf2, 0x20, 0x3c, 0xe5, 0x16, 0x55, 0x30, 0xb2, 0x73, 0xf2, 0x0d, 0x38, 0x5f,
-	0xb1, 0xa5, 0x49, 0xef, 0x9d, 0x91, 0x0c, 0xe2, 0x2d, 0x93, 0x78, 0xf2, 0x09, 0x1c, 0x69, 0x9e,
-	0xf6, 0xa6, 0xf9, 0x0c, 0x4e, 0x06, 0x9b, 0xcd, 0xf2, 0xf6, 0xf9, 0x7a, 0xb1, 0xfa, 0xf7, 0xd5,
-	0x75, 0xc0, 0x8e, 0xf2, 0xd8, 0xfc, 0x91, 0x0c, 0xe1, 0x74, 0xc7, 0xcf, 0xbe, 0xe0, 0xfc, 0xcd,
-	0x90, 0x25, 0xc9, 0x64, 0x9e, 0x55, 0x2c, 0x33, 0xc9, 0x1f, 0x08, 0xdc, 0x9c, 0xcc, 0x61, 0x32,
-	0xbf, 0x17, 0x27, 0xf8, 0x63, 0x40, 0x63, 0x71, 0x0d, 0x1e, 0xf4, 0x4f, 0x69, 0x85, 0x5b, 0x3a,
-	0xde, 0x84, 0x68, 0xcc, 0x6f, 0xd6, 0x35, 0xc7, 0x52, 0x17, 0x7f, 0x17, 0xcf, 0xbc, 0xa5, 0xae,
-	0x16, 0x37, 0x8b, 0xd4, 0x6b, 0x88, 0x43, 0x69, 0x90, 0x2f, 0xc0, 0x1a, 0x6f, 0xf0, 0x21, 0xb4,
-	0xa3, 0x51, 0xf0, 0xdd, 0xd3, 0xf0, 0xd5, 0xe0, 0xca, 0xa9, 0xe1, 0x03, 0xa8, 0x3f, 0x7f, 0x19,
-	0x8c, 0x1c, 0xc4, 0x9f, 0xbe, 0x8d, 0x82, 0xb1, 0x63, 0xf1, 0xa7, 0x17, 0xc1, 0xe5, 0x0b, 0xc7,
-	0xc6, 0x6d, 0x68, 0x0c, 0xae, 0xaf, 0xaf, 0xbe, 0x77, 0xea, 0xe4, 0xb1, 0xd6, 0x5a, 0x02, 0x84,
-	0x22, 0xea, 0x0c, 0xda, 0x82, 0xc3, 0x61, 0x32, 0xcf, 0x3a, 0x05, 0x68, 0xf1, 0x59, 0xf1, 0x92,
-	0xfc, 0x8a, 0x78, 0xbf, 0x4c, 0x96, 0xe2, 0x24, 0xe3, 0x46, 0x5c, 0x76, 0x64, 0x5e, 0xf6, 0xb7,
-	0xd2, 0xa2, 0x91, 0x69, 0x9b, 0x64, 0x76, 0xa1, 0x31, 0x4c, 0xe6, 0xc1, 0x4c, 0x51, 0x21, 0x0d,
-	0xae, 0x32, 0xdc, 0x6d, 0x30, 0x53, 0x64, 0x28, 0x8b, 0x7f, 0x3d, 0x98, 0xc7, 0x8c, 0x79, 0x4d,
-	0x51, 0x5e, 0x69, 0x90, 0x11, 0x6f, 0xc4, 0x1c, 0xe2, 0xde, 0x5e, 0xf8, 0x10, 0xea, 0xdb, 0x84,
-	0xc5, 0x02, 0x64, 0xa7, 0xdf, 0x51, 0x79, 0x8b, 0x34, 0xc4, 0x0b, 0xf2, 0x03, 0x60, 0xee, 0x4f,
-	0x75, 0x48, 0x96, 0x74, 0x8e, 0x14, 0xe9, 0x48, 0xef, 0x56, 0x1f, 0x9d, 0x0f, 0xbb, 0x74, 0x75,
-	0xce, 0xc1, 0x35, 0x22, 0xec, 0xbd, 0x3c, 0x5b, 0xd1, 0xa4, 0x22, 0x43, 0x5d, 0x22, 0xfe, 0x9f,
-	0x2e, 0x66, 0xdd, 0x67, 0x57, 0x75, 0x5f, 0x5d, 0xef, 0x3e, 0xd9, 0x3f, 0x5a, 0xd8, 0xff, 0xdc,
-	0x3f, 0xbf, 0x20, 0x80, 0x82, 0x60, 0xfc, 0x00, 0xac, 0x1c, 0xaa, 0x25, 0xa1, 0x88, 0x11, 0x63,
-	0x99, 0x23, 0x26, 0xb8, 0x99, 0x47, 0xf1, 0x52, 0x00, 0x6c, 0x87, 0xca, 0xd2, 0x9a, 0xa2, 0x6e,
-	0x34, 0xc5, 0x09, 0x34, 0xb9, 0x16, 0x0c, 0xe4, 0xcd, 0x69, 0x87, 0xca, 0x32, 0xc8, 0x69, 0x96,
-	0x0a, 0xf0, 0x04, 0xea, 0x95, 0x78, 0x8a, 0xd8, 0x96, 0x11, 0x3b, 0xc3, 0x69, 0x17, 0x38, 0xc9,
-	0x5f, 0x08, 0xda, 0x79, 0xce, 0x3b, 0x9e, 0x3c, 0x68, 0x5d, 0xae, 0x57, 0x29, 0x5b, 0xa5, 0x99,
-	0xe2, 0x28, 0x13, 0x7f, 0x50, 0x68, 0xc4, 0x61, 0x41, 0x9a, 0x52, 0x06, 0x1f, 0x0e, 0xe4, 0xf8,
-	0x18, 0xc8, 0x52, 0xb4, 0xc3, 0xdc, 0x16, 0x09, 0xc5, 0x4c, 0xbe, 0x93, 0xa9, 0xe6, 0xb6, 0x46,
-	0x4e, 0xd3, 0x20, 0x47, 0x5c, 0xd5, 0x56, 0x69, 0x2e, 0xdf, 0x4f, 0x54, 0x7e, 0x47, 0xd0, 0x94,
-	0xb0, 0xf7, 0x88, 0x64, 0x86, 0xd5, 0x2a, 0x61, 0xd5, 0x73, 0xb4, 0x4b, 0x39, 0x16, 0xfb, 0x45,
-	0xdd, 0xd8, 0x2f, 0xb2, 0x02, 0x34, 0xb4, 0x46, 0x79, 0x4b, 0x81, 0x71, 0x0f, 0x3a, 0x43, 0x76,
-	0xf3, 0x9a, 0xc5, 0x97, 0xeb, 0xed, 0x2a, 0x15, 0x0c, 0x34, 0x42, 0xfd, 0xa8, 0xff, 0xb7, 0x0d,
-	0xae, 0x62, 0x7f, 0x92, 0xa4, 0x2c, 0x7e, 0xc5, 0xe2, 0x37, 0x3c, 0xd2, 0x05, 0x74, 0xb4, 0xa5,
-	0x05, 0xbb, 0x74, 0x77, 0x33, 0xf2, 0xbb, 0xb4, 0x62, 0xaf, 0x21, 0x35, 0xfc, 0x25, 0xbc, 0xa7,
-	0x0f, 0x7f, 0xdc, 0xad, 0xda, 0x38, 0xfc, 0x63, 0x5a, 0xb5, 0x21, 0x90, 0x1a, 0x7e, 0x0c, 0x87,
-	0xc6, 0x5c, 0xc7, 0xc7, 0xb4, 0x6a, 0x33, 0xf0, 0x4f, 0x68, 0xe5, 0xf8, 0x27, 0x35, 0xfc, 0x19,
-	0xb4, 0xf3, 0x99, 0x8c, 0x8f, 0x68, 0x79, 0xd2, 0xfb, 0x98, 0xee, 0x8c, 0x6c, 0x52, 0xc3, 0x03,
-	0x70, 0x8a, 0x31, 0x21, 0x35, 0x09, 0x77, 0xab, 0xc6, 0x97, 0x7f, 0x4c, 0xab, 0xe6, 0x09, 0xa9,
-	0x71, 0xd6, 0x34, 0x45, 0xc3, 0x2e, 0xdd, 0x55, 0x50, 0xbf, 0x4b, 0x2b, 0x44, 0x2f, 0x03, 0xad,
-	0xf4, 0x5b, 0x80, 0x36, 0xc7, 0x8d, 0x00, 0x5d, 0x92, 0x77, 0xc9, 0xb5, 0xae, 0x4d, 0x12, 0x70,
-	0x59, 0x21, 0x25, 0xe0, 0x1d, 0x01, 0x23, 0xb5, 0xfe, 0x9f, 0x08, 0x8e, 0x0a, 0x61, 0xca, 0x8a,
-	0x7f, 0xff, 0x0a, 0x3c, 0x83, 0xf7, 0x4b, 0xeb, 0x09, 0x3e, 0xa5, 0xd5, 0x8b, 0x8f, 0xef, 0xd1,
-	0x3b, 0x36, 0x99, 0x77, 0x52, 0x93, 0xd7, 0x4d, 0xb1, 0xdc, 0x7f, 0xfa, 0x4f, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0x32, 0x48, 0xb2, 0x19, 0xf3, 0x0b, 0x00, 0x00,
+	// 1225 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x58, 0xcb, 0x6e, 0x1b, 0x37,
+	0x17, 0xd6, 0x8c, 0x66, 0x24, 0xeb, 0x28, 0x76, 0x64, 0x4a, 0x96, 0x27, 0xfa, 0x17, 0xbf, 0x4b,
+	0x14, 0x85, 0x37, 0xa5, 0x5b, 0x27, 0x8b, 0xd4, 0x40, 0x80, 0x28, 0x4e, 0xe2, 0x2a, 0xf1, 0x25,
+	0x99, 0x58, 0x05, 0xb2, 0x6a, 0x27, 0x12, 0x21, 0x4c, 0xa3, 0x5b, 0xe7, 0x92, 0xc2, 0x0f, 0xd0,
+	0x55, 0x9f, 0xa2, 0x40, 0x97, 0xdd, 0x76, 0xdf, 0x97, 0xe8, 0xbb, 0x74, 0x59, 0xf0, 0x36, 0xc3,
+	0xb9, 0xc8, 0x72, 0x6a, 0xb4, 0x2b, 0xf3, 0x50, 0x9c, 0xc3, 0xef, 0x7c, 0xfc, 0x48, 0x7e, 0x34,
+	0xb4, 0x47, 0x7e, 0x30, 0x9a, 0xd2, 0x03, 0xf1, 0x87, 0x2c, 0x83, 0x45, 0xb4, 0xc0, 0x43, 0x40,
+	0x4f, 0x62, 0x7f, 0x3a, 0x3e, 0xe6, 0x9d, 0x2e, 0xfd, 0x21, 0xa6, 0x61, 0x84, 0x10, 0x58, 0x73,
+	0x6f, 0x46, 0x1d, 0x63, 0xcf, 0xd8, 0x6f, 0xb8, 0xbc, 0x8d, 0xba, 0x50, 0x9b, 0x2f, 0x22, 0x7f,
+	0x44, 0x1d, 0x93, 0xf7, 0xca, 0x08, 0xb5, 0xc1, 0x88, 0x9d, 0xea, 0x9e, 0xb1, 0xdf, 0x3c, 0xb4,
+	0xc9, 0x30, 0xa4, 0x81, 0x6b, 0xc4, 0xf8, 0x00, 0xda, 0x99, 0xb4, 0xe1, 0x72, 0x31, 0x0f, 0x29,
+	0x72, 0xa0, 0x1e, 0xc6, 0xa3, 0x11, 0x0d, 0x43, 0x9e, 0x7a, 0xc3, 0x55, 0x21, 0xfe, 0xc3, 0x80,
+	0xf6, 0x70, 0x39, 0xf6, 0x22, 0x9a, 0x45, 0xd2, 0x83, 0x0d, 0x81, 0x77, 0x30, 0xe6, 0x9f, 0xd8,
+	0x6e, 0x12, 0xb3, 0x6c, 0x8b, 0x1f, 0xe7, 0x34, 0x18, 0x8c, 0x39, 0x24, 0xdb, 0x55, 0x21, 0x7a,
+	0x08, 0xb5, 0x98, 0x27, 0x73, 0xaa, 0x7b, 0xd5, 0xfd, 0xe6, 0xe1, 0x1e, 0x29, 0xc9, 0x2d, 0xfb,
+	0x9e, 0xcd, 0xa3, 0xe0, 0xca, 0x95, 0xe3, 0x7b, 0x5f, 0x41, 0x53, 0xeb, 0x46, 0x2d, 0xa8, 0xbe,
+	0xa7, 0x57, 0x92, 0x07, 0xd6, 0x44, 0x1d, 0xb0, 0x3f, 0x78, 0xd3, 0x58, 0xb1, 0x20, 0x82, 0x23,
+	0xf3, 0xa1, 0x81, 0xbf, 0x80, 0x4e, 0x76, 0x96, 0xb5, 0x45, 0xef, 0x43, 0xe7, 0x84, 0x46, 0x62,
+	0xf8, 0xa9, 0x1f, 0x46, 0xaa, 0xe8, 0x16, 0x54, 0x63, 0x5f, 0xd5, 0xcb, 0x9a, 0xf8, 0x08, 0x76,
+	0x72, 0x23, 0x65, 0xf2, 0x4f, 0xa0, 0x2e, 0xf8, 0x60, 0xc9, 0x59, 0xa9, 0x75, 0x22, 0xa7, 0x57,
+	0xfd, 0xf8, 0x6b, 0x68, 0x3d, 0xa5, 0xd3, 0x2c, 0xad, 0x1a, 0x75, 0x46, 0x96, 0x3a, 0x9d, 0x70,
+	0x33, 0x4b, 0x38, 0xfe, 0x1c, 0xb6, 0xb5, 0x4c, 0x6b, 0xcb, 0xbb, 0x80, 0x6e, 0x7f, 0xb9, 0x9c,
+	0x5e, 0xbd, 0x58, 0xf8, 0xf3, 0x9b, 0xaf, 0xea, 0x3d, 0xb0, 0xe2, 0x90, 0x06, 0x7c, 0xf2, 0x44,
+	0x52, 0xbc, 0x0b, 0xbf, 0x85, 0xdd, 0x42, 0xc2, 0x75, 0x28, 0xd0, 0xa7, 0x50, 0x9f, 0xd1, 0x30,
+	0xf4, 0x26, 0x54, 0xa6, 0x04, 0xc9, 0xd0, 0x59, 0x38, 0x71, 0xd5, 0x4f, 0x38, 0x84, 0x76, 0x4a,
+	0xf0, 0x62, 0x72, 0x13, 0xa0, 0x08, 0xac, 0xa5, 0xca, 0x6a, 0xbb, 0xbc, 0xcd, 0xd4, 0x31, 0xf5,
+	0x67, 0x7e, 0xc4, 0x37, 0x84, 0xed, 0x8a, 0x80, 0x6d, 0x1d, 0x86, 0x7f, 0x30, 0x76, 0x2c, 0xde,
+	0x2d, 0x23, 0xfc, 0x58, 0x5f, 0x7f, 0x36, 0xa9, 0x2c, 0x66, 0x1f, 0x1a, 0x1e, 0xab, 0xf3, 0x2c,
+	0x9c, 0xa8, 0x65, 0xd5, 0x41, 0xa7, 0x3f, 0xe2, 0x5f, 0x0c, 0xb6, 0xb8, 0xde, 0x94, 0xd3, 0xa2,
+	0x40, 0xf3, 0x1d, 0x69, 0x64, 0x77, 0xe4, 0x75, 0xeb, 0xaa, 0xab, 0xa1, 0x9a, 0x55, 0x43, 0x07,
+	0xec, 0x59, 0x38, 0x49, 0x80, 0x8b, 0x40, 0xab, 0xc7, 0xd6, 0xeb, 0x61, 0xa3, 0xbd, 0x49, 0x40,
+	0xa9, 0x53, 0xe3, 0x4b, 0x20, 0x02, 0x7c, 0xce, 0x54, 0x93, 0x40, 0x5c, 0xbb, 0x5e, 0xff, 0xcf,
+	0xac, 0x7f, 0x53, 0xd6, 0xad, 0xa9, 0xe0, 0x3b, 0x40, 0x2c, 0xdf, 0x99, 0x58, 0x39, 0x55, 0x74,
+	0x82, 0xd4, 0xd0, 0x91, 0xae, 0x3e, 0x22, 0x74, 0x3e, 0xaa, 0x39, 0x9d, 0x1f, 0x40, 0x3b, 0x33,
+	0xc3, 0x5a, 0xa5, 0xc7, 0x5c, 0x3d, 0xbc, 0x42, 0x7d, 0x1f, 0xff, 0xb3, 0xc3, 0x4b, 0xe9, 0xaa,
+	0x5a, 0xa6, 0x2b, 0x4b, 0xd3, 0x95, 0xd4, 0x8f, 0x36, 0xed, 0x47, 0xeb, 0x47, 0x00, 0x7f, 0x1d,
+	0xfb, 0x11, 0xfd, 0xef, 0x81, 0x6b, 0xd3, 0x7e, 0x34, 0xf0, 0x9f, 0x0d, 0xb8, 0xcb, 0xd6, 0x88,
+	0xe5, 0xb8, 0x1d, 0xea, 0x44, 0x38, 0xd5, 0x72, 0x89, 0x5b, 0xe5, 0x12, 0xb7, 0x75, 0x89, 0x9f,
+	0x89, 0x5d, 0x28, 0xc0, 0xdc, 0x5e, 0xe1, 0xcf, 0xe5, 0xc1, 0xc9, 0xf2, 0xdd, 0xfc, 0xe0, 0x94,
+	0xb7, 0x86, 0x99, 0xde, 0x1a, 0xf7, 0xe5, 0x79, 0xa9, 0xe7, 0x59, 0xab, 0xe5, 0x07, 0xd0, 0x3d,
+	0xa1, 0x81, 0x18, 0xfe, 0x94, 0x46, 0x9e, 0x3f, 0xbd, 0xc1, 0xe4, 0xf8, 0x4f, 0x03, 0x76, 0x0b,
+	0x9f, 0xa5, 0x73, 0x5d, 0x73, 0xd9, 0x04, 0xd4, 0x8b, 0x68, 0x3f, 0x92, 0xf7, 0x69, 0x12, 0xb3,
+	0xdf, 0xc4, 0x9d, 0xdc, 0x17, 0xa7, 0x69, 0xc3, 0x4d, 0x62, 0xcd, 0x8b, 0x58, 0x19, 0x2f, 0xa2,
+	0x7c, 0x8b, 0xad, 0xf9, 0x16, 0x1d, 0x75, 0x2d, 0x47, 0xd9, 0x1e, 0x34, 0x67, 0x74, 0xf6, 0x8e,
+	0x06, 0xc7, 0x8b, 0x78, 0x1e, 0x39, 0x75, 0xfe, 0xb3, 0xde, 0x85, 0x2f, 0x58, 0x59, 0x92, 0xbc,
+	0x33, 0xde, 0x1f, 0xde, 0x4a, 0x6e, 0xf8, 0x11, 0x38, 0xc5, 0x84, 0xc9, 0x65, 0x6e, 0xb3, 0xf5,
+	0x57, 0xd2, 0xcf, 0x28, 0x43, 0xfc, 0x82, 0xff, 0x32, 0x00, 0xd2, 0x5e, 0xb4, 0x05, 0x66, 0x62,
+	0x14, 0x4c, 0x7f, 0x9c, 0x10, 0x60, 0x66, 0x8d, 0x9b, 0x3f, 0x9b, 0x0c, 0x83, 0xa9, 0xa4, 0x51,
+	0x46, 0x2b, 0x25, 0xde, 0x85, 0xda, 0xf7, 0x0b, 0x7f, 0xde, 0x8f, 0x24, 0x8d, 0x32, 0xba, 0x96,
+	0xc8, 0x2e, 0xd4, 0x02, 0x3a, 0xf3, 0x82, 0xf7, 0x9c, 0xc3, 0x86, 0x2b, 0x23, 0xf4, 0x19, 0x6c,
+	0x45, 0x8b, 0xc8, 0x9b, 0x9e, 0x78, 0x33, 0x2a, 0x38, 0xde, 0xe0, 0x5f, 0xe6, 0x7a, 0x11, 0x86,
+	0x3b, 0xcb, 0x80, 0xa6, 0xa3, 0x1a, 0x7c, 0x54, 0xa6, 0x0f, 0x3f, 0x01, 0xab, 0xb4, 0xe6, 0xb4,
+	0x3e, 0x33, 0x53, 0x9f, 0xe2, 0xa2, 0x9a, 0x72, 0x81, 0x7f, 0x32, 0xa1, 0x91, 0x9c, 0x27, 0x85,
+	0x4c, 0x0e, 0xd4, 0x47, 0x8b, 0x79, 0x44, 0xe7, 0x4a, 0x8d, 0x2a, 0x44, 0xff, 0x03, 0x43, 0xa8,
+	0x70, 0xeb, 0x70, 0x33, 0x3d, 0x90, 0xc8, 0xe5, 0xd2, 0x35, 0xb2, 0x4a, 0xb5, 0x72, 0x4a, 0xd5,
+	0x15, 0x6e, 0xe7, 0x14, 0x9e, 0x2e, 0x40, 0x2d, 0xb3, 0x00, 0xfc, 0xfe, 0xae, 0xe7, 0x1c, 0xf5,
+	0x29, 0x98, 0x97, 0x4b, 0xb4, 0x09, 0x8d, 0xe1, 0xf9, 0xe0, 0x9b, 0x67, 0xee, 0x9b, 0xfe, 0x69,
+	0xab, 0x82, 0x36, 0xc0, 0x7a, 0x71, 0x31, 0x38, 0x6f, 0x19, 0xac, 0xf5, 0x7a, 0x38, 0xb8, 0x6c,
+	0x99, 0xac, 0xf5, 0x72, 0x70, 0xfc, 0xb2, 0x55, 0x45, 0x0d, 0xb0, 0xfb, 0xaf, 0x5e, 0x9d, 0xbe,
+	0x6d, 0x59, 0x68, 0x0b, 0x80, 0x37, 0xbf, 0xe5, 0x83, 0x6c, 0xfc, 0x9b, 0x01, 0x35, 0x51, 0xc6,
+	0xbf, 0xb0, 0x3b, 0x15, 0xf1, 0xd6, 0x8a, 0x5d, 0x68, 0x5f, 0xbf, 0x0b, 0x6b, 0x85, 0x5d, 0x78,
+	0xf8, 0xbb, 0x0d, 0x6d, 0xc9, 0xba, 0x17, 0x46, 0x34, 0x78, 0x43, 0x83, 0x0f, 0x6c, 0xbf, 0x1f,
+	0x41, 0x53, 0x7b, 0x66, 0xa0, 0x36, 0x29, 0xbe, 0x65, 0x7a, 0x1d, 0x52, 0xf2, 0x12, 0xc1, 0x15,
+	0xf4, 0x08, 0xee, 0xe8, 0x76, 0x1d, 0x75, 0xca, 0xde, 0x08, 0xbd, 0x1d, 0x52, 0xe6, 0xe9, 0x71,
+	0x05, 0x3d, 0x86, 0xcd, 0x8c, 0x23, 0x47, 0x3b, 0xa4, 0xcc, 0xcb, 0xf7, 0xba, 0xa4, 0xd4, 0xb8,
+	0xe3, 0x0a, 0x1a, 0x40, 0x2b, 0x7f, 0x12, 0x20, 0x87, 0xac, 0x38, 0x6d, 0x7a, 0xf7, 0xc8, 0xaa,
+	0x63, 0x03, 0x57, 0xd0, 0x03, 0x68, 0x24, 0xc6, 0x1c, 0x6d, 0x93, 0xbc, 0xdd, 0xef, 0x21, 0x52,
+	0xf0, 0xed, 0x82, 0x01, 0xdd, 0x7e, 0xa2, 0x0e, 0x29, 0xb1, 0xc0, 0xbd, 0x1d, 0x52, 0xe6, 0x51,
+	0x71, 0x85, 0x91, 0xaf, 0xb9, 0x24, 0xd4, 0x26, 0x45, 0x57, 0xd6, 0xeb, 0x90, 0x12, 0x23, 0xa5,
+	0x00, 0x4b, 0x4f, 0xc8, 0x01, 0x67, 0x2d, 0x2c, 0x07, 0x9c, 0xb3, 0x8c, 0x09, 0xe0, 0xc4, 0xef,
+	0x08, 0xc0, 0x79, 0xd7, 0x25, 0x00, 0x17, 0x4c, 0x51, 0xf2, 0x79, 0xe2, 0x3a, 0xc4, 0xe7, 0x79,
+	0xef, 0x23, 0x3e, 0x2f, 0x58, 0x13, 0x5c, 0x41, 0x5f, 0xc2, 0x86, 0xba, 0xe4, 0x51, 0x8b, 0xe4,
+	0xcc, 0x47, 0x6f, 0x9b, 0xe4, 0x1d, 0x00, 0xae, 0x1c, 0xfe, 0x6a, 0xc2, 0x76, 0x7a, 0x5a, 0x2b,
+	0xd5, 0xde, 0x5e, 0x3a, 0xcf, 0xe1, 0x6e, 0xee, 0x21, 0x84, 0x76, 0x49, 0xf9, 0x5b, 0xab, 0xe7,
+	0x90, 0x15, 0x6f, 0xa6, 0xdb, 0x2b, 0x40, 0xc1, 0x48, 0xfd, 0x85, 0x82, 0x51, 0x70, 0x2e, 0x0a,
+	0x46, 0xd1, 0x8a, 0xe0, 0xca, 0xbb, 0x1a, 0xff, 0x5f, 0xc4, 0xfd, 0xbf, 0x03, 0x00, 0x00, 0xff,
+	0xff, 0xb7, 0x49, 0xc8, 0x0e, 0xa2, 0x10, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1388,18 +1908,24 @@ type CircleMasterServiceClient interface {
 	BuildCircle(ctx context.Context, in *BuildCircleRequest, opts ...grpc.CallOption) (*BuildCircleResponse, error)
 	// 更新
 	UpdateCircle(ctx context.Context, in *UpdateCircleRequest, opts ...grpc.CallOption) (*UpdateCircleResponse, error)
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(ctx context.Context, in *GetCircleListRequest, opts ...grpc.CallOption) (*GetCircleListResponse, error)
+	// 获取成员列表
+	GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, opts ...grpc.CallOption) (*GetCircleMembersResponse, error)
 	// 删除圈子
 	DelCircle(ctx context.Context, in *DelCircleRequest, opts ...grpc.CallOption) (*DelCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...grpc.CallOption) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...grpc.CallOption) (*GetCircleLogResponse, error)
 	// 处理圈子消息
 	DealMessage(ctx context.Context, in *DealMessageRequest, opts ...grpc.CallOption) (*DealMessageResponse, error)
 	// 处理申请
 	DealApply(ctx context.Context, in *DealApplyRequest, opts ...grpc.CallOption) (*DealApplyResponse, error)
-	// 获取申请
+	// 获取加入圈子申请
 	GetApplyList(ctx context.Context, in *GetApplyListRequest, opts ...grpc.CallOption) (*GetApplyListResponse, error)
+	// 获取退出圈子申请
+	GetQuiteList(ctx context.Context, in *GetQuiteListRequest, opts ...grpc.CallOption) (*GetQuiteListResponse, error)
+	// 处理用户退出申请
+	DealQuit(ctx context.Context, in *DealQuitRequest, opts ...grpc.CallOption) (*DealQuitResponse, error)
 }
 
 type circleMasterServiceClient struct {
@@ -1437,6 +1963,15 @@ func (c *circleMasterServiceClient) GetCircleList(ctx context.Context, in *GetCi
 	return out, nil
 }
 
+func (c *circleMasterServiceClient) GetCircleMembers(ctx context.Context, in *GetCircleMembersRequest, opts ...grpc.CallOption) (*GetCircleMembersResponse, error) {
+	out := new(GetCircleMembersResponse)
+	err := c.cc.Invoke(ctx, "/CircleMasterService/GetCircleMembers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *circleMasterServiceClient) DelCircle(ctx context.Context, in *DelCircleRequest, opts ...grpc.CallOption) (*DelCircleResponse, error) {
 	out := new(DelCircleResponse)
 	err := c.cc.Invoke(ctx, "/CircleMasterService/DelCircle", in, out, opts...)
@@ -1446,9 +1981,9 @@ func (c *circleMasterServiceClient) DelCircle(ctx context.Context, in *DelCircle
 	return out, nil
 }
 
-func (c *circleMasterServiceClient) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...grpc.CallOption) (*GetCircleMsgResponse, error) {
-	out := new(GetCircleMsgResponse)
-	err := c.cc.Invoke(ctx, "/CircleMasterService/GetCircleMessage", in, out, opts...)
+func (c *circleMasterServiceClient) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...grpc.CallOption) (*GetCircleLogResponse, error) {
+	out := new(GetCircleLogResponse)
+	err := c.cc.Invoke(ctx, "/CircleMasterService/GetCircleLog", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1482,24 +2017,48 @@ func (c *circleMasterServiceClient) GetApplyList(ctx context.Context, in *GetApp
 	return out, nil
 }
 
+func (c *circleMasterServiceClient) GetQuiteList(ctx context.Context, in *GetQuiteListRequest, opts ...grpc.CallOption) (*GetQuiteListResponse, error) {
+	out := new(GetQuiteListResponse)
+	err := c.cc.Invoke(ctx, "/CircleMasterService/GetQuiteList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *circleMasterServiceClient) DealQuit(ctx context.Context, in *DealQuitRequest, opts ...grpc.CallOption) (*DealQuitResponse, error) {
+	out := new(DealQuitResponse)
+	err := c.cc.Invoke(ctx, "/CircleMasterService/DealQuit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CircleMasterServiceServer is the server API for CircleMasterService service.
 type CircleMasterServiceServer interface {
 	// 创建
 	BuildCircle(context.Context, *BuildCircleRequest) (*BuildCircleResponse, error)
 	// 更新
 	UpdateCircle(context.Context, *UpdateCircleRequest) (*UpdateCircleResponse, error)
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(context.Context, *GetCircleListRequest) (*GetCircleListResponse, error)
+	// 获取成员列表
+	GetCircleMembers(context.Context, *GetCircleMembersRequest) (*GetCircleMembersResponse, error)
 	// 删除圈子
 	DelCircle(context.Context, *DelCircleRequest) (*DelCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(context.Context, *GetCircleMsgRequest) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(context.Context, *GetCircleLogRequest) (*GetCircleLogResponse, error)
 	// 处理圈子消息
 	DealMessage(context.Context, *DealMessageRequest) (*DealMessageResponse, error)
 	// 处理申请
 	DealApply(context.Context, *DealApplyRequest) (*DealApplyResponse, error)
-	// 获取申请
+	// 获取加入圈子申请
 	GetApplyList(context.Context, *GetApplyListRequest) (*GetApplyListResponse, error)
+	// 获取退出圈子申请
+	GetQuiteList(context.Context, *GetQuiteListRequest) (*GetQuiteListResponse, error)
+	// 处理用户退出申请
+	DealQuit(context.Context, *DealQuitRequest) (*DealQuitResponse, error)
 }
 
 func RegisterCircleMasterServiceServer(s *grpc.Server, srv CircleMasterServiceServer) {
@@ -1560,6 +2119,24 @@ func _CircleMasterService_GetCircleList_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CircleMasterService_GetCircleMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCircleMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CircleMasterServiceServer).GetCircleMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CircleMasterService/GetCircleMembers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CircleMasterServiceServer).GetCircleMembers(ctx, req.(*GetCircleMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CircleMasterService_DelCircle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DelCircleRequest)
 	if err := dec(in); err != nil {
@@ -1578,20 +2155,20 @@ func _CircleMasterService_DelCircle_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CircleMasterService_GetCircleMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCircleMsgRequest)
+func _CircleMasterService_GetCircleLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCircleLogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CircleMasterServiceServer).GetCircleMessage(ctx, in)
+		return srv.(CircleMasterServiceServer).GetCircleLog(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/CircleMasterService/GetCircleMessage",
+		FullMethod: "/CircleMasterService/GetCircleLog",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CircleMasterServiceServer).GetCircleMessage(ctx, req.(*GetCircleMsgRequest))
+		return srv.(CircleMasterServiceServer).GetCircleLog(ctx, req.(*GetCircleLogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1650,6 +2227,42 @@ func _CircleMasterService_GetApplyList_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CircleMasterService_GetQuiteList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetQuiteListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CircleMasterServiceServer).GetQuiteList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CircleMasterService/GetQuiteList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CircleMasterServiceServer).GetQuiteList(ctx, req.(*GetQuiteListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CircleMasterService_DealQuit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DealQuitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CircleMasterServiceServer).DealQuit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CircleMasterService/DealQuit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CircleMasterServiceServer).DealQuit(ctx, req.(*DealQuitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _CircleMasterService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "CircleMasterService",
 	HandlerType: (*CircleMasterServiceServer)(nil),
@@ -1667,12 +2280,16 @@ var _CircleMasterService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _CircleMasterService_GetCircleList_Handler,
 		},
 		{
+			MethodName: "GetCircleMembers",
+			Handler:    _CircleMasterService_GetCircleMembers_Handler,
+		},
+		{
 			MethodName: "DelCircle",
 			Handler:    _CircleMasterService_DelCircle_Handler,
 		},
 		{
-			MethodName: "GetCircleMessage",
-			Handler:    _CircleMasterService_GetCircleMessage_Handler,
+			MethodName: "GetCircleLog",
+			Handler:    _CircleMasterService_GetCircleLog_Handler,
 		},
 		{
 			MethodName: "DealMessage",
@@ -1686,6 +2303,14 @@ var _CircleMasterService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "GetApplyList",
 			Handler:    _CircleMasterService_GetApplyList_Handler,
 		},
+		{
+			MethodName: "GetQuiteList",
+			Handler:    _CircleMasterService_GetQuiteList_Handler,
+		},
+		{
+			MethodName: "DealQuit",
+			Handler:    _CircleMasterService_DealQuit_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "circle/circle.proto",
@@ -1695,12 +2320,14 @@ var _CircleMasterService_serviceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CircleUserServiceClient interface {
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(ctx context.Context, in *GetCircleListRequest, opts ...grpc.CallOption) (*GetCircleListResponse, error)
 	// 申请加入圈子
 	ApplyJoinCircle(ctx context.Context, in *ApplyJoinCircleRequest, opts ...grpc.CallOption) (*ApplyJoinCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...grpc.CallOption) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...grpc.CallOption) (*GetCircleLogResponse, error)
+	// 玩家申请离开圈子
+	ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, opts ...grpc.CallOption) (*ApplyQuitCircleResponse, error)
 }
 
 type circleUserServiceClient struct {
@@ -1729,9 +2356,18 @@ func (c *circleUserServiceClient) ApplyJoinCircle(ctx context.Context, in *Apply
 	return out, nil
 }
 
-func (c *circleUserServiceClient) GetCircleMessage(ctx context.Context, in *GetCircleMsgRequest, opts ...grpc.CallOption) (*GetCircleMsgResponse, error) {
-	out := new(GetCircleMsgResponse)
-	err := c.cc.Invoke(ctx, "/CircleUserService/GetCircleMessage", in, out, opts...)
+func (c *circleUserServiceClient) GetCircleLog(ctx context.Context, in *GetCircleLogRequest, opts ...grpc.CallOption) (*GetCircleLogResponse, error) {
+	out := new(GetCircleLogResponse)
+	err := c.cc.Invoke(ctx, "/CircleUserService/GetCircleLog", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *circleUserServiceClient) ApplyQuitCircle(ctx context.Context, in *ApplyQuitCircleRequest, opts ...grpc.CallOption) (*ApplyQuitCircleResponse, error) {
+	out := new(ApplyQuitCircleResponse)
+	err := c.cc.Invoke(ctx, "/CircleUserService/ApplyQuitCircle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1740,12 +2376,14 @@ func (c *circleUserServiceClient) GetCircleMessage(ctx context.Context, in *GetC
 
 // CircleUserServiceServer is the server API for CircleUserService service.
 type CircleUserServiceServer interface {
-	// 获取列表
+	// 获取圈子列表
 	GetCircleList(context.Context, *GetCircleListRequest) (*GetCircleListResponse, error)
 	// 申请加入圈子
 	ApplyJoinCircle(context.Context, *ApplyJoinCircleRequest) (*ApplyJoinCircleResponse, error)
-	// 获取圈子的消息
-	GetCircleMessage(context.Context, *GetCircleMsgRequest) (*GetCircleMsgResponse, error)
+	// 获取圈子的日志
+	GetCircleLog(context.Context, *GetCircleLogRequest) (*GetCircleLogResponse, error)
+	// 玩家申请离开圈子
+	ApplyQuitCircle(context.Context, *ApplyQuitCircleRequest) (*ApplyQuitCircleResponse, error)
 }
 
 func RegisterCircleUserServiceServer(s *grpc.Server, srv CircleUserServiceServer) {
@@ -1788,20 +2426,38 @@ func _CircleUserService_ApplyJoinCircle_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CircleUserService_GetCircleMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCircleMsgRequest)
+func _CircleUserService_GetCircleLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCircleLogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CircleUserServiceServer).GetCircleMessage(ctx, in)
+		return srv.(CircleUserServiceServer).GetCircleLog(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/CircleUserService/GetCircleMessage",
+		FullMethod: "/CircleUserService/GetCircleLog",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CircleUserServiceServer).GetCircleMessage(ctx, req.(*GetCircleMsgRequest))
+		return srv.(CircleUserServiceServer).GetCircleLog(ctx, req.(*GetCircleLogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CircleUserService_ApplyQuitCircle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyQuitCircleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CircleUserServiceServer).ApplyQuitCircle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CircleUserService/ApplyQuitCircle",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CircleUserServiceServer).ApplyQuitCircle(ctx, req.(*ApplyQuitCircleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1819,8 +2475,12 @@ var _CircleUserService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _CircleUserService_ApplyJoinCircle_Handler,
 		},
 		{
-			MethodName: "GetCircleMessage",
-			Handler:    _CircleUserService_GetCircleMessage_Handler,
+			MethodName: "GetCircleLog",
+			Handler:    _CircleUserService_GetCircleLog_Handler,
+		},
+		{
+			MethodName: "ApplyQuitCircle",
+			Handler:    _CircleUserService_ApplyQuitCircle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
