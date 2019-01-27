@@ -34,6 +34,8 @@ service CircleMasterService {
     // 处理用户退出申请
     rpc DealQuit(DealQuitRequest) returns (DealQuitResponse) {}
 
+    // 详细信息
+    rpc GetCircleInfo(GetCircleInfoRequest) returns (GetCircleInfoResponse) {}
 
 }
 
@@ -193,7 +195,6 @@ message ApplyQuitCircleResponse {
 }
 
 
-
 message GerCircleDetailRequest {
     int32 circleId = 1;
 }
@@ -215,6 +216,15 @@ message GetCircleMembersRequest {
 
 message GetCircleMembersResponse {
     repeated CircleUser users =1;
+}
+
+message GetCircleInfoRequest {
+    int32 circleId = 1;
+}
+
+message GetCircleInfoResponse {
+    Circle circle = 1;
+    repeated CircleUser users = 2;
 }
 
 message CircleUser {
