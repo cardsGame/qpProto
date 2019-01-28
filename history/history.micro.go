@@ -10,6 +10,8 @@ It is generated from these files:
 It has these top-level messages:
 	GetUserHistoryRequest
 	GetUserHistoryResponse
+	StoreHistoryRequest
+	StoreHistoryResponse
 */
 package history
 
@@ -43,7 +45,8 @@ var _ server.Option
 // Client API for History service
 
 type HistoryService interface {
-	GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error)
+	GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error)
+	StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...client.CallOption) (*StoreHistoryResponse, error)
 }
 
 type historyService struct {
@@ -64,9 +67,19 @@ func NewHistoryService(name string, c client.Client) HistoryService {
 	}
 }
 
-func (c *historyService) GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error) {
-	req := c.c.NewRequest(c.name, "History.GetUserHistroy", in)
+func (c *historyService) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error) {
+	req := c.c.NewRequest(c.name, "History.GetUserHistory", in)
 	out := new(GetUserHistoryResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *historyService) StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...client.CallOption) (*StoreHistoryResponse, error) {
+	req := c.c.NewRequest(c.name, "History.StoreHistory", in)
+	out := new(StoreHistoryResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -77,12 +90,14 @@ func (c *historyService) GetUserHistroy(ctx context.Context, in *GetUserHistoryR
 // Server API for History service
 
 type HistoryHandler interface {
-	GetUserHistroy(context.Context, *GetUserHistoryRequest, *GetUserHistoryResponse) error
+	GetUserHistory(context.Context, *GetUserHistoryRequest, *GetUserHistoryResponse) error
+	StoreHistory(context.Context, *StoreHistoryRequest, *StoreHistoryResponse) error
 }
 
 func RegisterHistoryHandler(s server.Server, hdlr HistoryHandler, opts ...server.HandlerOption) error {
 	type history interface {
-		GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error
+		GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error
+		StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error
 	}
 	type History struct {
 		history
@@ -95,6 +110,10 @@ type historyHandler struct {
 	HistoryHandler
 }
 
-func (h *historyHandler) GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error {
-	return h.HistoryHandler.GetUserHistroy(ctx, in, out)
+func (h *historyHandler) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error {
+	return h.HistoryHandler.GetUserHistory(ctx, in, out)
+}
+
+func (h *historyHandler) StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error {
+	return h.HistoryHandler.StoreHistory(ctx, in, out)
 }

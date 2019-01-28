@@ -23,6 +23,28 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type HistoryType int32
+
+const (
+	HistoryType_friend_room HistoryType = 0
+)
+
+var HistoryType_name = map[int32]string{
+	0: "friend_room",
+}
+
+var HistoryType_value = map[string]int32{
+	"friend_room": 0,
+}
+
+func (x HistoryType) String() string {
+	return proto.EnumName(HistoryType_name, int32(x))
+}
+
+func (HistoryType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_132197fc40cc0614, []int{0}
+}
+
 // 获取用户战绩请求
 type GetUserHistoryRequest struct {
 	Page                 int32    `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
@@ -73,12 +95,12 @@ func (m *GetUserHistoryRequest) GetLimit() int32 {
 
 // 获取用户战绩响应
 type GetUserHistoryResponse struct {
-	// Types that are valid to be assigned to Room:
-	//	*GetUserHistoryResponse_FriendRoomData
-	Room                 isGetUserHistoryResponse_Room `protobuf_oneof:"room"`
-	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
-	XXX_unrecognized     []byte                        `json:"-"`
-	XXX_sizecache        int32                         `json:"-"`
+	// Types that are valid to be assigned to Rooms:
+	//	*GetUserHistoryResponse_FriendRooms
+	Rooms                isGetUserHistoryResponse_Rooms `protobuf_oneof:"rooms"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *GetUserHistoryResponse) Reset()         { *m = GetUserHistoryResponse{} }
@@ -106,26 +128,26 @@ func (m *GetUserHistoryResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetUserHistoryResponse proto.InternalMessageInfo
 
-type isGetUserHistoryResponse_Room interface {
-	isGetUserHistoryResponse_Room()
+type isGetUserHistoryResponse_Rooms interface {
+	isGetUserHistoryResponse_Rooms()
 }
 
-type GetUserHistoryResponse_FriendRoomData struct {
-	FriendRoomData *friendRoom.RoomData `protobuf:"bytes,1,opt,name=friendRoomData,proto3,oneof"`
+type GetUserHistoryResponse_FriendRooms struct {
+	FriendRooms *friendRoom.RoomData `protobuf:"bytes,1,opt,name=friendRooms,proto3,oneof"`
 }
 
-func (*GetUserHistoryResponse_FriendRoomData) isGetUserHistoryResponse_Room() {}
+func (*GetUserHistoryResponse_FriendRooms) isGetUserHistoryResponse_Rooms() {}
 
-func (m *GetUserHistoryResponse) GetRoom() isGetUserHistoryResponse_Room {
+func (m *GetUserHistoryResponse) GetRooms() isGetUserHistoryResponse_Rooms {
 	if m != nil {
-		return m.Room
+		return m.Rooms
 	}
 	return nil
 }
 
-func (m *GetUserHistoryResponse) GetFriendRoomData() *friendRoom.RoomData {
-	if x, ok := m.GetRoom().(*GetUserHistoryResponse_FriendRoomData); ok {
-		return x.FriendRoomData
+func (m *GetUserHistoryResponse) GetFriendRooms() *friendRoom.RoomData {
+	if x, ok := m.GetRooms().(*GetUserHistoryResponse_FriendRooms); ok {
+		return x.FriendRooms
 	}
 	return nil
 }
@@ -133,33 +155,148 @@ func (m *GetUserHistoryResponse) GetFriendRoomData() *friendRoom.RoomData {
 // XXX_OneofWrappers is for the internal use of the proto package.
 func (*GetUserHistoryResponse) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*GetUserHistoryResponse_FriendRoomData)(nil),
+		(*GetUserHistoryResponse_FriendRooms)(nil),
 	}
 }
 
+// 写入战绩请求
+type StoreHistoryRequest struct {
+	T HistoryType `protobuf:"varint,1,opt,name=t,proto3,enum=history.HistoryType" json:"t,omitempty"`
+	// Types that are valid to be assigned to RoomData:
+	//	*StoreHistoryRequest_FriendRoomData
+	RoomData             isStoreHistoryRequest_RoomData `protobuf_oneof:"roomData"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
+}
+
+func (m *StoreHistoryRequest) Reset()         { *m = StoreHistoryRequest{} }
+func (m *StoreHistoryRequest) String() string { return proto.CompactTextString(m) }
+func (*StoreHistoryRequest) ProtoMessage()    {}
+func (*StoreHistoryRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_132197fc40cc0614, []int{2}
+}
+
+func (m *StoreHistoryRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StoreHistoryRequest.Unmarshal(m, b)
+}
+func (m *StoreHistoryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StoreHistoryRequest.Marshal(b, m, deterministic)
+}
+func (m *StoreHistoryRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHistoryRequest.Merge(m, src)
+}
+func (m *StoreHistoryRequest) XXX_Size() int {
+	return xxx_messageInfo_StoreHistoryRequest.Size(m)
+}
+func (m *StoreHistoryRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHistoryRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHistoryRequest proto.InternalMessageInfo
+
+func (m *StoreHistoryRequest) GetT() HistoryType {
+	if m != nil {
+		return m.T
+	}
+	return HistoryType_friend_room
+}
+
+type isStoreHistoryRequest_RoomData interface {
+	isStoreHistoryRequest_RoomData()
+}
+
+type StoreHistoryRequest_FriendRoomData struct {
+	FriendRoomData *friendRoom.RoomData `protobuf:"bytes,2,opt,name=friendRoomData,proto3,oneof"`
+}
+
+func (*StoreHistoryRequest_FriendRoomData) isStoreHistoryRequest_RoomData() {}
+
+func (m *StoreHistoryRequest) GetRoomData() isStoreHistoryRequest_RoomData {
+	if m != nil {
+		return m.RoomData
+	}
+	return nil
+}
+
+func (m *StoreHistoryRequest) GetFriendRoomData() *friendRoom.RoomData {
+	if x, ok := m.GetRoomData().(*StoreHistoryRequest_FriendRoomData); ok {
+		return x.FriendRoomData
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*StoreHistoryRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*StoreHistoryRequest_FriendRoomData)(nil),
+	}
+}
+
+// 写入战绩响应
+type StoreHistoryResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *StoreHistoryResponse) Reset()         { *m = StoreHistoryResponse{} }
+func (m *StoreHistoryResponse) String() string { return proto.CompactTextString(m) }
+func (*StoreHistoryResponse) ProtoMessage()    {}
+func (*StoreHistoryResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_132197fc40cc0614, []int{3}
+}
+
+func (m *StoreHistoryResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StoreHistoryResponse.Unmarshal(m, b)
+}
+func (m *StoreHistoryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StoreHistoryResponse.Marshal(b, m, deterministic)
+}
+func (m *StoreHistoryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHistoryResponse.Merge(m, src)
+}
+func (m *StoreHistoryResponse) XXX_Size() int {
+	return xxx_messageInfo_StoreHistoryResponse.Size(m)
+}
+func (m *StoreHistoryResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHistoryResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHistoryResponse proto.InternalMessageInfo
+
 func init() {
+	proto.RegisterEnum("history.HistoryType", HistoryType_name, HistoryType_value)
 	proto.RegisterType((*GetUserHistoryRequest)(nil), "history.GetUserHistoryRequest")
 	proto.RegisterType((*GetUserHistoryResponse)(nil), "history.GetUserHistoryResponse")
+	proto.RegisterType((*StoreHistoryRequest)(nil), "history.StoreHistoryRequest")
+	proto.RegisterType((*StoreHistoryResponse)(nil), "history.StoreHistoryResponse")
 }
 
 func init() { proto.RegisterFile("history/history.proto", fileDescriptor_132197fc40cc0614) }
 
 var fileDescriptor_132197fc40cc0614 = []byte{
-	// 224 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcd, 0xc8, 0x2c, 0x2e,
-	0xc9, 0x2f, 0xaa, 0xd4, 0x87, 0xd2, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0xec, 0x50, 0xae,
-	0x94, 0x45, 0x7a, 0x66, 0x49, 0x46, 0x69, 0x92, 0x5e, 0x72, 0x7e, 0xae, 0x7e, 0x72, 0x62, 0x51,
-	0x4a, 0xb1, 0x7b, 0x62, 0x6e, 0xaa, 0x7e, 0x61, 0x41, 0x00, 0x48, 0x99, 0x7e, 0x5a, 0x51, 0x66,
-	0x6a, 0x5e, 0x4a, 0x50, 0x7e, 0x7e, 0x2e, 0x12, 0x13, 0x62, 0x84, 0x92, 0x23, 0x97, 0xa8, 0x7b,
-	0x6a, 0x49, 0x68, 0x71, 0x6a, 0x91, 0x07, 0xc4, 0xac, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x12,
-	0x21, 0x21, 0x2e, 0x96, 0x82, 0xc4, 0xf4, 0x54, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xd6, 0x20, 0x30,
-	0x5b, 0x48, 0x84, 0x8b, 0x35, 0x27, 0x33, 0x37, 0xb3, 0x44, 0x82, 0x09, 0x2c, 0x08, 0xe1, 0x28,
-	0x25, 0x70, 0x89, 0xa1, 0x1b, 0x51, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0x2a, 0x64, 0xc7, 0xc5, 0x87,
-	0xb0, 0xd0, 0x25, 0xb1, 0x24, 0x11, 0x6c, 0x1a, 0xb7, 0x91, 0x88, 0x1e, 0x92, 0x3b, 0x60, 0x72,
-	0x1e, 0x0c, 0x41, 0x68, 0xaa, 0x9d, 0xd8, 0xb8, 0x58, 0x8a, 0xf2, 0xf3, 0x73, 0x8d, 0xe2, 0xb8,
-	0xd8, 0xa1, 0x46, 0x0b, 0x05, 0x73, 0xf1, 0x21, 0x59, 0x56, 0x94, 0x5f, 0x29, 0x24, 0xa7, 0x07,
-	0x0b, 0x14, 0xac, 0x1e, 0x91, 0x92, 0xc7, 0x29, 0x0f, 0x71, 0xa5, 0x12, 0x43, 0x12, 0x1b, 0x38,
-	0x2c, 0x8c, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x52, 0xa5, 0x08, 0x18, 0x67, 0x01, 0x00, 0x00,
+	// 317 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x52, 0x41, 0x4f, 0xb3, 0x40,
+	0x10, 0x65, 0xbf, 0x7c, 0x88, 0x19, 0x0c, 0x9a, 0x91, 0x36, 0x0d, 0xd1, 0x6a, 0xf6, 0x64, 0x3c,
+	0x40, 0x82, 0x97, 0x9e, 0x4c, 0x6c, 0x4c, 0xda, 0x8b, 0x89, 0xa1, 0x7a, 0xf2, 0x60, 0x68, 0xbb,
+	0xb6, 0x24, 0xd2, 0xa5, 0xbb, 0xdb, 0x43, 0x7f, 0x80, 0x3f, 0xc7, 0xff, 0x68, 0x58, 0xa0, 0xa5,
+	0xa4, 0x5c, 0xe0, 0x2d, 0xf3, 0xe6, 0xbd, 0x37, 0xc3, 0x42, 0x67, 0x99, 0x48, 0xc5, 0xc5, 0x36,
+	0x28, 0xdf, 0x7e, 0x26, 0xb8, 0xe2, 0x68, 0x95, 0x47, 0x6f, 0xb0, 0x48, 0xd4, 0x72, 0x33, 0xf5,
+	0x67, 0x3c, 0x0d, 0x66, 0xb1, 0x98, 0xcb, 0x51, 0x9c, 0xb2, 0x60, 0x9d, 0xbd, 0xe6, 0xb4, 0xe0,
+	0x4b, 0x24, 0x6c, 0x35, 0x8f, 0x38, 0x4f, 0x6b, 0xb0, 0x90, 0xa0, 0x4f, 0xd0, 0x19, 0x31, 0xf5,
+	0x2e, 0x99, 0x18, 0x17, 0x5a, 0x11, 0x5b, 0x6f, 0x98, 0x54, 0x88, 0xf0, 0x3f, 0x8b, 0x17, 0xac,
+	0x47, 0x6e, 0xc9, 0x9d, 0x19, 0x69, 0x8c, 0x2e, 0x98, 0xdf, 0x49, 0x9a, 0xa8, 0xde, 0x3f, 0xfd,
+	0xb1, 0x38, 0xd0, 0x0f, 0xe8, 0x36, 0x25, 0x64, 0xc6, 0x57, 0x92, 0xe1, 0x00, 0xec, 0xbd, 0xa1,
+	0xd4, 0x52, 0x76, 0xe8, 0xfa, 0xb5, 0x10, 0xf9, 0xe3, 0x39, 0x56, 0xf1, 0xd8, 0x88, 0xea, 0xd4,
+	0xa1, 0x05, 0xa6, 0xc8, 0x01, 0xfd, 0x21, 0x70, 0x39, 0x51, 0x5c, 0xb0, 0x46, 0x3c, 0x0a, 0x44,
+	0x69, 0x41, 0x27, 0x74, 0xfd, 0x6a, 0x2b, 0x25, 0xe7, 0x6d, 0x9b, 0xb1, 0x88, 0x28, 0x7c, 0x04,
+	0x67, 0xaf, 0x99, 0xbb, 0xe8, 0xdc, 0xed, 0x09, 0x1a, 0xec, 0x21, 0xc0, 0xa9, 0x28, 0x31, 0xed,
+	0x82, 0x7b, 0x18, 0xa3, 0x18, 0xf1, 0xbe, 0x0f, 0x76, 0xcd, 0x15, 0xcf, 0xab, 0x89, 0x3f, 0xf3,
+	0xce, 0x0b, 0x23, 0xfc, 0x25, 0x60, 0x95, 0x04, 0x9c, 0x80, 0x73, 0xb8, 0x28, 0xec, 0xef, 0xa2,
+	0x1f, 0xfd, 0x09, 0xde, 0x4d, 0x6b, 0xbd, 0xb0, 0xa7, 0x06, 0xbe, 0xc0, 0x59, 0x3d, 0x18, 0x5e,
+	0xed, 0x5a, 0x8e, 0xac, 0xcd, 0xbb, 0x6e, 0xa9, 0x56, 0x72, 0xd3, 0x13, 0x7d, 0x2d, 0x1e, 0xfe,
+	0x02, 0x00, 0x00, 0xff, 0xff, 0x8a, 0xdb, 0x8c, 0xb2, 0x72, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -174,7 +311,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type HistoryClient interface {
-	GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error)
+	GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error)
+	StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...grpc.CallOption) (*StoreHistoryResponse, error)
 }
 
 type historyClient struct {
@@ -185,9 +323,18 @@ func NewHistoryClient(cc *grpc.ClientConn) HistoryClient {
 	return &historyClient{cc}
 }
 
-func (c *historyClient) GetUserHistroy(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error) {
+func (c *historyClient) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error) {
 	out := new(GetUserHistoryResponse)
-	err := c.cc.Invoke(ctx, "/history.History/GetUserHistroy", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/history.History/GetUserHistory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *historyClient) StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...grpc.CallOption) (*StoreHistoryResponse, error) {
+	out := new(StoreHistoryResponse)
+	err := c.cc.Invoke(ctx, "/history.History/StoreHistory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -196,27 +343,46 @@ func (c *historyClient) GetUserHistroy(ctx context.Context, in *GetUserHistoryRe
 
 // HistoryServer is the server API for History service.
 type HistoryServer interface {
-	GetUserHistroy(context.Context, *GetUserHistoryRequest) (*GetUserHistoryResponse, error)
+	GetUserHistory(context.Context, *GetUserHistoryRequest) (*GetUserHistoryResponse, error)
+	StoreHistory(context.Context, *StoreHistoryRequest) (*StoreHistoryResponse, error)
 }
 
 func RegisterHistoryServer(s *grpc.Server, srv HistoryServer) {
 	s.RegisterService(&_History_serviceDesc, srv)
 }
 
-func _History_GetUserHistroy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _History_GetUserHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HistoryServer).GetUserHistroy(ctx, in)
+		return srv.(HistoryServer).GetUserHistory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/history.History/GetUserHistroy",
+		FullMethod: "/history.History/GetUserHistory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HistoryServer).GetUserHistroy(ctx, req.(*GetUserHistoryRequest))
+		return srv.(HistoryServer).GetUserHistory(ctx, req.(*GetUserHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _History_StoreHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HistoryServer).StoreHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/history.History/StoreHistory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HistoryServer).StoreHistory(ctx, req.(*StoreHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -226,8 +392,12 @@ var _History_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*HistoryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetUserHistroy",
-			Handler:    _History_GetUserHistroy_Handler,
+			MethodName: "GetUserHistory",
+			Handler:    _History_GetUserHistory_Handler,
+		},
+		{
+			MethodName: "StoreHistory",
+			Handler:    _History_StoreHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -28,7 +28,7 @@ message GetUserHistoryResponse {
 message StoreHistoryRequest {
     HistoryType t = 1;
     oneof roomData {
-        friendRoom.RoomData friendRoomData  = 1;
+        friendRoom.RoomData friendRoomData  = 2;
     }
 }
 
