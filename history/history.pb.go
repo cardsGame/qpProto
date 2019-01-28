@@ -167,6 +167,92 @@ func (*GetUserHistoryResponse) XXX_OneofWrappers() []interface{} {
 	}
 }
 
+type GetCircleHistoryRequest struct {
+	Page                 int32       `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Limit                int32       `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	T                    HistoryType `protobuf:"varint,3,opt,name=t,proto3,enum=history.HistoryType" json:"t,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *GetCircleHistoryRequest) Reset()         { *m = GetCircleHistoryRequest{} }
+func (m *GetCircleHistoryRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCircleHistoryRequest) ProtoMessage()    {}
+func (*GetCircleHistoryRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_132197fc40cc0614, []int{2}
+}
+
+func (m *GetCircleHistoryRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleHistoryRequest.Unmarshal(m, b)
+}
+func (m *GetCircleHistoryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleHistoryRequest.Marshal(b, m, deterministic)
+}
+func (m *GetCircleHistoryRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleHistoryRequest.Merge(m, src)
+}
+func (m *GetCircleHistoryRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCircleHistoryRequest.Size(m)
+}
+func (m *GetCircleHistoryRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleHistoryRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCircleHistoryRequest proto.InternalMessageInfo
+
+func (m *GetCircleHistoryRequest) GetPage() int32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+func (m *GetCircleHistoryRequest) GetLimit() int32 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+func (m *GetCircleHistoryRequest) GetT() HistoryType {
+	if m != nil {
+		return m.T
+	}
+	return HistoryType_friend_room
+}
+
+type GetCircleHistoryResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetCircleHistoryResponse) Reset()         { *m = GetCircleHistoryResponse{} }
+func (m *GetCircleHistoryResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCircleHistoryResponse) ProtoMessage()    {}
+func (*GetCircleHistoryResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_132197fc40cc0614, []int{3}
+}
+
+func (m *GetCircleHistoryResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCircleHistoryResponse.Unmarshal(m, b)
+}
+func (m *GetCircleHistoryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCircleHistoryResponse.Marshal(b, m, deterministic)
+}
+func (m *GetCircleHistoryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCircleHistoryResponse.Merge(m, src)
+}
+func (m *GetCircleHistoryResponse) XXX_Size() int {
+	return xxx_messageInfo_GetCircleHistoryResponse.Size(m)
+}
+func (m *GetCircleHistoryResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCircleHistoryResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCircleHistoryResponse proto.InternalMessageInfo
+
 // 写入战绩请求
 type StoreHistoryRequest struct {
 	// Types that are valid to be assigned to RoomData:
@@ -181,7 +267,7 @@ func (m *StoreHistoryRequest) Reset()         { *m = StoreHistoryRequest{} }
 func (m *StoreHistoryRequest) String() string { return proto.CompactTextString(m) }
 func (*StoreHistoryRequest) ProtoMessage()    {}
 func (*StoreHistoryRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_132197fc40cc0614, []int{2}
+	return fileDescriptor_132197fc40cc0614, []int{4}
 }
 
 func (m *StoreHistoryRequest) XXX_Unmarshal(b []byte) error {
@@ -235,17 +321,18 @@ func (*StoreHistoryRequest) XXX_OneofWrappers() []interface{} {
 
 // 写入战绩响应
 type StoreHistoryResponse struct {
-	HistoryId            string   `protobuf:"bytes,1,opt,name=historyId,proto3" json:"historyId,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	HistoryId            string      `protobuf:"bytes,1,opt,name=historyId,proto3" json:"historyId,omitempty"`
+	T                    HistoryType `protobuf:"varint,2,opt,name=t,proto3,enum=history.HistoryType" json:"t,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *StoreHistoryResponse) Reset()         { *m = StoreHistoryResponse{} }
 func (m *StoreHistoryResponse) String() string { return proto.CompactTextString(m) }
 func (*StoreHistoryResponse) ProtoMessage()    {}
 func (*StoreHistoryResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_132197fc40cc0614, []int{3}
+	return fileDescriptor_132197fc40cc0614, []int{5}
 }
 
 func (m *StoreHistoryResponse) XXX_Unmarshal(b []byte) error {
@@ -273,21 +360,28 @@ func (m *StoreHistoryResponse) GetHistoryId() string {
 	return ""
 }
 
+func (m *StoreHistoryResponse) GetT() HistoryType {
+	if m != nil {
+		return m.T
+	}
+	return HistoryType_friend_room
+}
+
 // 增加索引请求
 type AddIndexReqeust struct {
-	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	SubKey               string   `protobuf:"bytes,2,opt,name=subKey,proto3" json:"subKey,omitempty"`
-	HistoryId            string   `protobuf:"bytes,3,opt,name=historyId,proto3" json:"historyId,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Key                  string      `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	HistoryId            string      `protobuf:"bytes,2,opt,name=historyId,proto3" json:"historyId,omitempty"`
+	T                    HistoryType `protobuf:"varint,3,opt,name=t,proto3,enum=history.HistoryType" json:"t,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *AddIndexReqeust) Reset()         { *m = AddIndexReqeust{} }
 func (m *AddIndexReqeust) String() string { return proto.CompactTextString(m) }
 func (*AddIndexReqeust) ProtoMessage()    {}
 func (*AddIndexReqeust) Descriptor() ([]byte, []int) {
-	return fileDescriptor_132197fc40cc0614, []int{4}
+	return fileDescriptor_132197fc40cc0614, []int{6}
 }
 
 func (m *AddIndexReqeust) XXX_Unmarshal(b []byte) error {
@@ -315,18 +409,18 @@ func (m *AddIndexReqeust) GetKey() string {
 	return ""
 }
 
-func (m *AddIndexReqeust) GetSubKey() string {
-	if m != nil {
-		return m.SubKey
-	}
-	return ""
-}
-
 func (m *AddIndexReqeust) GetHistoryId() string {
 	if m != nil {
 		return m.HistoryId
 	}
 	return ""
+}
+
+func (m *AddIndexReqeust) GetT() HistoryType {
+	if m != nil {
+		return m.T
+	}
+	return HistoryType_friend_room
 }
 
 // 增加索引响应
@@ -340,7 +434,7 @@ func (m *AddIndexResponse) Reset()         { *m = AddIndexResponse{} }
 func (m *AddIndexResponse) String() string { return proto.CompactTextString(m) }
 func (*AddIndexResponse) ProtoMessage()    {}
 func (*AddIndexResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_132197fc40cc0614, []int{5}
+	return fileDescriptor_132197fc40cc0614, []int{7}
 }
 
 func (m *AddIndexResponse) XXX_Unmarshal(b []byte) error {
@@ -365,6 +459,8 @@ func init() {
 	proto.RegisterEnum("history.HistoryType", HistoryType_name, HistoryType_value)
 	proto.RegisterType((*GetUserHistoryRequest)(nil), "history.GetUserHistoryRequest")
 	proto.RegisterType((*GetUserHistoryResponse)(nil), "history.GetUserHistoryResponse")
+	proto.RegisterType((*GetCircleHistoryRequest)(nil), "history.GetCircleHistoryRequest")
+	proto.RegisterType((*GetCircleHistoryResponse)(nil), "history.GetCircleHistoryResponse")
 	proto.RegisterType((*StoreHistoryRequest)(nil), "history.StoreHistoryRequest")
 	proto.RegisterType((*StoreHistoryResponse)(nil), "history.StoreHistoryResponse")
 	proto.RegisterType((*AddIndexReqeust)(nil), "history.AddIndexReqeust")
@@ -374,32 +470,34 @@ func init() {
 func init() { proto.RegisterFile("history/history.proto", fileDescriptor_132197fc40cc0614) }
 
 var fileDescriptor_132197fc40cc0614 = []byte{
-	// 393 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0x4d, 0xcf, 0xd2, 0x40,
-	0x10, 0xc7, 0xa9, 0xc8, 0xc3, 0xc3, 0x60, 0x80, 0xac, 0x85, 0xd4, 0x06, 0x91, 0xf4, 0x44, 0x3c,
-	0xb4, 0x09, 0x7a, 0xe0, 0x64, 0x02, 0x31, 0x01, 0x62, 0x4c, 0xcc, 0xa2, 0x07, 0xe3, 0xc1, 0x14,
-	0x3a, 0x42, 0xa3, 0x65, 0xcb, 0xee, 0x36, 0xb1, 0xdf, 0xda, 0x8f, 0x60, 0xda, 0x6e, 0x5f, 0x68,
-	0x20, 0xcf, 0xa5, 0x9d, 0xd9, 0xf9, 0xef, 0x6f, 0xde, 0x16, 0x86, 0x27, 0x5f, 0x48, 0xc6, 0x63,
-	0x47, 0xfd, 0xed, 0x90, 0x33, 0xc9, 0x48, 0x5b, 0xb9, 0xe6, 0xe2, 0xe8, 0xcb, 0x53, 0xb4, 0xb7,
-	0x0f, 0x2c, 0x70, 0x0e, 0x2e, 0xf7, 0xc4, 0xda, 0x0d, 0xd0, 0xb9, 0x84, 0x5f, 0x12, 0x99, 0xf3,
-	0x8b, 0xfb, 0x78, 0xf6, 0x28, 0x63, 0x41, 0xc5, 0xcc, 0x10, 0x16, 0xc2, 0x70, 0x8d, 0xf2, 0x9b,
-	0x40, 0xbe, 0xc9, 0x58, 0x14, 0x2f, 0x11, 0x0a, 0x49, 0x08, 0x3c, 0x0f, 0xdd, 0x23, 0x1a, 0xda,
-	0x54, 0x9b, 0xb5, 0x68, 0x6a, 0x13, 0x1d, 0x5a, 0x7f, 0xfc, 0xc0, 0x97, 0xc6, 0xb3, 0xf4, 0x30,
-	0x73, 0x88, 0x05, 0x9a, 0x34, 0x9a, 0x53, 0x6d, 0xd6, 0x9b, 0xeb, 0x76, 0x5e, 0xa0, 0xa2, 0x7d,
-	0x8d, 0x43, 0xa4, 0x9a, 0xb4, 0x7e, 0xc0, 0xa8, 0x9e, 0x46, 0x84, 0xec, 0x2c, 0x90, 0x2c, 0xa0,
-	0x5b, 0x16, 0x25, 0xd2, 0x74, 0xdd, 0xb9, 0x6e, 0x57, 0x0a, 0x4d, 0x3e, 0x1f, 0x5d, 0xe9, 0x6e,
-	0x1a, 0xb4, 0x2a, 0x5d, 0xb5, 0xa1, 0xc5, 0x13, 0xc3, 0x72, 0xe1, 0xe5, 0x4e, 0x32, 0x8e, 0xb5,
-	0x0e, 0x3e, 0x40, 0xaf, 0x94, 0x27, 0x80, 0x27, 0xe0, 0x35, 0xf5, 0x0a, 0xe0, 0x91, 0x2b, 0xdb,
-	0x7a, 0x0f, 0xfa, 0x75, 0x0a, 0x55, 0xfd, 0x18, 0x3a, 0xaa, 0xe3, 0xad, 0x97, 0xe2, 0x3b, 0xb4,
-	0x3c, 0xb0, 0xbe, 0x43, 0x7f, 0xe9, 0x79, 0xdb, 0xb3, 0x87, 0x7f, 0x29, 0x5e, 0x30, 0x12, 0x92,
-	0x0c, 0xa0, 0xf9, 0x1b, 0x63, 0x25, 0x4d, 0x4c, 0x32, 0x82, 0x07, 0x11, 0xed, 0x3f, 0x61, 0x9c,
-	0x4e, 0xb5, 0x43, 0x95, 0x77, 0x8d, 0x6e, 0xd6, 0xd1, 0x04, 0x06, 0x25, 0x3a, 0x2b, 0xe6, 0xed,
-	0x04, 0xba, 0x95, 0xb1, 0x93, 0x7e, 0x3e, 0xd9, 0x9f, 0x49, 0x1b, 0x83, 0xc6, 0xfc, 0x9f, 0x06,
-	0x6d, 0x25, 0x20, 0x3b, 0xe8, 0x5d, 0x2f, 0x84, 0x4c, 0x8a, 0xdd, 0xdd, 0x7c, 0x10, 0xe6, 0x9b,
-	0xbb, 0xf1, 0x2c, 0xbd, 0xd5, 0x20, 0x9f, 0xe1, 0x45, 0x75, 0x4a, 0x64, 0x5c, 0x5c, 0xb9, 0xb1,
-	0x1f, 0xf3, 0xf5, 0x9d, 0x68, 0x81, 0x5b, 0xc2, 0x63, 0xde, 0x23, 0x31, 0x0a, 0x71, 0x6d, 0xa2,
-	0xe6, 0xab, 0x1b, 0x91, 0x1c, 0xb1, 0x7f, 0x48, 0x5f, 0xf9, 0xbb, 0xff, 0x01, 0x00, 0x00, 0xff,
-	0xff, 0x1e, 0x48, 0x48, 0x1f, 0x41, 0x03, 0x00, 0x00,
+	// 424 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x53, 0xcd, 0xae, 0xd2, 0x40,
+	0x14, 0xa6, 0xbd, 0x22, 0xf7, 0x1e, 0x0c, 0xb7, 0x19, 0x7b, 0xb5, 0x36, 0x88, 0xd8, 0x15, 0x71,
+	0xd1, 0x26, 0xb8, 0x61, 0x65, 0x02, 0x9a, 0x00, 0x0b, 0x13, 0x53, 0x34, 0xd1, 0xb8, 0x30, 0x85,
+	0x1e, 0xa1, 0x91, 0x32, 0x65, 0x66, 0x48, 0xe4, 0x19, 0x7d, 0x29, 0xd3, 0x76, 0xfa, 0x43, 0x2d,
+	0xb0, 0x72, 0x03, 0x67, 0x66, 0xbe, 0xf9, 0x7e, 0xe6, 0x9c, 0xc2, 0xc3, 0x26, 0xe0, 0x82, 0xb2,
+	0xa3, 0x23, 0xff, 0xed, 0x88, 0x51, 0x41, 0x49, 0x4b, 0x2e, 0xcd, 0xd1, 0x3a, 0x10, 0x9b, 0xc3,
+	0xd2, 0x5e, 0xd1, 0xd0, 0x59, 0x79, 0xcc, 0xe7, 0x53, 0x2f, 0x44, 0x67, 0x1f, 0x7d, 0x8a, 0x61,
+	0xce, 0x4f, 0x16, 0xe0, 0xce, 0x77, 0x29, 0x0d, 0x4b, 0x65, 0x4a, 0x61, 0x21, 0x3c, 0x4c, 0x51,
+	0x7c, 0xe1, 0xc8, 0x66, 0x29, 0x97, 0x8b, 0xfb, 0x03, 0x72, 0x41, 0x08, 0x3c, 0x8a, 0xbc, 0x35,
+	0x1a, 0x4a, 0x5f, 0x19, 0x34, 0xdd, 0xa4, 0x26, 0x3a, 0x34, 0xb7, 0x41, 0x18, 0x08, 0x43, 0x4d,
+	0x36, 0xd3, 0x05, 0xb1, 0x40, 0x11, 0xc6, 0x4d, 0x5f, 0x19, 0x74, 0x86, 0xba, 0x9d, 0x19, 0x94,
+	0x6c, 0x9f, 0x8f, 0x11, 0xba, 0x8a, 0xb0, 0xbe, 0xc3, 0xb3, 0xaa, 0x0c, 0x8f, 0xe8, 0x8e, 0x23,
+	0x19, 0x41, 0xbb, 0x30, 0xc5, 0x13, 0xb9, 0xf6, 0x50, 0xb7, 0x4b, 0x46, 0xe3, 0x9f, 0x0f, 0x9e,
+	0xf0, 0x66, 0x0d, 0xb7, 0x0c, 0x9d, 0xb4, 0xa0, 0xc9, 0xe2, 0xc2, 0x5a, 0xc3, 0xf3, 0x29, 0x8a,
+	0xf7, 0x01, 0x5b, 0x6d, 0xf1, 0xbf, 0xa6, 0x30, 0xc1, 0xf8, 0x57, 0x28, 0xcd, 0x61, 0x79, 0xf0,
+	0x74, 0x21, 0x28, 0xab, 0x1a, 0x78, 0x07, 0x9d, 0xc2, 0x73, 0x9c, 0xe2, 0x4a, 0xc2, 0x0a, 0x7a,
+	0x02, 0x70, 0xcb, 0x64, 0x6d, 0x7d, 0x05, 0xfd, 0x54, 0x42, 0x3e, 0x61, 0x17, 0xee, 0xa4, 0xe1,
+	0xb9, 0x9f, 0xd0, 0xdf, 0xb9, 0xc5, 0x46, 0x1a, 0x4c, 0xbd, 0x1c, 0x0c, 0xe1, 0x7e, 0xec, 0xfb,
+	0xf3, 0x9d, 0x8f, 0xbf, 0x5d, 0xdc, 0xe3, 0x81, 0x0b, 0xa2, 0xc1, 0xcd, 0x2f, 0x3c, 0x4a, 0xba,
+	0xb8, 0x3c, 0x95, 0x51, 0x6b, 0x65, 0xae, 0xbc, 0x1f, 0x01, 0xad, 0x90, 0x49, 0xcd, 0xbf, 0xe9,
+	0x41, 0xbb, 0x84, 0x22, 0xf7, 0xd9, 0x38, 0xfc, 0x88, 0x63, 0x6b, 0x8d, 0xe1, 0x1f, 0x15, 0x5a,
+	0x12, 0x40, 0x16, 0xd0, 0x39, 0x9d, 0x22, 0xd2, 0xcb, 0xa5, 0x6a, 0xa7, 0xd8, 0x7c, 0x75, 0xf6,
+	0x5c, 0xb6, 0xad, 0x41, 0xbe, 0x81, 0x56, 0x6d, 0x2a, 0xe9, 0x97, 0xaf, 0xd5, 0x0d, 0x96, 0xf9,
+	0xfa, 0x02, 0x22, 0xa7, 0xfe, 0x08, 0x4f, 0xca, 0x0d, 0x23, 0xdd, 0xfc, 0x52, 0xcd, 0xa8, 0x98,
+	0x2f, 0xcf, 0x9c, 0xe6, 0x74, 0x63, 0xb8, 0xcd, 0x9e, 0x8f, 0x18, 0x39, 0xb8, 0xd2, 0x38, 0xf3,
+	0x45, 0xcd, 0x49, 0x46, 0xb1, 0x7c, 0x9c, 0x7c, 0xf5, 0x6f, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff,
+	0xc5, 0x3f, 0x5f, 0x5a, 0x51, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -414,7 +512,10 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type HistoryClient interface {
+	// 获取用户的战绩
 	GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error)
+	// 获取亲友圈的战绩
+	GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, opts ...grpc.CallOption) (*GetCircleHistoryResponse, error)
 	// 存储数据 服务端调用
 	StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...grpc.CallOption) (*StoreHistoryResponse, error)
 	// 增加索引 服务端调用
@@ -432,6 +533,15 @@ func NewHistoryClient(cc *grpc.ClientConn) HistoryClient {
 func (c *historyClient) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...grpc.CallOption) (*GetUserHistoryResponse, error) {
 	out := new(GetUserHistoryResponse)
 	err := c.cc.Invoke(ctx, "/history.History/GetUserHistory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *historyClient) GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, opts ...grpc.CallOption) (*GetCircleHistoryResponse, error) {
+	out := new(GetCircleHistoryResponse)
+	err := c.cc.Invoke(ctx, "/history.History/GetCircleHistory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +568,10 @@ func (c *historyClient) AddIndex(ctx context.Context, in *AddIndexReqeust, opts 
 
 // HistoryServer is the server API for History service.
 type HistoryServer interface {
+	// 获取用户的战绩
 	GetUserHistory(context.Context, *GetUserHistoryRequest) (*GetUserHistoryResponse, error)
+	// 获取亲友圈的战绩
+	GetCircleHistory(context.Context, *GetCircleHistoryRequest) (*GetCircleHistoryResponse, error)
 	// 存储数据 服务端调用
 	StoreHistory(context.Context, *StoreHistoryRequest) (*StoreHistoryResponse, error)
 	// 增加索引 服务端调用
@@ -483,6 +596,24 @@ func _History_GetUserHistory_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HistoryServer).GetUserHistory(ctx, req.(*GetUserHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _History_GetCircleHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCircleHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HistoryServer).GetCircleHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/history.History/GetCircleHistory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HistoryServer).GetCircleHistory(ctx, req.(*GetCircleHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -530,6 +661,10 @@ var _History_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserHistory",
 			Handler:    _History_GetUserHistory_Handler,
+		},
+		{
+			MethodName: "GetCircleHistory",
+			Handler:    _History_GetCircleHistory_Handler,
 		},
 		{
 			MethodName: "StoreHistory",
