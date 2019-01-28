@@ -3,15 +3,14 @@
 
 package friendRoom
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import room "github.com/cardsGame/qpProto/room"
-import zlmj "github.com/cardsGame/qpProto/zlmj"
-
 import (
-	context "golang.org/x/net/context"
+	context "context"
+	fmt "fmt"
+	room "github.com/cardsGame/qpProto/room"
+	zlmj "github.com/cardsGame/qpProto/zlmj"
+	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -23,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // 房间状态
 type RoomState int32
@@ -41,6 +40,7 @@ var RoomState_name = map[int32]string{
 	2: "wait_ready",
 	3: "over",
 }
+
 var RoomState_value = map[string]int32{
 	"wait_join":  0,
 	"in_game":    1,
@@ -51,8 +51,9 @@ var RoomState_value = map[string]int32{
 func (x RoomState) String() string {
 	return proto.EnumName(RoomState_name, int32(x))
 }
+
 func (RoomState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{0}
+	return fileDescriptor_b2975553733e89e1, []int{0}
 }
 
 // 房间限制类型
@@ -69,6 +70,7 @@ var RoomLimit_name = map[int32]string{
 	1: "limit_time",
 	2: "limit_circle",
 }
+
 var RoomLimit_value = map[string]int32{
 	"limit_round":  0,
 	"limit_time":   1,
@@ -78,8 +80,9 @@ var RoomLimit_value = map[string]int32{
 func (x RoomLimit) String() string {
 	return proto.EnumName(RoomLimit_name, int32(x))
 }
+
 func (RoomLimit) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{1}
+	return fileDescriptor_b2975553733e89e1, []int{1}
 }
 
 // 房间选项
@@ -102,16 +105,17 @@ func (m *RoomOption) Reset()         { *m = RoomOption{} }
 func (m *RoomOption) String() string { return proto.CompactTextString(m) }
 func (*RoomOption) ProtoMessage()    {}
 func (*RoomOption) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{0}
+	return fileDescriptor_b2975553733e89e1, []int{0}
 }
+
 func (m *RoomOption) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoomOption.Unmarshal(m, b)
 }
 func (m *RoomOption) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RoomOption.Marshal(b, m, deterministic)
 }
-func (dst *RoomOption) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RoomOption.Merge(dst, src)
+func (m *RoomOption) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoomOption.Merge(m, src)
 }
 func (m *RoomOption) XXX_Size() int {
 	return xxx_messageInfo_RoomOption.Size(m)
@@ -207,16 +211,17 @@ func (m *PlayerData) Reset()         { *m = PlayerData{} }
 func (m *PlayerData) String() string { return proto.CompactTextString(m) }
 func (*PlayerData) ProtoMessage()    {}
 func (*PlayerData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{1}
+	return fileDescriptor_b2975553733e89e1, []int{1}
 }
+
 func (m *PlayerData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerData.Unmarshal(m, b)
 }
 func (m *PlayerData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerData.Marshal(b, m, deterministic)
 }
-func (dst *PlayerData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerData.Merge(dst, src)
+func (m *PlayerData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerData.Merge(m, src)
 }
 func (m *PlayerData) XXX_Size() int {
 	return xxx_messageInfo_PlayerData.Size(m)
@@ -335,16 +340,17 @@ func (m *RoomData) Reset()         { *m = RoomData{} }
 func (m *RoomData) String() string { return proto.CompactTextString(m) }
 func (*RoomData) ProtoMessage()    {}
 func (*RoomData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{2}
+	return fileDescriptor_b2975553733e89e1, []int{2}
 }
+
 func (m *RoomData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoomData.Unmarshal(m, b)
 }
 func (m *RoomData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RoomData.Marshal(b, m, deterministic)
 }
-func (dst *RoomData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RoomData.Merge(dst, src)
+func (m *RoomData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoomData.Merge(m, src)
 }
 func (m *RoomData) XXX_Size() int {
 	return xxx_messageInfo_RoomData.Size(m)
@@ -460,16 +466,17 @@ func (m *GameRecord) Reset()         { *m = GameRecord{} }
 func (m *GameRecord) String() string { return proto.CompactTextString(m) }
 func (*GameRecord) ProtoMessage()    {}
 func (*GameRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{3}
+	return fileDescriptor_b2975553733e89e1, []int{3}
 }
+
 func (m *GameRecord) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GameRecord.Unmarshal(m, b)
 }
 func (m *GameRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GameRecord.Marshal(b, m, deterministic)
 }
-func (dst *GameRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GameRecord.Merge(dst, src)
+func (m *GameRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameRecord.Merge(m, src)
 }
 func (m *GameRecord) XXX_Size() int {
 	return xxx_messageInfo_GameRecord.Size(m)
@@ -504,59 +511,11 @@ func (m *GameRecord) GetZlmj() *zlmj.GameData {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*GameRecord) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _GameRecord_OneofMarshaler, _GameRecord_OneofUnmarshaler, _GameRecord_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*GameRecord) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*GameRecord_Zlmj)(nil),
 	}
-}
-
-func _GameRecord_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*GameRecord)
-	// game
-	switch x := m.Game.(type) {
-	case *GameRecord_Zlmj:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("GameRecord.Game has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _GameRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*GameRecord)
-	switch tag {
-	case 1: // game.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.GameData)
-		err := b.DecodeMessage(msg)
-		m.Game = &GameRecord_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _GameRecord_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*GameRecord)
-	// game
-	switch x := m.Game.(type) {
-	case *GameRecord_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // 创建房间请求
@@ -575,16 +534,17 @@ func (m *CreateRoomRequest) Reset()         { *m = CreateRoomRequest{} }
 func (m *CreateRoomRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRoomRequest) ProtoMessage()    {}
 func (*CreateRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{4}
+	return fileDescriptor_b2975553733e89e1, []int{4}
 }
+
 func (m *CreateRoomRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRoomRequest.Unmarshal(m, b)
 }
 func (m *CreateRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRoomRequest.Marshal(b, m, deterministic)
 }
-func (dst *CreateRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateRoomRequest.Merge(dst, src)
+func (m *CreateRoomRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateRoomRequest.Merge(m, src)
 }
 func (m *CreateRoomRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateRoomRequest.Size(m)
@@ -633,59 +593,11 @@ func (m *CreateRoomRequest) GetZlmj() *zlmj.Option {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*CreateRoomRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _CreateRoomRequest_OneofMarshaler, _CreateRoomRequest_OneofUnmarshaler, _CreateRoomRequest_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*CreateRoomRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*CreateRoomRequest_Zlmj)(nil),
 	}
-}
-
-func _CreateRoomRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*CreateRoomRequest)
-	// gameOption
-	switch x := m.GameOption.(type) {
-	case *CreateRoomRequest_Zlmj:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("CreateRoomRequest.GameOption has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _CreateRoomRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*CreateRoomRequest)
-	switch tag {
-	case 3: // gameOption.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.Option)
-		err := b.DecodeMessage(msg)
-		m.GameOption = &CreateRoomRequest_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _CreateRoomRequest_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*CreateRoomRequest)
-	// gameOption
-	switch x := m.GameOption.(type) {
-	case *CreateRoomRequest_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // 创建亲友圈房间请求
@@ -705,16 +617,17 @@ func (m *CreateCircleRoomRequest) Reset()         { *m = CreateCircleRoomRequest
 func (m *CreateCircleRoomRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateCircleRoomRequest) ProtoMessage()    {}
 func (*CreateCircleRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{5}
+	return fileDescriptor_b2975553733e89e1, []int{5}
 }
+
 func (m *CreateCircleRoomRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateCircleRoomRequest.Unmarshal(m, b)
 }
 func (m *CreateCircleRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateCircleRoomRequest.Marshal(b, m, deterministic)
 }
-func (dst *CreateCircleRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateCircleRoomRequest.Merge(dst, src)
+func (m *CreateCircleRoomRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateCircleRoomRequest.Merge(m, src)
 }
 func (m *CreateCircleRoomRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateCircleRoomRequest.Size(m)
@@ -770,59 +683,11 @@ func (m *CreateCircleRoomRequest) GetCircleId() string {
 	return ""
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*CreateCircleRoomRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _CreateCircleRoomRequest_OneofMarshaler, _CreateCircleRoomRequest_OneofUnmarshaler, _CreateCircleRoomRequest_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*CreateCircleRoomRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*CreateCircleRoomRequest_Zlmj)(nil),
 	}
-}
-
-func _CreateCircleRoomRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*CreateCircleRoomRequest)
-	// gameOption
-	switch x := m.GameOption.(type) {
-	case *CreateCircleRoomRequest_Zlmj:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("CreateCircleRoomRequest.GameOption has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _CreateCircleRoomRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*CreateCircleRoomRequest)
-	switch tag {
-	case 3: // gameOption.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.Option)
-		err := b.DecodeMessage(msg)
-		m.GameOption = &CreateCircleRoomRequest_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _CreateCircleRoomRequest_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*CreateCircleRoomRequest)
-	// gameOption
-	switch x := m.GameOption.(type) {
-	case *CreateCircleRoomRequest_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // 创建房间响应
@@ -839,16 +704,17 @@ func (m *CreateRoomResponse) Reset()         { *m = CreateRoomResponse{} }
 func (m *CreateRoomResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateRoomResponse) ProtoMessage()    {}
 func (*CreateRoomResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{6}
+	return fileDescriptor_b2975553733e89e1, []int{6}
 }
+
 func (m *CreateRoomResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRoomResponse.Unmarshal(m, b)
 }
 func (m *CreateRoomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRoomResponse.Marshal(b, m, deterministic)
 }
-func (dst *CreateRoomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateRoomResponse.Merge(dst, src)
+func (m *CreateRoomResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateRoomResponse.Merge(m, src)
 }
 func (m *CreateRoomResponse) XXX_Size() int {
 	return xxx_messageInfo_CreateRoomResponse.Size(m)
@@ -894,16 +760,17 @@ func (m *CreateCircleRoomResponse) Reset()         { *m = CreateCircleRoomRespon
 func (m *CreateCircleRoomResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateCircleRoomResponse) ProtoMessage()    {}
 func (*CreateCircleRoomResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{7}
+	return fileDescriptor_b2975553733e89e1, []int{7}
 }
+
 func (m *CreateCircleRoomResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateCircleRoomResponse.Unmarshal(m, b)
 }
 func (m *CreateCircleRoomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateCircleRoomResponse.Marshal(b, m, deterministic)
 }
-func (dst *CreateCircleRoomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateCircleRoomResponse.Merge(dst, src)
+func (m *CreateCircleRoomResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateCircleRoomResponse.Merge(m, src)
 }
 func (m *CreateCircleRoomResponse) XXX_Size() int {
 	return xxx_messageInfo_CreateCircleRoomResponse.Size(m)
@@ -946,16 +813,17 @@ func (m *GetPlayingRequest) Reset()         { *m = GetPlayingRequest{} }
 func (m *GetPlayingRequest) String() string { return proto.CompactTextString(m) }
 func (*GetPlayingRequest) ProtoMessage()    {}
 func (*GetPlayingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{8}
+	return fileDescriptor_b2975553733e89e1, []int{8}
 }
+
 func (m *GetPlayingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlayingRequest.Unmarshal(m, b)
 }
 func (m *GetPlayingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetPlayingRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetPlayingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPlayingRequest.Merge(dst, src)
+func (m *GetPlayingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPlayingRequest.Merge(m, src)
 }
 func (m *GetPlayingRequest) XXX_Size() int {
 	return xxx_messageInfo_GetPlayingRequest.Size(m)
@@ -978,16 +846,17 @@ func (m *GetPlayingResponse) Reset()         { *m = GetPlayingResponse{} }
 func (m *GetPlayingResponse) String() string { return proto.CompactTextString(m) }
 func (*GetPlayingResponse) ProtoMessage()    {}
 func (*GetPlayingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{9}
+	return fileDescriptor_b2975553733e89e1, []int{9}
 }
+
 func (m *GetPlayingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetPlayingResponse.Unmarshal(m, b)
 }
 func (m *GetPlayingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetPlayingResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetPlayingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetPlayingResponse.Merge(dst, src)
+func (m *GetPlayingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetPlayingResponse.Merge(m, src)
 }
 func (m *GetPlayingResponse) XXX_Size() int {
 	return xxx_messageInfo_GetPlayingResponse.Size(m)
@@ -1017,16 +886,17 @@ func (m *GetCirclePlayingRequest) Reset()         { *m = GetCirclePlayingRequest
 func (m *GetCirclePlayingRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCirclePlayingRequest) ProtoMessage()    {}
 func (*GetCirclePlayingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{10}
+	return fileDescriptor_b2975553733e89e1, []int{10}
 }
+
 func (m *GetCirclePlayingRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCirclePlayingRequest.Unmarshal(m, b)
 }
 func (m *GetCirclePlayingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetCirclePlayingRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetCirclePlayingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCirclePlayingRequest.Merge(dst, src)
+func (m *GetCirclePlayingRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCirclePlayingRequest.Merge(m, src)
 }
 func (m *GetCirclePlayingRequest) XXX_Size() int {
 	return xxx_messageInfo_GetCirclePlayingRequest.Size(m)
@@ -1056,16 +926,17 @@ func (m *GetCirclePlayingResponse) Reset()         { *m = GetCirclePlayingRespon
 func (m *GetCirclePlayingResponse) String() string { return proto.CompactTextString(m) }
 func (*GetCirclePlayingResponse) ProtoMessage()    {}
 func (*GetCirclePlayingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{11}
+	return fileDescriptor_b2975553733e89e1, []int{11}
 }
+
 func (m *GetCirclePlayingResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCirclePlayingResponse.Unmarshal(m, b)
 }
 func (m *GetCirclePlayingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetCirclePlayingResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetCirclePlayingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetCirclePlayingResponse.Merge(dst, src)
+func (m *GetCirclePlayingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCirclePlayingResponse.Merge(m, src)
 }
 func (m *GetCirclePlayingResponse) XXX_Size() int {
 	return xxx_messageInfo_GetCirclePlayingResponse.Size(m)
@@ -1097,16 +968,17 @@ func (m *PlayingRoom) Reset()         { *m = PlayingRoom{} }
 func (m *PlayingRoom) String() string { return proto.CompactTextString(m) }
 func (*PlayingRoom) ProtoMessage()    {}
 func (*PlayingRoom) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{12}
+	return fileDescriptor_b2975553733e89e1, []int{12}
 }
+
 func (m *PlayingRoom) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayingRoom.Unmarshal(m, b)
 }
 func (m *PlayingRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayingRoom.Marshal(b, m, deterministic)
 }
-func (dst *PlayingRoom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayingRoom.Merge(dst, src)
+func (m *PlayingRoom) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayingRoom.Merge(m, src)
 }
 func (m *PlayingRoom) XXX_Size() int {
 	return xxx_messageInfo_PlayingRoom.Size(m)
@@ -1153,16 +1025,17 @@ func (m *Message) Reset()         { *m = Message{} }
 func (m *Message) String() string { return proto.CompactTextString(m) }
 func (*Message) ProtoMessage()    {}
 func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{13}
+	return fileDescriptor_b2975553733e89e1, []int{13}
 }
+
 func (m *Message) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Message.Unmarshal(m, b)
 }
 func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
 }
-func (dst *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(dst, src)
+func (m *Message) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Message.Merge(m, src)
 }
 func (m *Message) XXX_Size() int {
 	return xxx_messageInfo_Message.Size(m)
@@ -1223,97 +1096,13 @@ func (m *Message) GetEvent() *Event {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Message) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Message_OneofMarshaler, _Message_OneofUnmarshaler, _Message_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Message) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Message_Req)(nil),
 		(*Message_Rsp)(nil),
 		(*Message_Event)(nil),
 	}
-}
-
-func _Message_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Message)
-	// message
-	switch x := m.Message.(type) {
-	case *Message_Req:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Req); err != nil {
-			return err
-		}
-	case *Message_Rsp:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Rsp); err != nil {
-			return err
-		}
-	case *Message_Event:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Event); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Message.Message has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Message_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Message)
-	switch tag {
-	case 1: // message.req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Req)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Req{msg}
-		return true, err
-	case 2: // message.rsp
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Rsp)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Rsp{msg}
-		return true, err
-	case 3: // message.event
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Event)
-		err := b.DecodeMessage(msg)
-		m.Message = &Message_Event{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Message_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Message)
-	// message
-	switch x := m.Message.(type) {
-	case *Message_Req:
-		s := proto.Size(x.Req)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Message_Rsp:
-		s := proto.Size(x.Rsp)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Message_Event:
-		s := proto.Size(x.Event)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type Req struct {
@@ -1348,16 +1137,17 @@ func (m *Req) Reset()         { *m = Req{} }
 func (m *Req) String() string { return proto.CompactTextString(m) }
 func (*Req) ProtoMessage()    {}
 func (*Req) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{14}
+	return fileDescriptor_b2975553733e89e1, []int{14}
 }
+
 func (m *Req) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Req.Unmarshal(m, b)
 }
 func (m *Req) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Req.Marshal(b, m, deterministic)
 }
-func (dst *Req) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Req.Merge(dst, src)
+func (m *Req) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Req.Merge(m, src)
 }
 func (m *Req) XXX_Size() int {
 	return xxx_messageInfo_Req.Size(m)
@@ -1624,9 +1414,9 @@ func (m *Req) GetZlmj() *zlmj.Req {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Req) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Req_OneofMarshaler, _Req_OneofUnmarshaler, _Req_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Req) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Req_EnterRoomReq)(nil),
 		(*Req_ReadyReq)(nil),
 		(*Req_SitdownReq)(nil),
@@ -1648,372 +1438,6 @@ func (*Req) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, fu
 	}
 }
 
-func _Req_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Req)
-	// req
-	switch x := m.Req.(type) {
-	case *Req_EnterRoomReq:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EnterRoomReq); err != nil {
-			return err
-		}
-	case *Req_ReadyReq:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ReadyReq); err != nil {
-			return err
-		}
-	case *Req_SitdownReq:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.SitdownReq); err != nil {
-			return err
-		}
-	case *Req_StandupReq:
-		b.EncodeVarint(4<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.StandupReq); err != nil {
-			return err
-		}
-	case *Req_ChangesitReq:
-		b.EncodeVarint(5<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ChangesitReq); err != nil {
-			return err
-		}
-	case *Req_LeaveReq:
-		b.EncodeVarint(6<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.LeaveReq); err != nil {
-			return err
-		}
-	case *Req_OfflineReq:
-		b.EncodeVarint(7<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.OfflineReq); err != nil {
-			return err
-		}
-	case *Req_UploadLocationReq:
-		b.EncodeVarint(8<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.UploadLocationReq); err != nil {
-			return err
-		}
-	case *Req_RequestDissolveReq:
-		b.EncodeVarint(9<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.RequestDissolveReq); err != nil {
-			return err
-		}
-	case *Req_ReplyDissolveReq:
-		b.EncodeVarint(10<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ReplyDissolveReq); err != nil {
-			return err
-		}
-	case *Req_TextChatReq:
-		b.EncodeVarint(11<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TextChatReq); err != nil {
-			return err
-		}
-	case *Req_QuickChatReq:
-		b.EncodeVarint(12<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.QuickChatReq); err != nil {
-			return err
-		}
-	case *Req_EmojiChatReq:
-		b.EncodeVarint(13<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EmojiChatReq); err != nil {
-			return err
-		}
-	case *Req_VoiceChatReq:
-		b.EncodeVarint(14<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.VoiceChatReq); err != nil {
-			return err
-		}
-	case *Req_StartReq:
-		b.EncodeVarint(15<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.StartReq); err != nil {
-			return err
-		}
-	case *Req_CreateRoomRequest:
-		b.EncodeVarint(16<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CreateRoomRequest); err != nil {
-			return err
-		}
-	case *Req_CreateCircleRoomRequest:
-		b.EncodeVarint(17<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CreateCircleRoomRequest); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Req.Req has unexpected type %T", x)
-	}
-	// gameReq
-	switch x := m.GameReq.(type) {
-	case *Req_Zlmj:
-		b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Req.GameReq has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Req_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Req)
-	switch tag {
-	case 1: // req.enterRoomReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(EnterRoomReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_EnterRoomReq{msg}
-		return true, err
-	case 2: // req.readyReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ReadyReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_ReadyReq{msg}
-		return true, err
-	case 3: // req.sitdownReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(SitdownReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_SitdownReq{msg}
-		return true, err
-	case 4: // req.standupReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StandupReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_StandupReq{msg}
-		return true, err
-	case 5: // req.changesitReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ChangesitReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_ChangesitReq{msg}
-		return true, err
-	case 6: // req.leaveReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(LeaveReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_LeaveReq{msg}
-		return true, err
-	case 7: // req.offlineReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(OfflineReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_OfflineReq{msg}
-		return true, err
-	case 8: // req.uploadLocationReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(UploadLocationReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_UploadLocationReq{msg}
-		return true, err
-	case 9: // req.requestDissolveReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(RequestDissolveReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_RequestDissolveReq{msg}
-		return true, err
-	case 10: // req.replyDissolveReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ReplyDissolveReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_ReplyDissolveReq{msg}
-		return true, err
-	case 11: // req.textChatReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(TextChatReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_TextChatReq{msg}
-		return true, err
-	case 12: // req.quickChatReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(QuickChatReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_QuickChatReq{msg}
-		return true, err
-	case 13: // req.emojiChatReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(EmojiChatReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_EmojiChatReq{msg}
-		return true, err
-	case 14: // req.voiceChatReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(VoiceChatReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_VoiceChatReq{msg}
-		return true, err
-	case 15: // req.startReq
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StartReq)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_StartReq{msg}
-		return true, err
-	case 16: // req.createRoomRequest
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(CreateRoomRequest)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_CreateRoomRequest{msg}
-		return true, err
-	case 17: // req.createCircleRoomRequest
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(CreateCircleRoomRequest)
-		err := b.DecodeMessage(msg)
-		m.Req = &Req_CreateCircleRoomRequest{msg}
-		return true, err
-	case 100: // gameReq.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.Req)
-		err := b.DecodeMessage(msg)
-		m.GameReq = &Req_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Req_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Req)
-	// req
-	switch x := m.Req.(type) {
-	case *Req_EnterRoomReq:
-		s := proto.Size(x.EnterRoomReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_ReadyReq:
-		s := proto.Size(x.ReadyReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_SitdownReq:
-		s := proto.Size(x.SitdownReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_StandupReq:
-		s := proto.Size(x.StandupReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_ChangesitReq:
-		s := proto.Size(x.ChangesitReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_LeaveReq:
-		s := proto.Size(x.LeaveReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_OfflineReq:
-		s := proto.Size(x.OfflineReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_UploadLocationReq:
-		s := proto.Size(x.UploadLocationReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_RequestDissolveReq:
-		s := proto.Size(x.RequestDissolveReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_ReplyDissolveReq:
-		s := proto.Size(x.ReplyDissolveReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_TextChatReq:
-		s := proto.Size(x.TextChatReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_QuickChatReq:
-		s := proto.Size(x.QuickChatReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_EmojiChatReq:
-		s := proto.Size(x.EmojiChatReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_VoiceChatReq:
-		s := proto.Size(x.VoiceChatReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_StartReq:
-		s := proto.Size(x.StartReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_CreateRoomRequest:
-		s := proto.Size(x.CreateRoomRequest)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Req_CreateCircleRoomRequest:
-		s := proto.Size(x.CreateCircleRoomRequest)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	// gameReq
-	switch x := m.GameReq.(type) {
-	case *Req_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
-}
-
 type Rsp struct {
 	// Types that are valid to be assigned to Rsp:
 	//	*Rsp_ErrorRsp
@@ -2033,16 +1457,17 @@ func (m *Rsp) Reset()         { *m = Rsp{} }
 func (m *Rsp) String() string { return proto.CompactTextString(m) }
 func (*Rsp) ProtoMessage()    {}
 func (*Rsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{15}
+	return fileDescriptor_b2975553733e89e1, []int{15}
 }
+
 func (m *Rsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Rsp.Unmarshal(m, b)
 }
 func (m *Rsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Rsp.Marshal(b, m, deterministic)
 }
-func (dst *Rsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Rsp.Merge(dst, src)
+func (m *Rsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Rsp.Merge(m, src)
 }
 func (m *Rsp) XXX_Size() int {
 	return xxx_messageInfo_Rsp.Size(m)
@@ -2140,147 +1565,15 @@ func (m *Rsp) GetZlmj() *zlmj.Rsp {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Rsp) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Rsp_OneofMarshaler, _Rsp_OneofUnmarshaler, _Rsp_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Rsp) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Rsp_ErrorRsp)(nil),
 		(*Rsp_EnterRoomRsp)(nil),
 		(*Rsp_CreateRoomResponse)(nil),
 		(*Rsp_CreateCircleRoomResponse)(nil),
 		(*Rsp_Zlmj)(nil),
 	}
-}
-
-func _Rsp_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Rsp)
-	// rsp
-	switch x := m.Rsp.(type) {
-	case *Rsp_ErrorRsp:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ErrorRsp); err != nil {
-			return err
-		}
-	case *Rsp_EnterRoomRsp:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EnterRoomRsp); err != nil {
-			return err
-		}
-	case *Rsp_CreateRoomResponse:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CreateRoomResponse); err != nil {
-			return err
-		}
-	case *Rsp_CreateCircleRoomResponse:
-		b.EncodeVarint(4<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CreateCircleRoomResponse); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Rsp.Rsp has unexpected type %T", x)
-	}
-	// gameRsp
-	switch x := m.GameRsp.(type) {
-	case *Rsp_Zlmj:
-		b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Rsp.GameRsp has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Rsp_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Rsp)
-	switch tag {
-	case 1: // rsp.errorRsp
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ErrorRsp)
-		err := b.DecodeMessage(msg)
-		m.Rsp = &Rsp_ErrorRsp{msg}
-		return true, err
-	case 2: // rsp.enterRoomRsp
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(EnterRoomRsp)
-		err := b.DecodeMessage(msg)
-		m.Rsp = &Rsp_EnterRoomRsp{msg}
-		return true, err
-	case 3: // rsp.createRoomResponse
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(CreateRoomResponse)
-		err := b.DecodeMessage(msg)
-		m.Rsp = &Rsp_CreateRoomResponse{msg}
-		return true, err
-	case 4: // rsp.createCircleRoomResponse
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(CreateCircleRoomResponse)
-		err := b.DecodeMessage(msg)
-		m.Rsp = &Rsp_CreateCircleRoomResponse{msg}
-		return true, err
-	case 100: // gameRsp.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.Rsp)
-		err := b.DecodeMessage(msg)
-		m.GameRsp = &Rsp_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Rsp_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Rsp)
-	// rsp
-	switch x := m.Rsp.(type) {
-	case *Rsp_ErrorRsp:
-		s := proto.Size(x.ErrorRsp)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Rsp_EnterRoomRsp:
-		s := proto.Size(x.EnterRoomRsp)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Rsp_CreateRoomResponse:
-		s := proto.Size(x.CreateRoomResponse)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Rsp_CreateCircleRoomResponse:
-		s := proto.Size(x.CreateCircleRoomResponse)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	// gameRsp
-	switch x := m.GameRsp.(type) {
-	case *Rsp_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type Event struct {
@@ -2316,16 +1609,17 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{16}
+	return fileDescriptor_b2975553733e89e1, []int{16}
 }
+
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Event.Unmarshal(m, b)
 }
 func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Event.Marshal(b, m, deterministic)
 }
-func (dst *Event) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Event.Merge(dst, src)
+func (m *Event) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Event.Merge(m, src)
 }
 func (m *Event) XXX_Size() int {
 	return xxx_messageInfo_Event.Size(m)
@@ -2605,9 +1899,9 @@ func (m *Event) GetZlmj() *zlmj.Event {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Event) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Event_OneofMarshaler, _Event_OneofUnmarshaler, _Event_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Event) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Event_PlayerEnterEvent)(nil),
 		(*Event_PlayerOfflineEvent)(nil),
 		(*Event_PlayerOnlineEvent)(nil),
@@ -2630,390 +1924,6 @@ func (*Event) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, 
 	}
 }
 
-func _Event_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Event)
-	// event
-	switch x := m.Event.(type) {
-	case *Event_PlayerEnterEvent:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerEnterEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerOfflineEvent:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerOfflineEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerOnlineEvent:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerOnlineEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerLeaveEvent:
-		b.EncodeVarint(4<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerLeaveEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerSitDownEvent:
-		b.EncodeVarint(5<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerSitDownEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerStandUpEvent:
-		b.EncodeVarint(6<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerStandUpEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerChangeSeatEvent:
-		b.EncodeVarint(7<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerChangeSeatEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerUploadLocationEvent:
-		b.EncodeVarint(8<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerUploadLocationEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerReadyEvent:
-		b.EncodeVarint(9<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerReadyEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerRequestDissolveEvent:
-		b.EncodeVarint(10<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerRequestDissolveEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerReplyDissolveEvent:
-		b.EncodeVarint(11<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerReplyDissolveEvent); err != nil {
-			return err
-		}
-	case *Event_CancelDissolveEvent:
-		b.EncodeVarint(12<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CancelDissolveEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerTextChatEvent:
-		b.EncodeVarint(13<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerTextChatEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerQuickChatEvent:
-		b.EncodeVarint(14<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerQuickChatEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerEmojiChatEvent:
-		b.EncodeVarint(15<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerEmojiChatEvent); err != nil {
-			return err
-		}
-	case *Event_PlayerVoiceChatEvent:
-		b.EncodeVarint(16<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PlayerVoiceChatEvent); err != nil {
-			return err
-		}
-	case *Event_RoomReadyEvent:
-		b.EncodeVarint(17<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.RoomReadyEvent); err != nil {
-			return err
-		}
-	case *Event_RoomOverEvent:
-		b.EncodeVarint(18<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.RoomOverEvent); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Event.Event has unexpected type %T", x)
-	}
-	// gameEvent
-	switch x := m.GameEvent.(type) {
-	case *Event_Zlmj:
-		b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Event.GameEvent has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Event_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Event)
-	switch tag {
-	case 1: // event.playerEnterEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerEnterEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerEnterEvent{msg}
-		return true, err
-	case 2: // event.playerOfflineEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerOfflineEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerOfflineEvent{msg}
-		return true, err
-	case 3: // event.playerOnlineEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerOnlineEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerOnlineEvent{msg}
-		return true, err
-	case 4: // event.playerLeaveEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerLeaveEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerLeaveEvent{msg}
-		return true, err
-	case 5: // event.playerSitDownEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerSitDownEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerSitDownEvent{msg}
-		return true, err
-	case 6: // event.playerStandUpEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerStandUpEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerStandUpEvent{msg}
-		return true, err
-	case 7: // event.playerChangeSeatEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerChangeSeatEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerChangeSeatEvent{msg}
-		return true, err
-	case 8: // event.playerUploadLocationEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerUploadLocationEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerUploadLocationEvent{msg}
-		return true, err
-	case 9: // event.playerReadyEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerReadyEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerReadyEvent{msg}
-		return true, err
-	case 10: // event.playerRequestDissolveEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerRequestDissolveEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerRequestDissolveEvent{msg}
-		return true, err
-	case 11: // event.playerReplyDissolveEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerReplyDissolveEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerReplyDissolveEvent{msg}
-		return true, err
-	case 12: // event.cancelDissolveEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(CancelDissolveEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_CancelDissolveEvent{msg}
-		return true, err
-	case 13: // event.playerTextChatEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerTextChatEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerTextChatEvent{msg}
-		return true, err
-	case 14: // event.playerQuickChatEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerQuickChatEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerQuickChatEvent{msg}
-		return true, err
-	case 15: // event.playerEmojiChatEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerEmojiChatEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerEmojiChatEvent{msg}
-		return true, err
-	case 16: // event.playerVoiceChatEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(PlayerVoiceChatEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_PlayerVoiceChatEvent{msg}
-		return true, err
-	case 17: // event.roomReadyEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(RoomReadyEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_RoomReadyEvent{msg}
-		return true, err
-	case 18: // event.roomOverEvent
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(RoomOverEvent)
-		err := b.DecodeMessage(msg)
-		m.Event = &Event_RoomOverEvent{msg}
-		return true, err
-	case 100: // gameEvent.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.Event)
-		err := b.DecodeMessage(msg)
-		m.GameEvent = &Event_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Event_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Event)
-	// event
-	switch x := m.Event.(type) {
-	case *Event_PlayerEnterEvent:
-		s := proto.Size(x.PlayerEnterEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerOfflineEvent:
-		s := proto.Size(x.PlayerOfflineEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerOnlineEvent:
-		s := proto.Size(x.PlayerOnlineEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerLeaveEvent:
-		s := proto.Size(x.PlayerLeaveEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerSitDownEvent:
-		s := proto.Size(x.PlayerSitDownEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerStandUpEvent:
-		s := proto.Size(x.PlayerStandUpEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerChangeSeatEvent:
-		s := proto.Size(x.PlayerChangeSeatEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerUploadLocationEvent:
-		s := proto.Size(x.PlayerUploadLocationEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerReadyEvent:
-		s := proto.Size(x.PlayerReadyEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerRequestDissolveEvent:
-		s := proto.Size(x.PlayerRequestDissolveEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerReplyDissolveEvent:
-		s := proto.Size(x.PlayerReplyDissolveEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_CancelDissolveEvent:
-		s := proto.Size(x.CancelDissolveEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerTextChatEvent:
-		s := proto.Size(x.PlayerTextChatEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerQuickChatEvent:
-		s := proto.Size(x.PlayerQuickChatEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerEmojiChatEvent:
-		s := proto.Size(x.PlayerEmojiChatEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_PlayerVoiceChatEvent:
-		s := proto.Size(x.PlayerVoiceChatEvent)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_RoomReadyEvent:
-		s := proto.Size(x.RoomReadyEvent)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_RoomOverEvent:
-		s := proto.Size(x.RoomOverEvent)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	// gameEvent
-	switch x := m.GameEvent.(type) {
-	case *Event_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
-}
-
 // region 请求
 // 文字聊天请求
 type TextChatReq struct {
@@ -3028,16 +1938,17 @@ func (m *TextChatReq) Reset()         { *m = TextChatReq{} }
 func (m *TextChatReq) String() string { return proto.CompactTextString(m) }
 func (*TextChatReq) ProtoMessage()    {}
 func (*TextChatReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{17}
+	return fileDescriptor_b2975553733e89e1, []int{17}
 }
+
 func (m *TextChatReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TextChatReq.Unmarshal(m, b)
 }
 func (m *TextChatReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_TextChatReq.Marshal(b, m, deterministic)
 }
-func (dst *TextChatReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TextChatReq.Merge(dst, src)
+func (m *TextChatReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TextChatReq.Merge(m, src)
 }
 func (m *TextChatReq) XXX_Size() int {
 	return xxx_messageInfo_TextChatReq.Size(m)
@@ -3075,16 +1986,17 @@ func (m *QuickChatReq) Reset()         { *m = QuickChatReq{} }
 func (m *QuickChatReq) String() string { return proto.CompactTextString(m) }
 func (*QuickChatReq) ProtoMessage()    {}
 func (*QuickChatReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{18}
+	return fileDescriptor_b2975553733e89e1, []int{18}
 }
+
 func (m *QuickChatReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_QuickChatReq.Unmarshal(m, b)
 }
 func (m *QuickChatReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_QuickChatReq.Marshal(b, m, deterministic)
 }
-func (dst *QuickChatReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QuickChatReq.Merge(dst, src)
+func (m *QuickChatReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QuickChatReq.Merge(m, src)
 }
 func (m *QuickChatReq) XXX_Size() int {
 	return xxx_messageInfo_QuickChatReq.Size(m)
@@ -3122,16 +2034,17 @@ func (m *EmojiChatReq) Reset()         { *m = EmojiChatReq{} }
 func (m *EmojiChatReq) String() string { return proto.CompactTextString(m) }
 func (*EmojiChatReq) ProtoMessage()    {}
 func (*EmojiChatReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{19}
+	return fileDescriptor_b2975553733e89e1, []int{19}
 }
+
 func (m *EmojiChatReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EmojiChatReq.Unmarshal(m, b)
 }
 func (m *EmojiChatReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EmojiChatReq.Marshal(b, m, deterministic)
 }
-func (dst *EmojiChatReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EmojiChatReq.Merge(dst, src)
+func (m *EmojiChatReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EmojiChatReq.Merge(m, src)
 }
 func (m *EmojiChatReq) XXX_Size() int {
 	return xxx_messageInfo_EmojiChatReq.Size(m)
@@ -3170,16 +2083,17 @@ func (m *VoiceChatReq) Reset()         { *m = VoiceChatReq{} }
 func (m *VoiceChatReq) String() string { return proto.CompactTextString(m) }
 func (*VoiceChatReq) ProtoMessage()    {}
 func (*VoiceChatReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{20}
+	return fileDescriptor_b2975553733e89e1, []int{20}
 }
+
 func (m *VoiceChatReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_VoiceChatReq.Unmarshal(m, b)
 }
 func (m *VoiceChatReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_VoiceChatReq.Marshal(b, m, deterministic)
 }
-func (dst *VoiceChatReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VoiceChatReq.Merge(dst, src)
+func (m *VoiceChatReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VoiceChatReq.Merge(m, src)
 }
 func (m *VoiceChatReq) XXX_Size() int {
 	return xxx_messageInfo_VoiceChatReq.Size(m)
@@ -3223,16 +2137,17 @@ func (m *EnterRoomReq) Reset()         { *m = EnterRoomReq{} }
 func (m *EnterRoomReq) String() string { return proto.CompactTextString(m) }
 func (*EnterRoomReq) ProtoMessage()    {}
 func (*EnterRoomReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{21}
+	return fileDescriptor_b2975553733e89e1, []int{21}
 }
+
 func (m *EnterRoomReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnterRoomReq.Unmarshal(m, b)
 }
 func (m *EnterRoomReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EnterRoomReq.Marshal(b, m, deterministic)
 }
-func (dst *EnterRoomReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnterRoomReq.Merge(dst, src)
+func (m *EnterRoomReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnterRoomReq.Merge(m, src)
 }
 func (m *EnterRoomReq) XXX_Size() int {
 	return xxx_messageInfo_EnterRoomReq.Size(m)
@@ -3261,16 +2176,17 @@ func (m *ReadyReq) Reset()         { *m = ReadyReq{} }
 func (m *ReadyReq) String() string { return proto.CompactTextString(m) }
 func (*ReadyReq) ProtoMessage()    {}
 func (*ReadyReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{22}
+	return fileDescriptor_b2975553733e89e1, []int{22}
 }
+
 func (m *ReadyReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadyReq.Unmarshal(m, b)
 }
 func (m *ReadyReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadyReq.Marshal(b, m, deterministic)
 }
-func (dst *ReadyReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadyReq.Merge(dst, src)
+func (m *ReadyReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadyReq.Merge(m, src)
 }
 func (m *ReadyReq) XXX_Size() int {
 	return xxx_messageInfo_ReadyReq.Size(m)
@@ -3292,16 +2208,17 @@ func (m *StartReq) Reset()         { *m = StartReq{} }
 func (m *StartReq) String() string { return proto.CompactTextString(m) }
 func (*StartReq) ProtoMessage()    {}
 func (*StartReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{23}
+	return fileDescriptor_b2975553733e89e1, []int{23}
 }
+
 func (m *StartReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StartReq.Unmarshal(m, b)
 }
 func (m *StartReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StartReq.Marshal(b, m, deterministic)
 }
-func (dst *StartReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StartReq.Merge(dst, src)
+func (m *StartReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StartReq.Merge(m, src)
 }
 func (m *StartReq) XXX_Size() int {
 	return xxx_messageInfo_StartReq.Size(m)
@@ -3324,16 +2241,17 @@ func (m *SitdownReq) Reset()         { *m = SitdownReq{} }
 func (m *SitdownReq) String() string { return proto.CompactTextString(m) }
 func (*SitdownReq) ProtoMessage()    {}
 func (*SitdownReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{24}
+	return fileDescriptor_b2975553733e89e1, []int{24}
 }
+
 func (m *SitdownReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SitdownReq.Unmarshal(m, b)
 }
 func (m *SitdownReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SitdownReq.Marshal(b, m, deterministic)
 }
-func (dst *SitdownReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SitdownReq.Merge(dst, src)
+func (m *SitdownReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SitdownReq.Merge(m, src)
 }
 func (m *SitdownReq) XXX_Size() int {
 	return xxx_messageInfo_SitdownReq.Size(m)
@@ -3362,16 +2280,17 @@ func (m *StandupReq) Reset()         { *m = StandupReq{} }
 func (m *StandupReq) String() string { return proto.CompactTextString(m) }
 func (*StandupReq) ProtoMessage()    {}
 func (*StandupReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{25}
+	return fileDescriptor_b2975553733e89e1, []int{25}
 }
+
 func (m *StandupReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StandupReq.Unmarshal(m, b)
 }
 func (m *StandupReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StandupReq.Marshal(b, m, deterministic)
 }
-func (dst *StandupReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StandupReq.Merge(dst, src)
+func (m *StandupReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StandupReq.Merge(m, src)
 }
 func (m *StandupReq) XXX_Size() int {
 	return xxx_messageInfo_StandupReq.Size(m)
@@ -3394,16 +2313,17 @@ func (m *ChangesitReq) Reset()         { *m = ChangesitReq{} }
 func (m *ChangesitReq) String() string { return proto.CompactTextString(m) }
 func (*ChangesitReq) ProtoMessage()    {}
 func (*ChangesitReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{26}
+	return fileDescriptor_b2975553733e89e1, []int{26}
 }
+
 func (m *ChangesitReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChangesitReq.Unmarshal(m, b)
 }
 func (m *ChangesitReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChangesitReq.Marshal(b, m, deterministic)
 }
-func (dst *ChangesitReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ChangesitReq.Merge(dst, src)
+func (m *ChangesitReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChangesitReq.Merge(m, src)
 }
 func (m *ChangesitReq) XXX_Size() int {
 	return xxx_messageInfo_ChangesitReq.Size(m)
@@ -3432,16 +2352,17 @@ func (m *LeaveReq) Reset()         { *m = LeaveReq{} }
 func (m *LeaveReq) String() string { return proto.CompactTextString(m) }
 func (*LeaveReq) ProtoMessage()    {}
 func (*LeaveReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{27}
+	return fileDescriptor_b2975553733e89e1, []int{27}
 }
+
 func (m *LeaveReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LeaveReq.Unmarshal(m, b)
 }
 func (m *LeaveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LeaveReq.Marshal(b, m, deterministic)
 }
-func (dst *LeaveReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LeaveReq.Merge(dst, src)
+func (m *LeaveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaveReq.Merge(m, src)
 }
 func (m *LeaveReq) XXX_Size() int {
 	return xxx_messageInfo_LeaveReq.Size(m)
@@ -3463,16 +2384,17 @@ func (m *OfflineReq) Reset()         { *m = OfflineReq{} }
 func (m *OfflineReq) String() string { return proto.CompactTextString(m) }
 func (*OfflineReq) ProtoMessage()    {}
 func (*OfflineReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{28}
+	return fileDescriptor_b2975553733e89e1, []int{28}
 }
+
 func (m *OfflineReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_OfflineReq.Unmarshal(m, b)
 }
 func (m *OfflineReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_OfflineReq.Marshal(b, m, deterministic)
 }
-func (dst *OfflineReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OfflineReq.Merge(dst, src)
+func (m *OfflineReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OfflineReq.Merge(m, src)
 }
 func (m *OfflineReq) XXX_Size() int {
 	return xxx_messageInfo_OfflineReq.Size(m)
@@ -3496,16 +2418,17 @@ func (m *UploadLocationReq) Reset()         { *m = UploadLocationReq{} }
 func (m *UploadLocationReq) String() string { return proto.CompactTextString(m) }
 func (*UploadLocationReq) ProtoMessage()    {}
 func (*UploadLocationReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{29}
+	return fileDescriptor_b2975553733e89e1, []int{29}
 }
+
 func (m *UploadLocationReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UploadLocationReq.Unmarshal(m, b)
 }
 func (m *UploadLocationReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UploadLocationReq.Marshal(b, m, deterministic)
 }
-func (dst *UploadLocationReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UploadLocationReq.Merge(dst, src)
+func (m *UploadLocationReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadLocationReq.Merge(m, src)
 }
 func (m *UploadLocationReq) XXX_Size() int {
 	return xxx_messageInfo_UploadLocationReq.Size(m)
@@ -3541,16 +2464,17 @@ func (m *RequestDissolveReq) Reset()         { *m = RequestDissolveReq{} }
 func (m *RequestDissolveReq) String() string { return proto.CompactTextString(m) }
 func (*RequestDissolveReq) ProtoMessage()    {}
 func (*RequestDissolveReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{30}
+	return fileDescriptor_b2975553733e89e1, []int{30}
 }
+
 func (m *RequestDissolveReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RequestDissolveReq.Unmarshal(m, b)
 }
 func (m *RequestDissolveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RequestDissolveReq.Marshal(b, m, deterministic)
 }
-func (dst *RequestDissolveReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestDissolveReq.Merge(dst, src)
+func (m *RequestDissolveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestDissolveReq.Merge(m, src)
 }
 func (m *RequestDissolveReq) XXX_Size() int {
 	return xxx_messageInfo_RequestDissolveReq.Size(m)
@@ -3573,16 +2497,17 @@ func (m *ReplyDissolveReq) Reset()         { *m = ReplyDissolveReq{} }
 func (m *ReplyDissolveReq) String() string { return proto.CompactTextString(m) }
 func (*ReplyDissolveReq) ProtoMessage()    {}
 func (*ReplyDissolveReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{31}
+	return fileDescriptor_b2975553733e89e1, []int{31}
 }
+
 func (m *ReplyDissolveReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReplyDissolveReq.Unmarshal(m, b)
 }
 func (m *ReplyDissolveReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReplyDissolveReq.Marshal(b, m, deterministic)
 }
-func (dst *ReplyDissolveReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReplyDissolveReq.Merge(dst, src)
+func (m *ReplyDissolveReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplyDissolveReq.Merge(m, src)
 }
 func (m *ReplyDissolveReq) XXX_Size() int {
 	return xxx_messageInfo_ReplyDissolveReq.Size(m)
@@ -3614,16 +2539,17 @@ func (m *ErrorRsp) Reset()         { *m = ErrorRsp{} }
 func (m *ErrorRsp) String() string { return proto.CompactTextString(m) }
 func (*ErrorRsp) ProtoMessage()    {}
 func (*ErrorRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{32}
+	return fileDescriptor_b2975553733e89e1, []int{32}
 }
+
 func (m *ErrorRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ErrorRsp.Unmarshal(m, b)
 }
 func (m *ErrorRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ErrorRsp.Marshal(b, m, deterministic)
 }
-func (dst *ErrorRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ErrorRsp.Merge(dst, src)
+func (m *ErrorRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ErrorRsp.Merge(m, src)
 }
 func (m *ErrorRsp) XXX_Size() int {
 	return xxx_messageInfo_ErrorRsp.Size(m)
@@ -3663,16 +2589,17 @@ func (m *EnterRoomRsp) Reset()         { *m = EnterRoomRsp{} }
 func (m *EnterRoomRsp) String() string { return proto.CompactTextString(m) }
 func (*EnterRoomRsp) ProtoMessage()    {}
 func (*EnterRoomRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{33}
+	return fileDescriptor_b2975553733e89e1, []int{33}
 }
+
 func (m *EnterRoomRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnterRoomRsp.Unmarshal(m, b)
 }
 func (m *EnterRoomRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EnterRoomRsp.Marshal(b, m, deterministic)
 }
-func (dst *EnterRoomRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnterRoomRsp.Merge(dst, src)
+func (m *EnterRoomRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnterRoomRsp.Merge(m, src)
 }
 func (m *EnterRoomRsp) XXX_Size() int {
 	return xxx_messageInfo_EnterRoomRsp.Size(m)
@@ -3714,59 +2641,11 @@ func (m *EnterRoomRsp) GetZlmj() *zlmj.GameData {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*EnterRoomRsp) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _EnterRoomRsp_OneofMarshaler, _EnterRoomRsp_OneofUnmarshaler, _EnterRoomRsp_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*EnterRoomRsp) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*EnterRoomRsp_Zlmj)(nil),
 	}
-}
-
-func _EnterRoomRsp_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*EnterRoomRsp)
-	// game
-	switch x := m.Game.(type) {
-	case *EnterRoomRsp_Zlmj:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("EnterRoomRsp.Game has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _EnterRoomRsp_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*EnterRoomRsp)
-	switch tag {
-	case 2: // game.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.GameData)
-		err := b.DecodeMessage(msg)
-		m.Game = &EnterRoomRsp_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _EnterRoomRsp_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*EnterRoomRsp)
-	// game
-	switch x := m.Game.(type) {
-	case *EnterRoomRsp_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // region 事件
@@ -3785,16 +2664,17 @@ func (m *PlayerEnterEvent) Reset()         { *m = PlayerEnterEvent{} }
 func (m *PlayerEnterEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerEnterEvent) ProtoMessage()    {}
 func (*PlayerEnterEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{34}
+	return fileDescriptor_b2975553733e89e1, []int{34}
 }
+
 func (m *PlayerEnterEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerEnterEvent.Unmarshal(m, b)
 }
 func (m *PlayerEnterEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerEnterEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerEnterEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerEnterEvent.Merge(dst, src)
+func (m *PlayerEnterEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerEnterEvent.Merge(m, src)
 }
 func (m *PlayerEnterEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerEnterEvent.Size(m)
@@ -3836,59 +2716,11 @@ func (m *PlayerEnterEvent) GetZlmj() *zlmj.PlayerData {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*PlayerEnterEvent) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _PlayerEnterEvent_OneofMarshaler, _PlayerEnterEvent_OneofUnmarshaler, _PlayerEnterEvent_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*PlayerEnterEvent) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*PlayerEnterEvent_Zlmj)(nil),
 	}
-}
-
-func _PlayerEnterEvent_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*PlayerEnterEvent)
-	// gamePlayer
-	switch x := m.GamePlayer.(type) {
-	case *PlayerEnterEvent_Zlmj:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Zlmj); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("PlayerEnterEvent.GamePlayer has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _PlayerEnterEvent_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*PlayerEnterEvent)
-	switch tag {
-	case 2: // gamePlayer.zlmj
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(zlmj.PlayerData)
-		err := b.DecodeMessage(msg)
-		m.GamePlayer = &PlayerEnterEvent_Zlmj{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _PlayerEnterEvent_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*PlayerEnterEvent)
-	// gamePlayer
-	switch x := m.GamePlayer.(type) {
-	case *PlayerEnterEvent_Zlmj:
-		s := proto.Size(x.Zlmj)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // 玩家离线事件
@@ -3903,16 +2735,17 @@ func (m *PlayerOfflineEvent) Reset()         { *m = PlayerOfflineEvent{} }
 func (m *PlayerOfflineEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerOfflineEvent) ProtoMessage()    {}
 func (*PlayerOfflineEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{35}
+	return fileDescriptor_b2975553733e89e1, []int{35}
 }
+
 func (m *PlayerOfflineEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerOfflineEvent.Unmarshal(m, b)
 }
 func (m *PlayerOfflineEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerOfflineEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerOfflineEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerOfflineEvent.Merge(dst, src)
+func (m *PlayerOfflineEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerOfflineEvent.Merge(m, src)
 }
 func (m *PlayerOfflineEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerOfflineEvent.Size(m)
@@ -3942,16 +2775,17 @@ func (m *PlayerOnlineEvent) Reset()         { *m = PlayerOnlineEvent{} }
 func (m *PlayerOnlineEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerOnlineEvent) ProtoMessage()    {}
 func (*PlayerOnlineEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{36}
+	return fileDescriptor_b2975553733e89e1, []int{36}
 }
+
 func (m *PlayerOnlineEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerOnlineEvent.Unmarshal(m, b)
 }
 func (m *PlayerOnlineEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerOnlineEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerOnlineEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerOnlineEvent.Merge(dst, src)
+func (m *PlayerOnlineEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerOnlineEvent.Merge(m, src)
 }
 func (m *PlayerOnlineEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerOnlineEvent.Size(m)
@@ -3981,16 +2815,17 @@ func (m *PlayerLeaveEvent) Reset()         { *m = PlayerLeaveEvent{} }
 func (m *PlayerLeaveEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerLeaveEvent) ProtoMessage()    {}
 func (*PlayerLeaveEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{37}
+	return fileDescriptor_b2975553733e89e1, []int{37}
 }
+
 func (m *PlayerLeaveEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerLeaveEvent.Unmarshal(m, b)
 }
 func (m *PlayerLeaveEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerLeaveEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerLeaveEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerLeaveEvent.Merge(dst, src)
+func (m *PlayerLeaveEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerLeaveEvent.Merge(m, src)
 }
 func (m *PlayerLeaveEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerLeaveEvent.Size(m)
@@ -4021,16 +2856,17 @@ func (m *PlayerSitDownEvent) Reset()         { *m = PlayerSitDownEvent{} }
 func (m *PlayerSitDownEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerSitDownEvent) ProtoMessage()    {}
 func (*PlayerSitDownEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{38}
+	return fileDescriptor_b2975553733e89e1, []int{38}
 }
+
 func (m *PlayerSitDownEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerSitDownEvent.Unmarshal(m, b)
 }
 func (m *PlayerSitDownEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerSitDownEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerSitDownEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerSitDownEvent.Merge(dst, src)
+func (m *PlayerSitDownEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerSitDownEvent.Merge(m, src)
 }
 func (m *PlayerSitDownEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerSitDownEvent.Size(m)
@@ -4068,16 +2904,17 @@ func (m *PlayerStandUpEvent) Reset()         { *m = PlayerStandUpEvent{} }
 func (m *PlayerStandUpEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerStandUpEvent) ProtoMessage()    {}
 func (*PlayerStandUpEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{39}
+	return fileDescriptor_b2975553733e89e1, []int{39}
 }
+
 func (m *PlayerStandUpEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerStandUpEvent.Unmarshal(m, b)
 }
 func (m *PlayerStandUpEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerStandUpEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerStandUpEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerStandUpEvent.Merge(dst, src)
+func (m *PlayerStandUpEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerStandUpEvent.Merge(m, src)
 }
 func (m *PlayerStandUpEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerStandUpEvent.Size(m)
@@ -4115,16 +2952,17 @@ func (m *PlayerChangeSeatEvent) Reset()         { *m = PlayerChangeSeatEvent{} }
 func (m *PlayerChangeSeatEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerChangeSeatEvent) ProtoMessage()    {}
 func (*PlayerChangeSeatEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{40}
+	return fileDescriptor_b2975553733e89e1, []int{40}
 }
+
 func (m *PlayerChangeSeatEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerChangeSeatEvent.Unmarshal(m, b)
 }
 func (m *PlayerChangeSeatEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerChangeSeatEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerChangeSeatEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerChangeSeatEvent.Merge(dst, src)
+func (m *PlayerChangeSeatEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerChangeSeatEvent.Merge(m, src)
 }
 func (m *PlayerChangeSeatEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerChangeSeatEvent.Size(m)
@@ -4163,16 +3001,17 @@ func (m *PlayerUploadLocationEvent) Reset()         { *m = PlayerUploadLocationE
 func (m *PlayerUploadLocationEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerUploadLocationEvent) ProtoMessage()    {}
 func (*PlayerUploadLocationEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{41}
+	return fileDescriptor_b2975553733e89e1, []int{41}
 }
+
 func (m *PlayerUploadLocationEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerUploadLocationEvent.Unmarshal(m, b)
 }
 func (m *PlayerUploadLocationEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerUploadLocationEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerUploadLocationEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerUploadLocationEvent.Merge(dst, src)
+func (m *PlayerUploadLocationEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerUploadLocationEvent.Merge(m, src)
 }
 func (m *PlayerUploadLocationEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerUploadLocationEvent.Size(m)
@@ -4216,16 +3055,17 @@ func (m *PlayerReadyEvent) Reset()         { *m = PlayerReadyEvent{} }
 func (m *PlayerReadyEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerReadyEvent) ProtoMessage()    {}
 func (*PlayerReadyEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{42}
+	return fileDescriptor_b2975553733e89e1, []int{42}
 }
+
 func (m *PlayerReadyEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerReadyEvent.Unmarshal(m, b)
 }
 func (m *PlayerReadyEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerReadyEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerReadyEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerReadyEvent.Merge(dst, src)
+func (m *PlayerReadyEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerReadyEvent.Merge(m, src)
 }
 func (m *PlayerReadyEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerReadyEvent.Size(m)
@@ -4256,16 +3096,17 @@ func (m *PlayerRequestDissolveEvent) Reset()         { *m = PlayerRequestDissolv
 func (m *PlayerRequestDissolveEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerRequestDissolveEvent) ProtoMessage()    {}
 func (*PlayerRequestDissolveEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{43}
+	return fileDescriptor_b2975553733e89e1, []int{43}
 }
+
 func (m *PlayerRequestDissolveEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerRequestDissolveEvent.Unmarshal(m, b)
 }
 func (m *PlayerRequestDissolveEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerRequestDissolveEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerRequestDissolveEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerRequestDissolveEvent.Merge(dst, src)
+func (m *PlayerRequestDissolveEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerRequestDissolveEvent.Merge(m, src)
 }
 func (m *PlayerRequestDissolveEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerRequestDissolveEvent.Size(m)
@@ -4303,16 +3144,17 @@ func (m *PlayerReplyDissolveEvent) Reset()         { *m = PlayerReplyDissolveEve
 func (m *PlayerReplyDissolveEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerReplyDissolveEvent) ProtoMessage()    {}
 func (*PlayerReplyDissolveEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{44}
+	return fileDescriptor_b2975553733e89e1, []int{44}
 }
+
 func (m *PlayerReplyDissolveEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerReplyDissolveEvent.Unmarshal(m, b)
 }
 func (m *PlayerReplyDissolveEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerReplyDissolveEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerReplyDissolveEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerReplyDissolveEvent.Merge(dst, src)
+func (m *PlayerReplyDissolveEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerReplyDissolveEvent.Merge(m, src)
 }
 func (m *PlayerReplyDissolveEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerReplyDissolveEvent.Size(m)
@@ -4348,16 +3190,17 @@ func (m *CancelDissolveEvent) Reset()         { *m = CancelDissolveEvent{} }
 func (m *CancelDissolveEvent) String() string { return proto.CompactTextString(m) }
 func (*CancelDissolveEvent) ProtoMessage()    {}
 func (*CancelDissolveEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{45}
+	return fileDescriptor_b2975553733e89e1, []int{45}
 }
+
 func (m *CancelDissolveEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CancelDissolveEvent.Unmarshal(m, b)
 }
 func (m *CancelDissolveEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CancelDissolveEvent.Marshal(b, m, deterministic)
 }
-func (dst *CancelDissolveEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CancelDissolveEvent.Merge(dst, src)
+func (m *CancelDissolveEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CancelDissolveEvent.Merge(m, src)
 }
 func (m *CancelDissolveEvent) XXX_Size() int {
 	return xxx_messageInfo_CancelDissolveEvent.Size(m)
@@ -4381,16 +3224,17 @@ func (m *PlayerTextChatEvent) Reset()         { *m = PlayerTextChatEvent{} }
 func (m *PlayerTextChatEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerTextChatEvent) ProtoMessage()    {}
 func (*PlayerTextChatEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{46}
+	return fileDescriptor_b2975553733e89e1, []int{46}
 }
+
 func (m *PlayerTextChatEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerTextChatEvent.Unmarshal(m, b)
 }
 func (m *PlayerTextChatEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerTextChatEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerTextChatEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerTextChatEvent.Merge(dst, src)
+func (m *PlayerTextChatEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerTextChatEvent.Merge(m, src)
 }
 func (m *PlayerTextChatEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerTextChatEvent.Size(m)
@@ -4428,16 +3272,17 @@ func (m *PlayerQuickChatEvent) Reset()         { *m = PlayerQuickChatEvent{} }
 func (m *PlayerQuickChatEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerQuickChatEvent) ProtoMessage()    {}
 func (*PlayerQuickChatEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{47}
+	return fileDescriptor_b2975553733e89e1, []int{47}
 }
+
 func (m *PlayerQuickChatEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerQuickChatEvent.Unmarshal(m, b)
 }
 func (m *PlayerQuickChatEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerQuickChatEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerQuickChatEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerQuickChatEvent.Merge(dst, src)
+func (m *PlayerQuickChatEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerQuickChatEvent.Merge(m, src)
 }
 func (m *PlayerQuickChatEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerQuickChatEvent.Size(m)
@@ -4475,16 +3320,17 @@ func (m *PlayerEmojiChatEvent) Reset()         { *m = PlayerEmojiChatEvent{} }
 func (m *PlayerEmojiChatEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerEmojiChatEvent) ProtoMessage()    {}
 func (*PlayerEmojiChatEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{48}
+	return fileDescriptor_b2975553733e89e1, []int{48}
 }
+
 func (m *PlayerEmojiChatEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerEmojiChatEvent.Unmarshal(m, b)
 }
 func (m *PlayerEmojiChatEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerEmojiChatEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerEmojiChatEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerEmojiChatEvent.Merge(dst, src)
+func (m *PlayerEmojiChatEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerEmojiChatEvent.Merge(m, src)
 }
 func (m *PlayerEmojiChatEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerEmojiChatEvent.Size(m)
@@ -4523,16 +3369,17 @@ func (m *PlayerVoiceChatEvent) Reset()         { *m = PlayerVoiceChatEvent{} }
 func (m *PlayerVoiceChatEvent) String() string { return proto.CompactTextString(m) }
 func (*PlayerVoiceChatEvent) ProtoMessage()    {}
 func (*PlayerVoiceChatEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{49}
+	return fileDescriptor_b2975553733e89e1, []int{49}
 }
+
 func (m *PlayerVoiceChatEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlayerVoiceChatEvent.Unmarshal(m, b)
 }
 func (m *PlayerVoiceChatEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlayerVoiceChatEvent.Marshal(b, m, deterministic)
 }
-func (dst *PlayerVoiceChatEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlayerVoiceChatEvent.Merge(dst, src)
+func (m *PlayerVoiceChatEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerVoiceChatEvent.Merge(m, src)
 }
 func (m *PlayerVoiceChatEvent) XXX_Size() int {
 	return xxx_messageInfo_PlayerVoiceChatEvent.Size(m)
@@ -4576,16 +3423,17 @@ func (m *RoomReadyEvent) Reset()         { *m = RoomReadyEvent{} }
 func (m *RoomReadyEvent) String() string { return proto.CompactTextString(m) }
 func (*RoomReadyEvent) ProtoMessage()    {}
 func (*RoomReadyEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{50}
+	return fileDescriptor_b2975553733e89e1, []int{50}
 }
+
 func (m *RoomReadyEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoomReadyEvent.Unmarshal(m, b)
 }
 func (m *RoomReadyEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RoomReadyEvent.Marshal(b, m, deterministic)
 }
-func (dst *RoomReadyEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RoomReadyEvent.Merge(dst, src)
+func (m *RoomReadyEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoomReadyEvent.Merge(m, src)
 }
 func (m *RoomReadyEvent) XXX_Size() int {
 	return xxx_messageInfo_RoomReadyEvent.Size(m)
@@ -4616,16 +3464,17 @@ func (m *RoomOverEvent) Reset()         { *m = RoomOverEvent{} }
 func (m *RoomOverEvent) String() string { return proto.CompactTextString(m) }
 func (*RoomOverEvent) ProtoMessage()    {}
 func (*RoomOverEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_friendRoom_53560c034472a3ed, []int{51}
+	return fileDescriptor_b2975553733e89e1, []int{51}
 }
+
 func (m *RoomOverEvent) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoomOverEvent.Unmarshal(m, b)
 }
 func (m *RoomOverEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RoomOverEvent.Marshal(b, m, deterministic)
 }
-func (dst *RoomOverEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RoomOverEvent.Merge(dst, src)
+func (m *RoomOverEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoomOverEvent.Merge(m, src)
 }
 func (m *RoomOverEvent) XXX_Size() int {
 	return xxx_messageInfo_RoomOverEvent.Size(m)
@@ -4651,6 +3500,8 @@ func (m *RoomOverEvent) GetOverType() room.RoomOverType {
 }
 
 func init() {
+	proto.RegisterEnum("friendRoom.RoomState", RoomState_name, RoomState_value)
+	proto.RegisterEnum("friendRoom.RoomLimit", RoomLimit_name, RoomLimit_value)
 	proto.RegisterType((*RoomOption)(nil), "friendRoom.RoomOption")
 	proto.RegisterType((*PlayerData)(nil), "friendRoom.PlayerData")
 	proto.RegisterType((*RoomData)(nil), "friendRoom.RoomData")
@@ -4703,8 +3554,158 @@ func init() {
 	proto.RegisterType((*PlayerVoiceChatEvent)(nil), "friendRoom.PlayerVoiceChatEvent")
 	proto.RegisterType((*RoomReadyEvent)(nil), "friendRoom.RoomReadyEvent")
 	proto.RegisterType((*RoomOverEvent)(nil), "friendRoom.RoomOverEvent")
-	proto.RegisterEnum("friendRoom.RoomState", RoomState_name, RoomState_value)
-	proto.RegisterEnum("friendRoom.RoomLimit", RoomLimit_name, RoomLimit_value)
+}
+
+func init() { proto.RegisterFile("friendRoom/friendRoom.proto", fileDescriptor_b2975553733e89e1) }
+
+var fileDescriptor_b2975553733e89e1 = []byte{
+	// 2336 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0x51, 0x73, 0xdc, 0x48,
+	0xf1, 0x97, 0x76, 0xbd, 0xeb, 0xdd, 0xde, 0xf5, 0x66, 0x3d, 0x76, 0x12, 0xc5, 0xff, 0xfc, 0x73,
+	0x3e, 0x25, 0x04, 0xe3, 0x3b, 0x9c, 0x94, 0x29, 0xa8, 0x00, 0x45, 0x8a, 0xc4, 0x49, 0xbc, 0xa1,
+	0x92, 0x8b, 0x19, 0x27, 0x57, 0xc0, 0x8b, 0x4b, 0x91, 0xc6, 0x6b, 0xe5, 0x76, 0x25, 0x59, 0xd2,
+	0xda, 0x67, 0xaa, 0xa8, 0xe2, 0x81, 0x17, 0x78, 0xe1, 0x0b, 0xf0, 0x05, 0x78, 0x86, 0xaf, 0xc0,
+	0x13, 0xdf, 0x82, 0x0f, 0xc1, 0x33, 0xd5, 0x33, 0x23, 0x69, 0xa4, 0x91, 0x1c, 0x5c, 0x45, 0x1d,
+	0xbc, 0xb8, 0x76, 0xba, 0x7f, 0xfd, 0xd3, 0x4c, 0x4f, 0xcf, 0x74, 0x4f, 0x1b, 0xfe, 0xef, 0x38,
+	0xf6, 0x59, 0xe0, 0xd1, 0x30, 0x9c, 0x3f, 0x28, 0x7e, 0xee, 0x44, 0x71, 0x98, 0x86, 0x04, 0x0a,
+	0xc9, 0xc6, 0xe7, 0x53, 0x3f, 0x3d, 0x59, 0xbc, 0xdf, 0x71, 0xc3, 0xf9, 0x03, 0xd7, 0x89, 0xbd,
+	0x64, 0xdf, 0x99, 0xb3, 0x07, 0xa7, 0xd1, 0x01, 0x22, 0x1f, 0xc4, 0x68, 0x1f, 0xe7, 0x96, 0x1f,
+	0x41, 0xff, 0x7a, 0x36, 0xff, 0xc0, 0xff, 0x08, 0xb4, 0xfd, 0x97, 0x16, 0x00, 0x7e, 0xe4, 0x4d,
+	0x94, 0xfa, 0x61, 0x40, 0x2c, 0x58, 0x76, 0x16, 0x69, 0x78, 0xe8, 0xa7, 0x96, 0xb9, 0x69, 0x6e,
+	0xf5, 0x68, 0x36, 0x24, 0xdf, 0x86, 0xe5, 0xc8, 0xb9, 0x78, 0x7b, 0x11, 0x31, 0xab, 0xb5, 0x69,
+	0x6e, 0x8d, 0x76, 0x57, 0x76, 0xf8, 0x47, 0xd1, 0xf8, 0xc0, 0xb9, 0xa0, 0x99, 0x96, 0xdc, 0x01,
+	0x48, 0xc3, 0xd4, 0x99, 0xd1, 0x70, 0x11, 0x78, 0x56, 0x7b, 0xd3, 0xdc, 0xea, 0x50, 0x45, 0x42,
+	0x6e, 0x43, 0x9f, 0x8f, 0xde, 0xfa, 0x73, 0x66, 0x2d, 0x71, 0x75, 0x21, 0x40, 0x6d, 0xc0, 0x98,
+	0x47, 0x99, 0xe3, 0x5d, 0x58, 0x1d, 0x3e, 0x85, 0x42, 0x40, 0x36, 0xa0, 0xe7, 0x47, 0xd4, 0x99,
+	0xfa, 0xc1, 0xd4, 0xea, 0x72, 0x65, 0x3e, 0x46, 0xcb, 0x69, 0x94, 0x48, 0xe5, 0xb2, 0xb0, 0xcc,
+	0x05, 0x64, 0x1b, 0xc6, 0xfc, 0x23, 0x07, 0x33, 0xe7, 0x82, 0xc5, 0x7b, 0xe1, 0x22, 0x48, 0xad,
+	0x1e, 0xff, 0xb8, 0x26, 0x27, 0x9b, 0x30, 0xe0, 0xb2, 0x3d, 0x3f, 0x76, 0x67, 0xcc, 0xea, 0x73,
+	0x98, 0x2a, 0xb2, 0xff, 0xd9, 0x02, 0x10, 0x16, 0xcf, 0x9c, 0xd4, 0x21, 0x37, 0xa0, 0xbb, 0x48,
+	0x58, 0xfc, 0xd2, 0xe3, 0x4e, 0xeb, 0x50, 0x39, 0x42, 0x57, 0x9c, 0x30, 0xc7, 0x7b, 0x39, 0x9f,
+	0xbe, 0x8b, 0x67, 0xdc, 0x6d, 0x7d, 0xaa, 0x48, 0xd0, 0x6e, 0xca, 0x02, 0x8f, 0xc5, 0xd2, 0x4d,
+	0x72, 0x84, 0xcb, 0x0c, 0x7c, 0xf7, 0xab, 0x2f, 0x1c, 0xe9, 0xa1, 0x3e, 0xcd, 0xc7, 0xdc, 0x05,
+	0xc9, 0x9b, 0x60, 0xe6, 0x07, 0x4c, 0xfa, 0x27, 0x1f, 0x93, 0x2d, 0x58, 0x8a, 0xc3, 0x19, 0xe3,
+	0xae, 0x19, 0xed, 0xae, 0x2b, 0x1b, 0xc4, 0xe7, 0x4a, 0xc3, 0x19, 0xa3, 0x1c, 0x81, 0xfb, 0xec,
+	0x27, 0xc2, 0xc9, 0xc2, 0x55, 0xd9, 0x90, 0xdc, 0x87, 0x91, 0xe7, 0x27, 0x49, 0x38, 0x3b, 0x63,
+	0x4f, 0xa6, 0x31, 0x63, 0x1e, 0x77, 0x53, 0x8f, 0x56, 0xa4, 0xe8, 0xd0, 0x5c, 0x12, 0x24, 0xe7,
+	0x2c, 0x66, 0x1e, 0xf7, 0x54, 0x8f, 0x6a, 0x72, 0xdc, 0x9a, 0x59, 0x18, 0x4c, 0xfd, 0x74, 0xe1,
+	0x31, 0x0b, 0x36, 0xcd, 0xad, 0x16, 0x2d, 0x04, 0xb8, 0xa2, 0x99, 0x93, 0x0a, 0xe5, 0x80, 0x2b,
+	0xf3, 0x31, 0x19, 0x41, 0xcb, 0x8f, 0xac, 0x21, 0xf7, 0x41, 0xcb, 0x8f, 0xec, 0x3f, 0x2e, 0x41,
+	0x0f, 0x17, 0x94, 0xb9, 0x1d, 0x57, 0xf8, 0x45, 0xc8, 0xdd, 0xde, 0xa7, 0x72, 0x44, 0xb6, 0xa1,
+	0x37, 0x75, 0xe6, 0x4c, 0x89, 0xd5, 0x91, 0x70, 0xc5, 0xbe, 0x94, 0xd2, 0x5c, 0x8f, 0x58, 0x54,
+	0x71, 0x6c, 0x5b, 0xc5, 0x52, 0x29, 0xa5, 0xb9, 0x9e, 0x7c, 0x06, 0x9d, 0x24, 0x75, 0x52, 0xb1,
+	0x27, 0xa3, 0xdd, 0xeb, 0x3b, 0xca, 0xa9, 0xc5, 0x3f, 0x87, 0xa8, 0xa4, 0x02, 0x23, 0x3c, 0x7c,
+	0x98, 0x3a, 0x71, 0x2a, 0xb7, 0x29, 0x1b, 0x92, 0x87, 0xb0, 0x1c, 0xf1, 0xfd, 0x48, 0xac, 0xee,
+	0x66, 0x7b, 0x6b, 0xb0, 0x7b, 0x43, 0x25, 0x2a, 0xc2, 0x8a, 0x66, 0x30, 0xb2, 0x03, 0xdd, 0x90,
+	0x9f, 0x4f, 0xbe, 0x59, 0x15, 0x83, 0xe2, 0xf4, 0x52, 0x89, 0xc2, 0x00, 0x0e, 0xcf, 0x03, 0x16,
+	0xbf, 0x13, 0x41, 0x29, 0xe2, 0x5c, 0x15, 0x11, 0x1b, 0x86, 0xd9, 0x2e, 0xbd, 0x62, 0xc7, 0xa9,
+	0x8c, 0xf1, 0x92, 0x8c, 0x3c, 0x84, 0xb5, 0x6c, 0xcc, 0x27, 0x2e, 0xd9, 0x80, 0x43, 0xeb, 0x54,
+	0xb8, 0x93, 0xee, 0x22, 0x16, 0x07, 0x7f, 0xc0, 0x61, 0xf9, 0x18, 0x63, 0xc0, 0x5d, 0xc4, 0xf2,
+	0x48, 0x0d, 0xc5, 0xb1, 0xcf, 0x05, 0xe4, 0x11, 0x0c, 0x70, 0x4b, 0x28, 0x73, 0xc3, 0xd8, 0x4b,
+	0xac, 0x15, 0xdd, 0x2f, 0xfb, 0xb9, 0x9a, 0xaa, 0x50, 0xfb, 0x47, 0x00, 0x85, 0x8a, 0xdc, 0x83,
+	0x25, 0xbc, 0xdc, 0x78, 0x40, 0x0c, 0x76, 0x47, 0x3b, 0xfc, 0xa6, 0x43, 0x3d, 0x3a, 0x74, 0x62,
+	0x50, 0xae, 0x7d, 0xda, 0x85, 0x25, 0xa4, 0xb0, 0xff, 0x6c, 0xc2, 0xea, 0x5e, 0xcc, 0x70, 0xd7,
+	0xc2, 0x70, 0x4e, 0xd9, 0xe9, 0x82, 0x25, 0x69, 0x29, 0x7c, 0xcc, 0x8f, 0x84, 0xcf, 0x0f, 0x00,
+	0xe2, 0xdc, 0xff, 0x3c, 0xd8, 0x9a, 0x77, 0x47, 0x41, 0x12, 0x5b, 0xce, 0xb3, 0xcd, 0x2d, 0x86,
+	0x62, 0x9e, 0x42, 0x97, 0xcf, 0x72, 0x08, 0x80, 0xdf, 0x11, 0x52, 0xfb, 0xef, 0x26, 0xdc, 0x14,
+	0x73, 0x15, 0x2e, 0xfb, 0x1f, 0x9c, 0x31, 0xdf, 0x7f, 0x3e, 0xb9, 0x97, 0x5e, 0x76, 0x6f, 0x65,
+	0xe3, 0xca, 0x6a, 0x7e, 0x67, 0x02, 0x51, 0x3d, 0x9f, 0x44, 0x61, 0x90, 0xb0, 0x6f, 0xfa, 0x44,
+	0xdb, 0x7f, 0x30, 0xc1, 0xd2, 0x9d, 0xfa, 0x5f, 0x9a, 0xcc, 0x1a, 0xac, 0xee, 0xb3, 0x14, 0xcf,
+	0xbf, 0x1f, 0x4c, 0xe5, 0xd6, 0xda, 0x7b, 0x40, 0x54, 0xa1, 0x9c, 0xda, 0x77, 0xa1, 0x83, 0x66,
+	0x89, 0x65, 0xf2, 0x83, 0x72, 0xb3, 0x7a, 0x81, 0x20, 0x16, 0x97, 0x22, 0x50, 0xf6, 0xf7, 0xe1,
+	0xe6, 0x3e, 0x4b, 0xc5, 0x12, 0xcb, 0xfc, 0xa5, 0x2d, 0x33, 0xcb, 0x5b, 0x66, 0xbf, 0x00, 0x4b,
+	0x37, 0x93, 0x33, 0xd8, 0x2e, 0xcf, 0x60, 0xbd, 0x1a, 0x41, 0xfc, 0x02, 0x93, 0x9f, 0xff, 0x0d,
+	0x0c, 0x94, 0x49, 0x7d, 0xe3, 0x7e, 0xfd, 0xbd, 0x09, 0xcb, 0xaf, 0x59, 0x92, 0x38, 0x53, 0x46,
+	0xee, 0x42, 0x3b, 0x66, 0xa7, 0xf2, 0x7a, 0xb8, 0x56, 0x9a, 0x34, 0x3b, 0x9d, 0x18, 0x14, 0xb5,
+	0x1c, 0x94, 0x44, 0xf2, 0x6c, 0x94, 0x41, 0x49, 0xc4, 0x41, 0x49, 0x44, 0xbe, 0x03, 0x1d, 0x76,
+	0xc6, 0x82, 0x54, 0x1e, 0x88, 0x55, 0x15, 0xf6, 0x1c, 0x15, 0x13, 0x83, 0x0a, 0xc4, 0xd3, 0x3e,
+	0x2c, 0xcf, 0xc5, 0xf7, 0xed, 0x3f, 0xf5, 0xa1, 0x4d, 0xd9, 0x29, 0x79, 0x0c, 0x43, 0x16, 0xa4,
+	0x98, 0x92, 0xf9, 0x29, 0x96, 0x13, 0xb2, 0x4a, 0x24, 0x8a, 0x7e, 0x62, 0xd0, 0x12, 0x9e, 0xec,
+	0x42, 0x2f, 0xc6, 0x74, 0x8d, 0xb6, 0x62, 0x9e, 0xe5, 0x1d, 0x90, 0xba, 0x89, 0x41, 0x73, 0x1c,
+	0x79, 0x04, 0x90, 0xf8, 0xa9, 0x17, 0x9e, 0x07, 0x68, 0xd5, 0xd6, 0x4f, 0xfe, 0x61, 0xae, 0x9d,
+	0x18, 0x54, 0xc1, 0x72, 0xcb, 0xd4, 0x09, 0xbc, 0x45, 0x84, 0x96, 0x4b, 0x35, 0x96, 0xb9, 0x96,
+	0x5b, 0xe6, 0x23, 0x5c, 0xa7, 0x7b, 0xe2, 0x04, 0x53, 0x96, 0xf8, 0x29, 0xda, 0x76, 0xf4, 0x75,
+	0xee, 0x29, 0x7a, 0x5c, 0xa7, 0x8a, 0xc7, 0x75, 0xce, 0x98, 0x73, 0xc6, 0xd0, 0xb6, 0xab, 0xaf,
+	0xf3, 0x95, 0xd4, 0xe1, 0x3a, 0x33, 0x1c, 0xce, 0x36, 0x3c, 0x3e, 0xc6, 0x82, 0x08, 0xad, 0x6a,
+	0x32, 0xe6, 0x9b, 0x5c, 0x8b, 0xb3, 0x2d, 0xb0, 0xe4, 0x35, 0xac, 0x2e, 0xa2, 0x59, 0xe8, 0x78,
+	0xaf, 0x42, 0xd7, 0xe1, 0x37, 0x20, 0x3b, 0xe5, 0xd9, 0x73, 0xb0, 0xfb, 0xff, 0x2a, 0xc1, 0xbb,
+	0x2a, 0x68, 0x62, 0x50, 0xdd, 0x92, 0x1c, 0x00, 0x89, 0xc5, 0x31, 0x7b, 0x26, 0x93, 0x25, 0xf2,
+	0xf5, 0x39, 0xdf, 0x9d, 0x4a, 0xec, 0x55, 0x50, 0x13, 0x83, 0xd6, 0xd8, 0x92, 0x9f, 0xc1, 0x38,
+	0x66, 0xd1, 0xec, 0x42, 0xe5, 0x03, 0xce, 0x77, 0xbb, 0xcc, 0x57, 0xc6, 0x4c, 0x0c, 0xaa, 0xd9,
+	0x91, 0x1f, 0xc3, 0x20, 0x65, 0x5f, 0xa7, 0x7b, 0x27, 0x0e, 0xdf, 0x99, 0x01, 0xa7, 0x29, 0xdd,
+	0x24, 0x6f, 0x0b, 0xf5, 0xc4, 0xa0, 0x2a, 0x1a, 0xf7, 0xf5, 0x74, 0xe1, 0xbb, 0x5f, 0x65, 0xd6,
+	0x43, 0x7d, 0x5f, 0x7f, 0xae, 0xe8, 0x71, 0x5f, 0x55, 0x3c, 0x8f, 0xff, 0x79, 0xf8, 0xc1, 0xcf,
+	0xec, 0x57, 0x6a, 0xe2, 0x5f, 0xd1, 0xf3, 0xf8, 0x57, 0xc6, 0x68, 0x7f, 0x16, 0xfa, 0x2e, 0xcb,
+	0xec, 0x47, 0xba, 0xfd, 0x97, 0x8a, 0x1e, 0xed, 0x55, 0x3c, 0xc6, 0x55, 0x82, 0x85, 0x0b, 0xda,
+	0x5e, 0xd3, 0xe3, 0xea, 0x50, 0xea, 0x30, 0xae, 0x32, 0x1c, 0x46, 0x87, 0x5b, 0x2d, 0x16, 0xac,
+	0xb1, 0x1e, 0x1d, 0x5a, 0x45, 0x81, 0xd1, 0xa1, 0x59, 0x92, 0x23, 0xb8, 0xe9, 0xd6, 0xe7, 0x73,
+	0x6b, 0x95, 0x93, 0xde, 0xd5, 0x49, 0x35, 0xe8, 0xc4, 0xa0, 0x4d, 0x2c, 0xe4, 0x13, 0x99, 0xb1,
+	0x3d, 0xce, 0xd6, 0x17, 0x19, 0x1b, 0x17, 0x65, 0xca, 0x02, 0xa3, 0xc3, 0x2f, 0x43, 0xbc, 0x9e,
+	0x44, 0x41, 0x75, 0x6a, 0xff, 0xa3, 0x05, 0x6d, 0x9a, 0x44, 0xe8, 0x1e, 0x16, 0xc7, 0x61, 0x4c,
+	0x93, 0x48, 0x5e, 0x4d, 0x25, 0xf7, 0x3c, 0x97, 0x3a, 0x74, 0x4f, 0x86, 0x2b, 0x5f, 0x69, 0xf9,
+	0xf5, 0xd9, 0x70, 0xa5, 0x71, 0xdb, 0x12, 0x1e, 0x4f, 0x8b, 0xab, 0x55, 0x04, 0xf2, 0x9a, 0xba,
+	0xd3, 0xe4, 0x5f, 0x81, 0xc2, 0xd3, 0xa2, 0xdb, 0x92, 0xf7, 0x60, 0xb9, 0x0d, 0xc9, 0x5d, 0x5e,
+	0x62, 0xf7, 0x2e, 0x77, 0x71, 0xce, 0xde, 0xc8, 0xd3, 0xe0, 0xe4, 0x24, 0x2a, 0x39, 0x39, 0x89,
+	0x72, 0x27, 0x27, 0x91, 0xfd, 0xd7, 0x21, 0x74, 0x78, 0x86, 0xc0, 0xe3, 0x2c, 0x4a, 0x7c, 0xee,
+	0x18, 0x2e, 0x93, 0xee, 0xbe, 0xad, 0x3f, 0x09, 0x0a, 0x0c, 0x1e, 0xe7, 0xaa, 0x1d, 0xba, 0x4f,
+	0xc8, 0xe4, 0xed, 0x26, 0xd8, 0x5a, 0xba, 0xfb, 0x0e, 0x34, 0x14, 0xba, 0x4f, 0xb7, 0xc5, 0x78,
+	0x97, 0xd2, 0xa0, 0x20, 0x6c, 0xeb, 0xf1, 0x7e, 0x50, 0x05, 0x61, 0xbc, 0x6b, 0x96, 0xc5, 0x62,
+	0xf9, 0xa5, 0x2d, 0xd8, 0x96, 0x9a, 0x16, 0x5b, 0x60, 0x8a, 0xc5, 0x16, 0xb2, 0x62, 0xb1, 0x87,
+	0x7e, 0xfa, 0x2c, 0x3c, 0x0f, 0x04, 0x5b, 0xa7, 0x69, 0xb1, 0x2a, 0xaa, 0x58, 0xac, 0x2a, 0x55,
+	0x18, 0x31, 0x79, 0xbd, 0x8b, 0x04, 0x63, 0xb7, 0x91, 0x51, 0x41, 0x29, 0x8c, 0x8a, 0x94, 0xfc,
+	0x12, 0xae, 0x0b, 0xa9, 0x48, 0x70, 0x87, 0xcc, 0x49, 0x05, 0xa9, 0xc8, 0x48, 0x9f, 0xea, 0xa4,
+	0x15, 0xe0, 0xc4, 0xa0, 0xf5, 0x0c, 0x84, 0xc1, 0x2d, 0xa1, 0x28, 0x27, 0x22, 0x41, 0x2f, 0xf2,
+	0xd5, 0xb7, 0x74, 0xfa, 0x1a, 0xf0, 0xc4, 0xa0, 0xcd, 0x4c, 0xc5, 0x8e, 0xf1, 0x72, 0x42, 0xb0,
+	0xf7, 0x9b, 0x76, 0xac, 0xc0, 0x14, 0x3b, 0x56, 0xc8, 0xc8, 0x09, 0x6c, 0x64, 0xb2, 0x52, 0x56,
+	0x13, 0xac, 0x22, 0x87, 0xdd, 0xaf, 0x63, 0xd5, 0xd1, 0x13, 0x83, 0x5e, 0xc2, 0x85, 0xa7, 0x3e,
+	0xd3, 0x2a, 0x19, 0x4f, 0x7c, 0x67, 0xa0, 0x9f, 0xfa, 0x83, 0x06, 0x2c, 0x9e, 0xfa, 0x26, 0x1e,
+	0x72, 0x08, 0x6b, 0xae, 0x13, 0xb8, 0x6c, 0x56, 0xa6, 0x17, 0x59, 0xf0, 0x93, 0xd2, 0xa5, 0xa2,
+	0xc3, 0x26, 0x06, 0xad, 0xb3, 0x46, 0x52, 0xf1, 0xc1, 0x2c, 0xef, 0x0a, 0xd2, 0x15, 0x9d, 0xf4,
+	0x40, 0x87, 0x21, 0x69, 0x8d, 0x35, 0xf9, 0x12, 0xd6, 0x85, 0x38, 0x4f, 0xc7, 0x82, 0x55, 0x24,
+	0xcc, 0x4d, 0x9d, 0xb5, 0x8c, 0x9b, 0x18, 0xb4, 0xd6, 0xbe, 0xe0, 0xcd, 0xd3, 0xb4, 0xe0, 0xbd,
+	0xd6, 0xc4, 0x5b, 0xc6, 0x15, 0xbc, 0x65, 0x79, 0xc1, 0x9b, 0xa7, 0x6f, 0xc1, 0x3b, 0x6e, 0xe2,
+	0x2d, 0xe3, 0x0a, 0xde, 0xb2, 0x9c, 0x3c, 0x83, 0x51, 0xcc, 0xef, 0xed, 0x3c, 0x92, 0x45, 0x92,
+	0xdd, 0xa8, 0x3e, 0x5c, 0x4a, 0x71, 0x5c, 0xb1, 0x21, 0x4f, 0x60, 0x85, 0x3f, 0x89, 0xcf, 0xb2,
+	0xdb, 0x9a, 0x70, 0x92, 0x5b, 0xda, 0xfb, 0xf9, 0xac, 0xb8, 0xaa, 0xcb, 0x16, 0xe4, 0xd3, 0x52,
+	0xc2, 0x18, 0x88, 0x84, 0x21, 0xb0, 0x59, 0xca, 0x58, 0x96, 0x4f, 0x8b, 0xa7, 0x03, 0xe8, 0x63,
+	0xd2, 0xe0, 0x5a, 0xfb, 0x87, 0x30, 0x50, 0x0a, 0xb2, 0xc6, 0x9e, 0x23, 0x81, 0x25, 0x2c, 0xd4,
+	0x64, 0xb7, 0x91, 0xff, 0xb6, 0x1f, 0xc3, 0x50, 0xad, 0xc6, 0x1a, 0x6d, 0x6f, 0x40, 0xd7, 0x3d,
+	0x71, 0xd2, 0x97, 0x1e, 0xb7, 0xee, 0x50, 0x39, 0xb2, 0x7f, 0x0a, 0x43, 0xb5, 0x1a, 0x6b, 0xb4,
+	0xb7, 0x60, 0x99, 0x57, 0x69, 0x39, 0x41, 0x36, 0xb4, 0x7f, 0x05, 0x43, 0xb5, 0x1e, 0xbb, 0x8c,
+	0x81, 0xd7, 0x69, 0x92, 0xa1, 0x4f, 0xb3, 0x21, 0x6a, 0x12, 0xe6, 0x86, 0x81, 0x97, 0xc8, 0x66,
+	0x69, 0x36, 0xb4, 0xef, 0xc3, 0x50, 0x7d, 0x2b, 0x35, 0xbd, 0x2f, 0x6d, 0x80, 0x5e, 0xf6, 0x2e,
+	0xc2, 0xdf, 0x59, 0x8d, 0x67, 0xdb, 0x00, 0xc5, 0xcb, 0x87, 0xac, 0x43, 0xc7, 0x0f, 0x3c, 0xf6,
+	0xb5, 0x9c, 0x98, 0x18, 0xd8, 0x43, 0x80, 0xe2, 0x8d, 0x63, 0xdf, 0x83, 0xa1, 0xfa, 0x6a, 0x69,
+	0xb0, 0x01, 0xe8, 0x65, 0xef, 0x13, 0xb4, 0x2f, 0x5e, 0x1d, 0xf6, 0x6b, 0x58, 0xd5, 0x9e, 0x10,
+	0xa5, 0x36, 0xa8, 0x59, 0x69, 0x83, 0x96, 0x1a, 0xa8, 0xad, 0x4a, 0x03, 0xd5, 0x5e, 0x07, 0xa2,
+	0xbf, 0x20, 0xec, 0x2d, 0x18, 0x57, 0xdf, 0x01, 0x38, 0x51, 0x67, 0x1a, 0x33, 0x26, 0x9b, 0xfb,
+	0x62, 0x60, 0x3f, 0x82, 0x5e, 0x56, 0xd1, 0x61, 0xf8, 0xb8, 0xa1, 0x9c, 0x41, 0x87, 0xf2, 0xdf,
+	0xe8, 0x7a, 0xf9, 0x7e, 0xcd, 0x36, 0x25, 0x7b, 0xce, 0x1e, 0xab, 0xae, 0x4f, 0x22, 0xd1, 0x80,
+	0x0e, 0xe7, 0x75, 0x35, 0x63, 0xde, 0x14, 0xe0, 0x88, 0xbc, 0x51, 0xd7, 0xfa, 0xb7, 0x1a, 0x75,
+	0xbf, 0x35, 0x61, 0x5c, 0xad, 0x82, 0xb2, 0x4e, 0x96, 0x90, 0xcb, 0x4f, 0x36, 0xb5, 0x52, 0x15,
+	0x24, 0xb9, 0x5f, 0xfa, 0xf4, 0x58, 0x7c, 0xba, 0xc0, 0x56, 0xfb, 0x6f, 0x42, 0x63, 0x7f, 0x0e,
+	0x44, 0xaf, 0x9c, 0x9a, 0xe2, 0xd8, 0xfe, 0x0c, 0x56, 0xb5, 0xb2, 0xa8, 0x11, 0xbc, 0x9d, 0x2d,
+	0x4e, 0xa9, 0x70, 0x9a, 0xb0, 0x4f, 0xb3, 0x69, 0x94, 0xaa, 0x97, 0xa6, 0xe3, 0x94, 0x07, 0x66,
+	0x4b, 0x0d, 0xcc, 0x82, 0x43, 0xad, 0x57, 0xae, 0xc6, 0xf1, 0x1c, 0xae, 0xd7, 0x16, 0x2d, 0x57,
+	0xa4, 0x99, 0xc3, 0xad, 0xc6, 0xe2, 0xa4, 0x91, 0x4a, 0x3d, 0x29, 0xad, 0xcb, 0x4e, 0x4a, 0xbb,
+	0x7a, 0x52, 0x72, 0x4f, 0x2b, 0x77, 0x7a, 0x93, 0xa7, 0x7f, 0x01, 0x1b, 0xcd, 0x35, 0x48, 0xe3,
+	0xdc, 0xaa, 0x8d, 0xf5, 0x96, 0xde, 0x58, 0xb7, 0x27, 0x60, 0x35, 0x55, 0x1d, 0x97, 0xb9, 0x4f,
+	0x9c, 0xdc, 0x96, 0x7a, 0x72, 0xaf, 0xc3, 0x5a, 0x4d, 0x81, 0x61, 0x3f, 0x81, 0xb5, 0x9a, 0x12,
+	0xe1, 0x4a, 0x29, 0xe3, 0x05, 0xac, 0xd7, 0xd5, 0x03, 0x57, 0x4e, 0x1d, 0x93, 0x8c, 0xa7, 0x92,
+	0xe7, 0xaf, 0x9e, 0x42, 0xde, 0x67, 0x4c, 0x95, 0xcc, 0xfe, 0x9f, 0x4c, 0x25, 0x3f, 0x81, 0x51,
+	0xb9, 0x06, 0x28, 0xfe, 0xe7, 0x63, 0x7e, 0xfc, 0x7f, 0x3e, 0xf6, 0x0c, 0x56, 0x4a, 0xd9, 0xff,
+	0x4a, 0xd6, 0x64, 0x07, 0x7a, 0xe1, 0x19, 0x8b, 0x95, 0xfe, 0x27, 0x29, 0x7a, 0x9a, 0x6f, 0xa4,
+	0x86, 0xe6, 0x98, 0xed, 0x27, 0xd0, 0xcf, 0x39, 0xc8, 0x0a, 0xf4, 0xcf, 0x1d, 0x3f, 0x3d, 0xfa,
+	0x10, 0xfa, 0xc1, 0xd8, 0x20, 0x03, 0x58, 0xf6, 0x83, 0x23, 0xbc, 0xbe, 0xc6, 0x26, 0x19, 0x01,
+	0x70, 0x1d, 0xef, 0x04, 0x8e, 0x5b, 0xa4, 0x07, 0x4b, 0x48, 0x32, 0x6e, 0x6f, 0x3f, 0x16, 0x14,
+	0xaf, 0xfc, 0xb9, 0x9f, 0x92, 0x6b, 0x30, 0x98, 0xe1, 0x8f, 0xa3, 0x38, 0x5c, 0x04, 0xde, 0xd8,
+	0x40, 0x3b, 0x21, 0x48, 0x7d, 0xce, 0x33, 0x86, 0xa1, 0x18, 0x8b, 0x0e, 0xf1, 0xb8, 0xb5, 0xfb,
+	0xb7, 0x16, 0xc0, 0x8b, 0x7c, 0x49, 0xe4, 0x35, 0x40, 0xf1, 0x38, 0x27, 0x97, 0x37, 0x45, 0x36,
+	0x3e, 0xf2, 0xa6, 0xb7, 0x0d, 0xa4, 0x2b, 0x7a, 0xdf, 0x65, 0x3a, 0xad, 0x51, 0x5e, 0xa6, 0xd3,
+	0x5b, 0xe6, 0xb6, 0x41, 0x8e, 0x60, 0x5c, 0x6d, 0x67, 0x93, 0xbb, 0x15, 0xab, 0xba, 0x1e, 0xf9,
+	0xc6, 0xbd, 0xcb, 0x41, 0xf9, 0x07, 0x1e, 0x41, 0xf7, 0x30, 0x8d, 0x99, 0x33, 0x27, 0x6b, 0xaa,
+	0x85, 0xec, 0x3d, 0x6f, 0xd4, 0x09, 0x6d, 0x63, 0xcb, 0x7c, 0x68, 0xbe, 0xef, 0xf2, 0x7f, 0xc6,
+	0x7f, 0xef, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x4e, 0x2c, 0xd3, 0x26, 0x13, 0x20, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -4909,158 +3910,4 @@ var _FriendRoom_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Metadata: "friendRoom/friendRoom.proto",
-}
-
-func init() {
-	proto.RegisterFile("friendRoom/friendRoom.proto", fileDescriptor_friendRoom_53560c034472a3ed)
-}
-
-var fileDescriptor_friendRoom_53560c034472a3ed = []byte{
-	// 2336 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0x51, 0x73, 0xdc, 0x48,
-	0xf1, 0x97, 0x76, 0xbd, 0xeb, 0xdd, 0xde, 0xf5, 0x66, 0x3d, 0x76, 0x12, 0xc5, 0xff, 0xfc, 0x73,
-	0x3e, 0x25, 0x04, 0xe3, 0x3b, 0x9c, 0x94, 0x29, 0xa8, 0x00, 0x45, 0x8a, 0xc4, 0x49, 0xbc, 0xa1,
-	0x92, 0x8b, 0x19, 0x27, 0x57, 0xc0, 0x8b, 0x4b, 0x91, 0xc6, 0x6b, 0xe5, 0x76, 0x25, 0x59, 0xd2,
-	0xda, 0x67, 0xaa, 0xa8, 0xe2, 0x81, 0x17, 0x78, 0xe1, 0x0b, 0xf0, 0x05, 0x78, 0x86, 0xaf, 0xc0,
-	0x13, 0xdf, 0x82, 0x0f, 0xc1, 0x33, 0xd5, 0x33, 0x23, 0x69, 0xa4, 0x91, 0x1c, 0x5c, 0x45, 0x1d,
-	0xbc, 0xb8, 0x76, 0xba, 0x7f, 0xfd, 0xd3, 0x4c, 0x4f, 0xcf, 0x74, 0x4f, 0x1b, 0xfe, 0xef, 0x38,
-	0xf6, 0x59, 0xe0, 0xd1, 0x30, 0x9c, 0x3f, 0x28, 0x7e, 0xee, 0x44, 0x71, 0x98, 0x86, 0x04, 0x0a,
-	0xc9, 0xc6, 0xe7, 0x53, 0x3f, 0x3d, 0x59, 0xbc, 0xdf, 0x71, 0xc3, 0xf9, 0x03, 0xd7, 0x89, 0xbd,
-	0x64, 0xdf, 0x99, 0xb3, 0x07, 0xa7, 0xd1, 0x01, 0x22, 0x1f, 0xc4, 0x68, 0x1f, 0xe7, 0x96, 0x1f,
-	0x41, 0xff, 0x7a, 0x36, 0xff, 0xc0, 0xff, 0x08, 0xb4, 0xfd, 0x97, 0x16, 0x00, 0x7e, 0xe4, 0x4d,
-	0x94, 0xfa, 0x61, 0x40, 0x2c, 0x58, 0x76, 0x16, 0x69, 0x78, 0xe8, 0xa7, 0x96, 0xb9, 0x69, 0x6e,
-	0xf5, 0x68, 0x36, 0x24, 0xdf, 0x86, 0xe5, 0xc8, 0xb9, 0x78, 0x7b, 0x11, 0x31, 0xab, 0xb5, 0x69,
-	0x6e, 0x8d, 0x76, 0x57, 0x76, 0xf8, 0x47, 0xd1, 0xf8, 0xc0, 0xb9, 0xa0, 0x99, 0x96, 0xdc, 0x01,
-	0x48, 0xc3, 0xd4, 0x99, 0xd1, 0x70, 0x11, 0x78, 0x56, 0x7b, 0xd3, 0xdc, 0xea, 0x50, 0x45, 0x42,
-	0x6e, 0x43, 0x9f, 0x8f, 0xde, 0xfa, 0x73, 0x66, 0x2d, 0x71, 0x75, 0x21, 0x40, 0x6d, 0xc0, 0x98,
-	0x47, 0x99, 0xe3, 0x5d, 0x58, 0x1d, 0x3e, 0x85, 0x42, 0x40, 0x36, 0xa0, 0xe7, 0x47, 0xd4, 0x99,
-	0xfa, 0xc1, 0xd4, 0xea, 0x72, 0x65, 0x3e, 0x46, 0xcb, 0x69, 0x94, 0x48, 0xe5, 0xb2, 0xb0, 0xcc,
-	0x05, 0x64, 0x1b, 0xc6, 0xfc, 0x23, 0x07, 0x33, 0xe7, 0x82, 0xc5, 0x7b, 0xe1, 0x22, 0x48, 0xad,
-	0x1e, 0xff, 0xb8, 0x26, 0x27, 0x9b, 0x30, 0xe0, 0xb2, 0x3d, 0x3f, 0x76, 0x67, 0xcc, 0xea, 0x73,
-	0x98, 0x2a, 0xb2, 0xff, 0xd9, 0x02, 0x10, 0x16, 0xcf, 0x9c, 0xd4, 0x21, 0x37, 0xa0, 0xbb, 0x48,
-	0x58, 0xfc, 0xd2, 0xe3, 0x4e, 0xeb, 0x50, 0x39, 0x42, 0x57, 0x9c, 0x30, 0xc7, 0x7b, 0x39, 0x9f,
-	0xbe, 0x8b, 0x67, 0xdc, 0x6d, 0x7d, 0xaa, 0x48, 0xd0, 0x6e, 0xca, 0x02, 0x8f, 0xc5, 0xd2, 0x4d,
-	0x72, 0x84, 0xcb, 0x0c, 0x7c, 0xf7, 0xab, 0x2f, 0x1c, 0xe9, 0xa1, 0x3e, 0xcd, 0xc7, 0xdc, 0x05,
-	0xc9, 0x9b, 0x60, 0xe6, 0x07, 0x4c, 0xfa, 0x27, 0x1f, 0x93, 0x2d, 0x58, 0x8a, 0xc3, 0x19, 0xe3,
-	0xae, 0x19, 0xed, 0xae, 0x2b, 0x1b, 0xc4, 0xe7, 0x4a, 0xc3, 0x19, 0xa3, 0x1c, 0x81, 0xfb, 0xec,
-	0x27, 0xc2, 0xc9, 0xc2, 0x55, 0xd9, 0x90, 0xdc, 0x87, 0x91, 0xe7, 0x27, 0x49, 0x38, 0x3b, 0x63,
-	0x4f, 0xa6, 0x31, 0x63, 0x1e, 0x77, 0x53, 0x8f, 0x56, 0xa4, 0xe8, 0xd0, 0x5c, 0x12, 0x24, 0xe7,
-	0x2c, 0x66, 0x1e, 0xf7, 0x54, 0x8f, 0x6a, 0x72, 0xdc, 0x9a, 0x59, 0x18, 0x4c, 0xfd, 0x74, 0xe1,
-	0x31, 0x0b, 0x36, 0xcd, 0xad, 0x16, 0x2d, 0x04, 0xb8, 0xa2, 0x99, 0x93, 0x0a, 0xe5, 0x80, 0x2b,
-	0xf3, 0x31, 0x19, 0x41, 0xcb, 0x8f, 0xac, 0x21, 0xf7, 0x41, 0xcb, 0x8f, 0xec, 0x3f, 0x2e, 0x41,
-	0x0f, 0x17, 0x94, 0xb9, 0x1d, 0x57, 0xf8, 0x45, 0xc8, 0xdd, 0xde, 0xa7, 0x72, 0x44, 0xb6, 0xa1,
-	0x37, 0x75, 0xe6, 0x4c, 0x89, 0xd5, 0x91, 0x70, 0xc5, 0xbe, 0x94, 0xd2, 0x5c, 0x8f, 0x58, 0x54,
-	0x71, 0x6c, 0x5b, 0xc5, 0x52, 0x29, 0xa5, 0xb9, 0x9e, 0x7c, 0x06, 0x9d, 0x24, 0x75, 0x52, 0xb1,
-	0x27, 0xa3, 0xdd, 0xeb, 0x3b, 0xca, 0xa9, 0xc5, 0x3f, 0x87, 0xa8, 0xa4, 0x02, 0x23, 0x3c, 0x7c,
-	0x98, 0x3a, 0x71, 0x2a, 0xb7, 0x29, 0x1b, 0x92, 0x87, 0xb0, 0x1c, 0xf1, 0xfd, 0x48, 0xac, 0xee,
-	0x66, 0x7b, 0x6b, 0xb0, 0x7b, 0x43, 0x25, 0x2a, 0xc2, 0x8a, 0x66, 0x30, 0xb2, 0x03, 0xdd, 0x90,
-	0x9f, 0x4f, 0xbe, 0x59, 0x15, 0x83, 0xe2, 0xf4, 0x52, 0x89, 0xc2, 0x00, 0x0e, 0xcf, 0x03, 0x16,
-	0xbf, 0x13, 0x41, 0x29, 0xe2, 0x5c, 0x15, 0x11, 0x1b, 0x86, 0xd9, 0x2e, 0xbd, 0x62, 0xc7, 0xa9,
-	0x8c, 0xf1, 0x92, 0x8c, 0x3c, 0x84, 0xb5, 0x6c, 0xcc, 0x27, 0x2e, 0xd9, 0x80, 0x43, 0xeb, 0x54,
-	0xb8, 0x93, 0xee, 0x22, 0x16, 0x07, 0x7f, 0xc0, 0x61, 0xf9, 0x18, 0x63, 0xc0, 0x5d, 0xc4, 0xf2,
-	0x48, 0x0d, 0xc5, 0xb1, 0xcf, 0x05, 0xe4, 0x11, 0x0c, 0x70, 0x4b, 0x28, 0x73, 0xc3, 0xd8, 0x4b,
-	0xac, 0x15, 0xdd, 0x2f, 0xfb, 0xb9, 0x9a, 0xaa, 0x50, 0xfb, 0x47, 0x00, 0x85, 0x8a, 0xdc, 0x83,
-	0x25, 0xbc, 0xdc, 0x78, 0x40, 0x0c, 0x76, 0x47, 0x3b, 0xfc, 0xa6, 0x43, 0x3d, 0x3a, 0x74, 0x62,
-	0x50, 0xae, 0x7d, 0xda, 0x85, 0x25, 0xa4, 0xb0, 0xff, 0x6c, 0xc2, 0xea, 0x5e, 0xcc, 0x70, 0xd7,
-	0xc2, 0x70, 0x4e, 0xd9, 0xe9, 0x82, 0x25, 0x69, 0x29, 0x7c, 0xcc, 0x8f, 0x84, 0xcf, 0x0f, 0x00,
-	0xe2, 0xdc, 0xff, 0x3c, 0xd8, 0x9a, 0x77, 0x47, 0x41, 0x12, 0x5b, 0xce, 0xb3, 0xcd, 0x2d, 0x86,
-	0x62, 0x9e, 0x42, 0x97, 0xcf, 0x72, 0x08, 0x80, 0xdf, 0x11, 0x52, 0xfb, 0xef, 0x26, 0xdc, 0x14,
-	0x73, 0x15, 0x2e, 0xfb, 0x1f, 0x9c, 0x31, 0xdf, 0x7f, 0x3e, 0xb9, 0x97, 0x5e, 0x76, 0x6f, 0x65,
-	0xe3, 0xca, 0x6a, 0x7e, 0x67, 0x02, 0x51, 0x3d, 0x9f, 0x44, 0x61, 0x90, 0xb0, 0x6f, 0xfa, 0x44,
-	0xdb, 0x7f, 0x30, 0xc1, 0xd2, 0x9d, 0xfa, 0x5f, 0x9a, 0xcc, 0x1a, 0xac, 0xee, 0xb3, 0x14, 0xcf,
-	0xbf, 0x1f, 0x4c, 0xe5, 0xd6, 0xda, 0x7b, 0x40, 0x54, 0xa1, 0x9c, 0xda, 0x77, 0xa1, 0x83, 0x66,
-	0x89, 0x65, 0xf2, 0x83, 0x72, 0xb3, 0x7a, 0x81, 0x20, 0x16, 0x97, 0x22, 0x50, 0xf6, 0xf7, 0xe1,
-	0xe6, 0x3e, 0x4b, 0xc5, 0x12, 0xcb, 0xfc, 0xa5, 0x2d, 0x33, 0xcb, 0x5b, 0x66, 0xbf, 0x00, 0x4b,
-	0x37, 0x93, 0x33, 0xd8, 0x2e, 0xcf, 0x60, 0xbd, 0x1a, 0x41, 0xfc, 0x02, 0x93, 0x9f, 0xff, 0x0d,
-	0x0c, 0x94, 0x49, 0x7d, 0xe3, 0x7e, 0xfd, 0xbd, 0x09, 0xcb, 0xaf, 0x59, 0x92, 0x38, 0x53, 0x46,
-	0xee, 0x42, 0x3b, 0x66, 0xa7, 0xf2, 0x7a, 0xb8, 0x56, 0x9a, 0x34, 0x3b, 0x9d, 0x18, 0x14, 0xb5,
-	0x1c, 0x94, 0x44, 0xf2, 0x6c, 0x94, 0x41, 0x49, 0xc4, 0x41, 0x49, 0x44, 0xbe, 0x03, 0x1d, 0x76,
-	0xc6, 0x82, 0x54, 0x1e, 0x88, 0x55, 0x15, 0xf6, 0x1c, 0x15, 0x13, 0x83, 0x0a, 0xc4, 0xd3, 0x3e,
-	0x2c, 0xcf, 0xc5, 0xf7, 0xed, 0x3f, 0xf5, 0xa1, 0x4d, 0xd9, 0x29, 0x79, 0x0c, 0x43, 0x16, 0xa4,
-	0x98, 0x92, 0xf9, 0x29, 0x96, 0x13, 0xb2, 0x4a, 0x24, 0x8a, 0x7e, 0x62, 0xd0, 0x12, 0x9e, 0xec,
-	0x42, 0x2f, 0xc6, 0x74, 0x8d, 0xb6, 0x62, 0x9e, 0xe5, 0x1d, 0x90, 0xba, 0x89, 0x41, 0x73, 0x1c,
-	0x79, 0x04, 0x90, 0xf8, 0xa9, 0x17, 0x9e, 0x07, 0x68, 0xd5, 0xd6, 0x4f, 0xfe, 0x61, 0xae, 0x9d,
-	0x18, 0x54, 0xc1, 0x72, 0xcb, 0xd4, 0x09, 0xbc, 0x45, 0x84, 0x96, 0x4b, 0x35, 0x96, 0xb9, 0x96,
-	0x5b, 0xe6, 0x23, 0x5c, 0xa7, 0x7b, 0xe2, 0x04, 0x53, 0x96, 0xf8, 0x29, 0xda, 0x76, 0xf4, 0x75,
-	0xee, 0x29, 0x7a, 0x5c, 0xa7, 0x8a, 0xc7, 0x75, 0xce, 0x98, 0x73, 0xc6, 0xd0, 0xb6, 0xab, 0xaf,
-	0xf3, 0x95, 0xd4, 0xe1, 0x3a, 0x33, 0x1c, 0xce, 0x36, 0x3c, 0x3e, 0xc6, 0x82, 0x08, 0xad, 0x6a,
-	0x32, 0xe6, 0x9b, 0x5c, 0x8b, 0xb3, 0x2d, 0xb0, 0xe4, 0x35, 0xac, 0x2e, 0xa2, 0x59, 0xe8, 0x78,
-	0xaf, 0x42, 0xd7, 0xe1, 0x37, 0x20, 0x3b, 0xe5, 0xd9, 0x73, 0xb0, 0xfb, 0xff, 0x2a, 0xc1, 0xbb,
-	0x2a, 0x68, 0x62, 0x50, 0xdd, 0x92, 0x1c, 0x00, 0x89, 0xc5, 0x31, 0x7b, 0x26, 0x93, 0x25, 0xf2,
-	0xf5, 0x39, 0xdf, 0x9d, 0x4a, 0xec, 0x55, 0x50, 0x13, 0x83, 0xd6, 0xd8, 0x92, 0x9f, 0xc1, 0x38,
-	0x66, 0xd1, 0xec, 0x42, 0xe5, 0x03, 0xce, 0x77, 0xbb, 0xcc, 0x57, 0xc6, 0x4c, 0x0c, 0xaa, 0xd9,
-	0x91, 0x1f, 0xc3, 0x20, 0x65, 0x5f, 0xa7, 0x7b, 0x27, 0x0e, 0xdf, 0x99, 0x01, 0xa7, 0x29, 0xdd,
-	0x24, 0x6f, 0x0b, 0xf5, 0xc4, 0xa0, 0x2a, 0x1a, 0xf7, 0xf5, 0x74, 0xe1, 0xbb, 0x5f, 0x65, 0xd6,
-	0x43, 0x7d, 0x5f, 0x7f, 0xae, 0xe8, 0x71, 0x5f, 0x55, 0x3c, 0x8f, 0xff, 0x79, 0xf8, 0xc1, 0xcf,
-	0xec, 0x57, 0x6a, 0xe2, 0x5f, 0xd1, 0xf3, 0xf8, 0x57, 0xc6, 0x68, 0x7f, 0x16, 0xfa, 0x2e, 0xcb,
-	0xec, 0x47, 0xba, 0xfd, 0x97, 0x8a, 0x1e, 0xed, 0x55, 0x3c, 0xc6, 0x55, 0x82, 0x85, 0x0b, 0xda,
-	0x5e, 0xd3, 0xe3, 0xea, 0x50, 0xea, 0x30, 0xae, 0x32, 0x1c, 0x46, 0x87, 0x5b, 0x2d, 0x16, 0xac,
-	0xb1, 0x1e, 0x1d, 0x5a, 0x45, 0x81, 0xd1, 0xa1, 0x59, 0x92, 0x23, 0xb8, 0xe9, 0xd6, 0xe7, 0x73,
-	0x6b, 0x95, 0x93, 0xde, 0xd5, 0x49, 0x35, 0xe8, 0xc4, 0xa0, 0x4d, 0x2c, 0xe4, 0x13, 0x99, 0xb1,
-	0x3d, 0xce, 0xd6, 0x17, 0x19, 0x1b, 0x17, 0x65, 0xca, 0x02, 0xa3, 0xc3, 0x2f, 0x43, 0xbc, 0x9e,
-	0x44, 0x41, 0x75, 0x6a, 0xff, 0xa3, 0x05, 0x6d, 0x9a, 0x44, 0xe8, 0x1e, 0x16, 0xc7, 0x61, 0x4c,
-	0x93, 0x48, 0x5e, 0x4d, 0x25, 0xf7, 0x3c, 0x97, 0x3a, 0x74, 0x4f, 0x86, 0x2b, 0x5f, 0x69, 0xf9,
-	0xf5, 0xd9, 0x70, 0xa5, 0x71, 0xdb, 0x12, 0x1e, 0x4f, 0x8b, 0xab, 0x55, 0x04, 0xf2, 0x9a, 0xba,
-	0xd3, 0xe4, 0x5f, 0x81, 0xc2, 0xd3, 0xa2, 0xdb, 0x92, 0xf7, 0x60, 0xb9, 0x0d, 0xc9, 0x5d, 0x5e,
-	0x62, 0xf7, 0x2e, 0x77, 0x71, 0xce, 0xde, 0xc8, 0xd3, 0xe0, 0xe4, 0x24, 0x2a, 0x39, 0x39, 0x89,
-	0x72, 0x27, 0x27, 0x91, 0xfd, 0xd7, 0x21, 0x74, 0x78, 0x86, 0xc0, 0xe3, 0x2c, 0x4a, 0x7c, 0xee,
-	0x18, 0x2e, 0x93, 0xee, 0xbe, 0xad, 0x3f, 0x09, 0x0a, 0x0c, 0x1e, 0xe7, 0xaa, 0x1d, 0xba, 0x4f,
-	0xc8, 0xe4, 0xed, 0x26, 0xd8, 0x5a, 0xba, 0xfb, 0x0e, 0x34, 0x14, 0xba, 0x4f, 0xb7, 0xc5, 0x78,
-	0x97, 0xd2, 0xa0, 0x20, 0x6c, 0xeb, 0xf1, 0x7e, 0x50, 0x05, 0x61, 0xbc, 0x6b, 0x96, 0xc5, 0x62,
-	0xf9, 0xa5, 0x2d, 0xd8, 0x96, 0x9a, 0x16, 0x5b, 0x60, 0x8a, 0xc5, 0x16, 0xb2, 0x62, 0xb1, 0x87,
-	0x7e, 0xfa, 0x2c, 0x3c, 0x0f, 0x04, 0x5b, 0xa7, 0x69, 0xb1, 0x2a, 0xaa, 0x58, 0xac, 0x2a, 0x55,
-	0x18, 0x31, 0x79, 0xbd, 0x8b, 0x04, 0x63, 0xb7, 0x91, 0x51, 0x41, 0x29, 0x8c, 0x8a, 0x94, 0xfc,
-	0x12, 0xae, 0x0b, 0xa9, 0x48, 0x70, 0x87, 0xcc, 0x49, 0x05, 0xa9, 0xc8, 0x48, 0x9f, 0xea, 0xa4,
-	0x15, 0xe0, 0xc4, 0xa0, 0xf5, 0x0c, 0x84, 0xc1, 0x2d, 0xa1, 0x28, 0x27, 0x22, 0x41, 0x2f, 0xf2,
-	0xd5, 0xb7, 0x74, 0xfa, 0x1a, 0xf0, 0xc4, 0xa0, 0xcd, 0x4c, 0xc5, 0x8e, 0xf1, 0x72, 0x42, 0xb0,
-	0xf7, 0x9b, 0x76, 0xac, 0xc0, 0x14, 0x3b, 0x56, 0xc8, 0xc8, 0x09, 0x6c, 0x64, 0xb2, 0x52, 0x56,
-	0x13, 0xac, 0x22, 0x87, 0xdd, 0xaf, 0x63, 0xd5, 0xd1, 0x13, 0x83, 0x5e, 0xc2, 0x85, 0xa7, 0x3e,
-	0xd3, 0x2a, 0x19, 0x4f, 0x7c, 0x67, 0xa0, 0x9f, 0xfa, 0x83, 0x06, 0x2c, 0x9e, 0xfa, 0x26, 0x1e,
-	0x72, 0x08, 0x6b, 0xae, 0x13, 0xb8, 0x6c, 0x56, 0xa6, 0x17, 0x59, 0xf0, 0x93, 0xd2, 0xa5, 0xa2,
-	0xc3, 0x26, 0x06, 0xad, 0xb3, 0x46, 0x52, 0xf1, 0xc1, 0x2c, 0xef, 0x0a, 0xd2, 0x15, 0x9d, 0xf4,
-	0x40, 0x87, 0x21, 0x69, 0x8d, 0x35, 0xf9, 0x12, 0xd6, 0x85, 0x38, 0x4f, 0xc7, 0x82, 0x55, 0x24,
-	0xcc, 0x4d, 0x9d, 0xb5, 0x8c, 0x9b, 0x18, 0xb4, 0xd6, 0xbe, 0xe0, 0xcd, 0xd3, 0xb4, 0xe0, 0xbd,
-	0xd6, 0xc4, 0x5b, 0xc6, 0x15, 0xbc, 0x65, 0x79, 0xc1, 0x9b, 0xa7, 0x6f, 0xc1, 0x3b, 0x6e, 0xe2,
-	0x2d, 0xe3, 0x0a, 0xde, 0xb2, 0x9c, 0x3c, 0x83, 0x51, 0xcc, 0xef, 0xed, 0x3c, 0x92, 0x45, 0x92,
-	0xdd, 0xa8, 0x3e, 0x5c, 0x4a, 0x71, 0x5c, 0xb1, 0x21, 0x4f, 0x60, 0x85, 0x3f, 0x89, 0xcf, 0xb2,
-	0xdb, 0x9a, 0x70, 0x92, 0x5b, 0xda, 0xfb, 0xf9, 0xac, 0xb8, 0xaa, 0xcb, 0x16, 0xe4, 0xd3, 0x52,
-	0xc2, 0x18, 0x88, 0x84, 0x21, 0xb0, 0x59, 0xca, 0x58, 0x96, 0x4f, 0x8b, 0xa7, 0x03, 0xe8, 0x63,
-	0xd2, 0xe0, 0x5a, 0xfb, 0x87, 0x30, 0x50, 0x0a, 0xb2, 0xc6, 0x9e, 0x23, 0x81, 0x25, 0x2c, 0xd4,
-	0x64, 0xb7, 0x91, 0xff, 0xb6, 0x1f, 0xc3, 0x50, 0xad, 0xc6, 0x1a, 0x6d, 0x6f, 0x40, 0xd7, 0x3d,
-	0x71, 0xd2, 0x97, 0x1e, 0xb7, 0xee, 0x50, 0x39, 0xb2, 0x7f, 0x0a, 0x43, 0xb5, 0x1a, 0x6b, 0xb4,
-	0xb7, 0x60, 0x99, 0x57, 0x69, 0x39, 0x41, 0x36, 0xb4, 0x7f, 0x05, 0x43, 0xb5, 0x1e, 0xbb, 0x8c,
-	0x81, 0xd7, 0x69, 0x92, 0xa1, 0x4f, 0xb3, 0x21, 0x6a, 0x12, 0xe6, 0x86, 0x81, 0x97, 0xc8, 0x66,
-	0x69, 0x36, 0xb4, 0xef, 0xc3, 0x50, 0x7d, 0x2b, 0x35, 0xbd, 0x2f, 0x6d, 0x80, 0x5e, 0xf6, 0x2e,
-	0xc2, 0xdf, 0x59, 0x8d, 0x67, 0xdb, 0x00, 0xc5, 0xcb, 0x87, 0xac, 0x43, 0xc7, 0x0f, 0x3c, 0xf6,
-	0xb5, 0x9c, 0x98, 0x18, 0xd8, 0x43, 0x80, 0xe2, 0x8d, 0x63, 0xdf, 0x83, 0xa1, 0xfa, 0x6a, 0x69,
-	0xb0, 0x01, 0xe8, 0x65, 0xef, 0x13, 0xb4, 0x2f, 0x5e, 0x1d, 0xf6, 0x6b, 0x58, 0xd5, 0x9e, 0x10,
-	0xa5, 0x36, 0xa8, 0x59, 0x69, 0x83, 0x96, 0x1a, 0xa8, 0xad, 0x4a, 0x03, 0xd5, 0x5e, 0x07, 0xa2,
-	0xbf, 0x20, 0xec, 0x2d, 0x18, 0x57, 0xdf, 0x01, 0x38, 0x51, 0x67, 0x1a, 0x33, 0x26, 0x9b, 0xfb,
-	0x62, 0x60, 0x3f, 0x82, 0x5e, 0x56, 0xd1, 0x61, 0xf8, 0xb8, 0xa1, 0x9c, 0x41, 0x87, 0xf2, 0xdf,
-	0xe8, 0x7a, 0xf9, 0x7e, 0xcd, 0x36, 0x25, 0x7b, 0xce, 0x1e, 0xab, 0xae, 0x4f, 0x22, 0xd1, 0x80,
-	0x0e, 0xe7, 0x75, 0x35, 0x63, 0xde, 0x14, 0xe0, 0x88, 0xbc, 0x51, 0xd7, 0xfa, 0xb7, 0x1a, 0x75,
-	0xbf, 0x35, 0x61, 0x5c, 0xad, 0x82, 0xb2, 0x4e, 0x96, 0x90, 0xcb, 0x4f, 0x36, 0xb5, 0x52, 0x15,
-	0x24, 0xb9, 0x5f, 0xfa, 0xf4, 0x58, 0x7c, 0xba, 0xc0, 0x56, 0xfb, 0x6f, 0x42, 0x63, 0x7f, 0x0e,
-	0x44, 0xaf, 0x9c, 0x9a, 0xe2, 0xd8, 0xfe, 0x0c, 0x56, 0xb5, 0xb2, 0xa8, 0x11, 0xbc, 0x9d, 0x2d,
-	0x4e, 0xa9, 0x70, 0x9a, 0xb0, 0x4f, 0xb3, 0x69, 0x94, 0xaa, 0x97, 0xa6, 0xe3, 0x94, 0x07, 0x66,
-	0x4b, 0x0d, 0xcc, 0x82, 0x43, 0xad, 0x57, 0xae, 0xc6, 0xf1, 0x1c, 0xae, 0xd7, 0x16, 0x2d, 0x57,
-	0xa4, 0x99, 0xc3, 0xad, 0xc6, 0xe2, 0xa4, 0x91, 0x4a, 0x3d, 0x29, 0xad, 0xcb, 0x4e, 0x4a, 0xbb,
-	0x7a, 0x52, 0x72, 0x4f, 0x2b, 0x77, 0x7a, 0x93, 0xa7, 0x7f, 0x01, 0x1b, 0xcd, 0x35, 0x48, 0xe3,
-	0xdc, 0xaa, 0x8d, 0xf5, 0x96, 0xde, 0x58, 0xb7, 0x27, 0x60, 0x35, 0x55, 0x1d, 0x97, 0xb9, 0x4f,
-	0x9c, 0xdc, 0x96, 0x7a, 0x72, 0xaf, 0xc3, 0x5a, 0x4d, 0x81, 0x61, 0x3f, 0x81, 0xb5, 0x9a, 0x12,
-	0xe1, 0x4a, 0x29, 0xe3, 0x05, 0xac, 0xd7, 0xd5, 0x03, 0x57, 0x4e, 0x1d, 0x93, 0x8c, 0xa7, 0x92,
-	0xe7, 0xaf, 0x9e, 0x42, 0xde, 0x67, 0x4c, 0x95, 0xcc, 0xfe, 0x9f, 0x4c, 0x25, 0x3f, 0x81, 0x51,
-	0xb9, 0x06, 0x28, 0xfe, 0xe7, 0x63, 0x7e, 0xfc, 0x7f, 0x3e, 0xf6, 0x0c, 0x56, 0x4a, 0xd9, 0xff,
-	0x4a, 0xd6, 0x64, 0x07, 0x7a, 0xe1, 0x19, 0x8b, 0x95, 0xfe, 0x27, 0x29, 0x7a, 0x9a, 0x6f, 0xa4,
-	0x86, 0xe6, 0x98, 0xed, 0x27, 0xd0, 0xcf, 0x39, 0xc8, 0x0a, 0xf4, 0xcf, 0x1d, 0x3f, 0x3d, 0xfa,
-	0x10, 0xfa, 0xc1, 0xd8, 0x20, 0x03, 0x58, 0xf6, 0x83, 0x23, 0xbc, 0xbe, 0xc6, 0x26, 0x19, 0x01,
-	0x70, 0x1d, 0xef, 0x04, 0x8e, 0x5b, 0xa4, 0x07, 0x4b, 0x48, 0x32, 0x6e, 0x6f, 0x3f, 0x16, 0x14,
-	0xaf, 0xfc, 0xb9, 0x9f, 0x92, 0x6b, 0x30, 0x98, 0xe1, 0x8f, 0xa3, 0x38, 0x5c, 0x04, 0xde, 0xd8,
-	0x40, 0x3b, 0x21, 0x48, 0x7d, 0xce, 0x33, 0x86, 0xa1, 0x18, 0x8b, 0x0e, 0xf1, 0xb8, 0xb5, 0xfb,
-	0xb7, 0x16, 0xc0, 0x8b, 0x7c, 0x49, 0xe4, 0x35, 0x40, 0xf1, 0x38, 0x27, 0x97, 0x37, 0x45, 0x36,
-	0x3e, 0xf2, 0xa6, 0xb7, 0x0d, 0xa4, 0x2b, 0x7a, 0xdf, 0x65, 0x3a, 0xad, 0x51, 0x5e, 0xa6, 0xd3,
-	0x5b, 0xe6, 0xb6, 0x41, 0x8e, 0x60, 0x5c, 0x6d, 0x67, 0x93, 0xbb, 0x15, 0xab, 0xba, 0x1e, 0xf9,
-	0xc6, 0xbd, 0xcb, 0x41, 0xf9, 0x07, 0x1e, 0x41, 0xf7, 0x30, 0x8d, 0x99, 0x33, 0x27, 0x6b, 0xaa,
-	0x85, 0xec, 0x3d, 0x6f, 0xd4, 0x09, 0x6d, 0x63, 0xcb, 0x7c, 0x68, 0xbe, 0xef, 0xf2, 0x7f, 0xc6,
-	0x7f, 0xef, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x4e, 0x2c, 0xd3, 0x26, 0x13, 0x20, 0x00, 0x00,
 }

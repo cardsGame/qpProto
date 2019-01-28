@@ -3,9 +3,11 @@
 
 package room
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -16,7 +18,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // 游戏类型
 type GameType int32
@@ -32,6 +34,7 @@ var GameType_name = map[int32]string{
 	1: "zlmj",
 	2: "ddz",
 }
+
 var GameType_value = map[string]int32{
 	"none_game": 0,
 	"zlmj":      1,
@@ -41,8 +44,9 @@ var GameType_value = map[string]int32{
 func (x GameType) String() string {
 	return proto.EnumName(GameType_name, int32(x))
 }
+
 func (GameType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_room_8a3676b2ed9df2a3, []int{0}
+	return fileDescriptor_b6c5d20c74c34643, []int{0}
 }
 
 // 房间类型
@@ -63,6 +67,7 @@ var RoomType_name = map[int32]string{
 	3: "division",
 	4: "match",
 }
+
 var RoomType_value = map[string]int32{
 	"none_room": 0,
 	"friend":    1,
@@ -74,8 +79,9 @@ var RoomType_value = map[string]int32{
 func (x RoomType) String() string {
 	return proto.EnumName(RoomType_name, int32(x))
 }
+
 func (RoomType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_room_8a3676b2ed9df2a3, []int{1}
+	return fileDescriptor_b6c5d20c74c34643, []int{1}
 }
 
 // 房间支付类型
@@ -92,6 +98,7 @@ var RoomPay_name = map[int32]string{
 	1: "aa_pay",
 	2: "master_pay",
 }
+
 var RoomPay_value = map[string]int32{
 	"none_pay":   0,
 	"aa_pay":     1,
@@ -101,8 +108,9 @@ var RoomPay_value = map[string]int32{
 func (x RoomPay) String() string {
 	return proto.EnumName(RoomPay_name, int32(x))
 }
+
 func (RoomPay) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_room_8a3676b2ed9df2a3, []int{2}
+	return fileDescriptor_b6c5d20c74c34643, []int{2}
 }
 
 // 房间结束类型
@@ -121,6 +129,7 @@ var RoomOverType_name = map[int32]string{
 	3: "force_over",
 	4: "dissolve_over",
 }
+
 var RoomOverType_value = map[string]int32{
 	"not_over":      0,
 	"normal":        2,
@@ -131,8 +140,9 @@ var RoomOverType_value = map[string]int32{
 func (x RoomOverType) String() string {
 	return proto.EnumName(RoomOverType_name, int32(x))
 }
+
 func (RoomOverType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_room_8a3676b2ed9df2a3, []int{3}
+	return fileDescriptor_b6c5d20c74c34643, []int{3}
 }
 
 // 房间玩家角色
@@ -149,6 +159,7 @@ var RoomPlayerRole_name = map[int32]string{
 	1: "player",
 	2: "guest",
 }
+
 var RoomPlayerRole_value = map[string]int32{
 	"none_role": 0,
 	"player":    1,
@@ -158,8 +169,9 @@ var RoomPlayerRole_value = map[string]int32{
 func (x RoomPlayerRole) String() string {
 	return proto.EnumName(RoomPlayerRole_name, int32(x))
 }
+
 func (RoomPlayerRole) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_room_8a3676b2ed9df2a3, []int{4}
+	return fileDescriptor_b6c5d20c74c34643, []int{4}
 }
 
 func init() {
@@ -170,9 +182,9 @@ func init() {
 	proto.RegisterEnum("room.RoomPlayerRole", RoomPlayerRole_name, RoomPlayerRole_value)
 }
 
-func init() { proto.RegisterFile("room/room.proto", fileDescriptor_room_8a3676b2ed9df2a3) }
+func init() { proto.RegisterFile("room/room.proto", fileDescriptor_b6c5d20c74c34643) }
 
-var fileDescriptor_room_8a3676b2ed9df2a3 = []byte{
+var fileDescriptor_b6c5d20c74c34643 = []byte{
 	// 251 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x90, 0xcf, 0x4e, 0xc3, 0x30,
 	0x0c, 0x87, 0xd7, 0x3f, 0x6c, 0x9d, 0xb5, 0x0d, 0x93, 0xc7, 0xa8, 0x10, 0x1c, 0x26, 0xf1, 0x0a,

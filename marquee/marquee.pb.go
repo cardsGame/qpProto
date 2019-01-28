@@ -3,13 +3,12 @@
 
 package marquee
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
 import (
-	context "golang.org/x/net/context"
+	context "context"
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -21,7 +20,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type GetMarqueeListRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -33,16 +32,17 @@ func (m *GetMarqueeListRequest) Reset()         { *m = GetMarqueeListRequest{} }
 func (m *GetMarqueeListRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMarqueeListRequest) ProtoMessage()    {}
 func (*GetMarqueeListRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{0}
+	return fileDescriptor_94a316c3e91c3c32, []int{0}
 }
+
 func (m *GetMarqueeListRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetMarqueeListRequest.Unmarshal(m, b)
 }
 func (m *GetMarqueeListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetMarqueeListRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetMarqueeListRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMarqueeListRequest.Merge(dst, src)
+func (m *GetMarqueeListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMarqueeListRequest.Merge(m, src)
 }
 func (m *GetMarqueeListRequest) XXX_Size() int {
 	return xxx_messageInfo_GetMarqueeListRequest.Size(m)
@@ -65,16 +65,17 @@ func (m *GetMarqueeListResponse) Reset()         { *m = GetMarqueeListResponse{}
 func (m *GetMarqueeListResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMarqueeListResponse) ProtoMessage()    {}
 func (*GetMarqueeListResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{1}
+	return fileDescriptor_94a316c3e91c3c32, []int{1}
 }
+
 func (m *GetMarqueeListResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetMarqueeListResponse.Unmarshal(m, b)
 }
 func (m *GetMarqueeListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetMarqueeListResponse.Marshal(b, m, deterministic)
 }
-func (dst *GetMarqueeListResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMarqueeListResponse.Merge(dst, src)
+func (m *GetMarqueeListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMarqueeListResponse.Merge(m, src)
 }
 func (m *GetMarqueeListResponse) XXX_Size() int {
 	return xxx_messageInfo_GetMarqueeListResponse.Size(m)
@@ -110,16 +111,17 @@ func (m *CreateMarqueeRequest) Reset()         { *m = CreateMarqueeRequest{} }
 func (m *CreateMarqueeRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateMarqueeRequest) ProtoMessage()    {}
 func (*CreateMarqueeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{2}
+	return fileDescriptor_94a316c3e91c3c32, []int{2}
 }
+
 func (m *CreateMarqueeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateMarqueeRequest.Unmarshal(m, b)
 }
 func (m *CreateMarqueeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateMarqueeRequest.Marshal(b, m, deterministic)
 }
-func (dst *CreateMarqueeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateMarqueeRequest.Merge(dst, src)
+func (m *CreateMarqueeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateMarqueeRequest.Merge(m, src)
 }
 func (m *CreateMarqueeRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateMarqueeRequest.Size(m)
@@ -148,16 +150,17 @@ func (m *DeleteMarqueeRequest) Reset()         { *m = DeleteMarqueeRequest{} }
 func (m *DeleteMarqueeRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteMarqueeRequest) ProtoMessage()    {}
 func (*DeleteMarqueeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{3}
+	return fileDescriptor_94a316c3e91c3c32, []int{3}
 }
+
 func (m *DeleteMarqueeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteMarqueeRequest.Unmarshal(m, b)
 }
 func (m *DeleteMarqueeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeleteMarqueeRequest.Marshal(b, m, deterministic)
 }
-func (dst *DeleteMarqueeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteMarqueeRequest.Merge(dst, src)
+func (m *DeleteMarqueeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteMarqueeRequest.Merge(m, src)
 }
 func (m *DeleteMarqueeRequest) XXX_Size() int {
 	return xxx_messageInfo_DeleteMarqueeRequest.Size(m)
@@ -187,16 +190,17 @@ func (m *UpdateMarqueeRequest) Reset()         { *m = UpdateMarqueeRequest{} }
 func (m *UpdateMarqueeRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateMarqueeRequest) ProtoMessage()    {}
 func (*UpdateMarqueeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{4}
+	return fileDescriptor_94a316c3e91c3c32, []int{4}
 }
+
 func (m *UpdateMarqueeRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateMarqueeRequest.Unmarshal(m, b)
 }
 func (m *UpdateMarqueeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateMarqueeRequest.Marshal(b, m, deterministic)
 }
-func (dst *UpdateMarqueeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateMarqueeRequest.Merge(dst, src)
+func (m *UpdateMarqueeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateMarqueeRequest.Merge(m, src)
 }
 func (m *UpdateMarqueeRequest) XXX_Size() int {
 	return xxx_messageInfo_UpdateMarqueeRequest.Size(m)
@@ -233,16 +237,17 @@ func (m *MarqueeData) Reset()         { *m = MarqueeData{} }
 func (m *MarqueeData) String() string { return proto.CompactTextString(m) }
 func (*MarqueeData) ProtoMessage()    {}
 func (*MarqueeData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_marquee_86b0278f1d0db314, []int{5}
+	return fileDescriptor_94a316c3e91c3c32, []int{5}
 }
+
 func (m *MarqueeData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MarqueeData.Unmarshal(m, b)
 }
 func (m *MarqueeData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MarqueeData.Marshal(b, m, deterministic)
 }
-func (dst *MarqueeData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MarqueeData.Merge(dst, src)
+func (m *MarqueeData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MarqueeData.Merge(m, src)
 }
 func (m *MarqueeData) XXX_Size() int {
 	return xxx_messageInfo_MarqueeData.Size(m)
@@ -274,6 +279,29 @@ func init() {
 	proto.RegisterType((*DeleteMarqueeRequest)(nil), "DeleteMarqueeRequest")
 	proto.RegisterType((*UpdateMarqueeRequest)(nil), "UpdateMarqueeRequest")
 	proto.RegisterType((*MarqueeData)(nil), "MarqueeData")
+}
+
+func init() { proto.RegisterFile("marquee/marquee.proto", fileDescriptor_94a316c3e91c3c32) }
+
+var fileDescriptor_94a316c3e91c3c32 = []byte{
+	// 261 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x41, 0x4b, 0xc3, 0x30,
+	0x14, 0xc7, 0x6d, 0xb5, 0x0e, 0xdf, 0x74, 0x87, 0x47, 0xbb, 0x95, 0x9d, 0x4a, 0x0e, 0xd2, 0x53,
+	0x94, 0x09, 0x7a, 0x15, 0x36, 0xf0, 0xa2, 0x20, 0x01, 0x3f, 0x40, 0xb4, 0xef, 0x50, 0xa8, 0x4d,
+	0xd7, 0xbc, 0x7d, 0x75, 0xcf, 0x62, 0x1b, 0x61, 0x99, 0x01, 0x77, 0x2a, 0xaf, 0xef, 0xff, 0xcb,
+	0x9f, 0xfc, 0x08, 0x64, 0x9f, 0xba, 0xdf, 0xee, 0x88, 0x6e, 0xdc, 0x57, 0x76, 0xbd, 0x61, 0x23,
+	0x16, 0x90, 0x3d, 0x11, 0xbf, 0x8c, 0xff, 0x9e, 0x6b, 0xcb, 0x8a, 0xb6, 0x3b, 0xb2, 0x2c, 0x5e,
+	0x61, 0x7e, 0xb8, 0xb0, 0x9d, 0x69, 0x2d, 0x61, 0x01, 0x67, 0x4d, 0x6d, 0x39, 0x8f, 0x8a, 0xd3,
+	0x72, 0xba, 0xba, 0x94, 0x2e, 0xb3, 0xd1, 0xac, 0xd5, 0xb0, 0xc1, 0x14, 0x12, 0x36, 0xac, 0x9b,
+	0x3c, 0x2e, 0xa2, 0x32, 0x51, 0xe3, 0x20, 0x6e, 0x21, 0x5d, 0xf7, 0xa4, 0x99, 0x1c, 0xe0, 0x9a,
+	0x30, 0x87, 0xc9, 0x87, 0x69, 0x99, 0xda, 0x9f, 0x23, 0xa3, 0xf2, 0x42, 0xfd, 0x8e, 0xe2, 0x1a,
+	0xd2, 0x0d, 0x35, 0xf4, 0x87, 0x98, 0x41, 0x5c, 0x57, 0x43, 0x38, 0x51, 0x71, 0x5d, 0x89, 0x47,
+	0x48, 0xdf, 0xba, 0x4a, 0xff, 0x97, 0xdb, 0x6f, 0x8a, 0xfd, 0xa6, 0x07, 0x98, 0xee, 0x5d, 0xe3,
+	0x78, 0x70, 0xf5, 0x15, 0xc1, 0xc4, 0x91, 0xb8, 0x86, 0x99, 0xaf, 0x0c, 0xe7, 0x32, 0x28, 0x77,
+	0xb9, 0x90, 0x61, 0xb7, 0xe2, 0x04, 0xef, 0xe1, 0xca, 0xb3, 0x84, 0x99, 0x0c, 0x59, 0x5b, 0x7a,
+	0xde, 0x47, 0xce, 0x73, 0x80, 0x99, 0x0c, 0x39, 0x09, 0x71, 0x9e, 0x63, 0xcc, 0x64, 0xc8, 0xf9,
+	0x21, 0xf7, 0x7e, 0x3e, 0xbc, 0x9f, 0xbb, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xed, 0x08, 0xd2,
+	0x14, 0x58, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -445,27 +473,4 @@ var _Marquee_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "marquee/marquee.proto",
-}
-
-func init() { proto.RegisterFile("marquee/marquee.proto", fileDescriptor_marquee_86b0278f1d0db314) }
-
-var fileDescriptor_marquee_86b0278f1d0db314 = []byte{
-	// 261 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x41, 0x4b, 0xc3, 0x30,
-	0x14, 0xc7, 0x6d, 0xb5, 0x0e, 0xdf, 0x74, 0x87, 0x47, 0xbb, 0x95, 0x9d, 0x4a, 0x0e, 0xd2, 0x53,
-	0x94, 0x09, 0x7a, 0x15, 0x36, 0xf0, 0xa2, 0x20, 0x01, 0x3f, 0x40, 0xb4, 0xef, 0x50, 0xa8, 0x4d,
-	0xd7, 0xbc, 0x7d, 0x75, 0xcf, 0x62, 0x1b, 0x61, 0x99, 0x01, 0x77, 0x2a, 0xaf, 0xef, 0xff, 0xcb,
-	0x9f, 0xfc, 0x08, 0x64, 0x9f, 0xba, 0xdf, 0xee, 0x88, 0x6e, 0xdc, 0x57, 0x76, 0xbd, 0x61, 0x23,
-	0x16, 0x90, 0x3d, 0x11, 0xbf, 0x8c, 0xff, 0x9e, 0x6b, 0xcb, 0x8a, 0xb6, 0x3b, 0xb2, 0x2c, 0x5e,
-	0x61, 0x7e, 0xb8, 0xb0, 0x9d, 0x69, 0x2d, 0x61, 0x01, 0x67, 0x4d, 0x6d, 0x39, 0x8f, 0x8a, 0xd3,
-	0x72, 0xba, 0xba, 0x94, 0x2e, 0xb3, 0xd1, 0xac, 0xd5, 0xb0, 0xc1, 0x14, 0x12, 0x36, 0xac, 0x9b,
-	0x3c, 0x2e, 0xa2, 0x32, 0x51, 0xe3, 0x20, 0x6e, 0x21, 0x5d, 0xf7, 0xa4, 0x99, 0x1c, 0xe0, 0x9a,
-	0x30, 0x87, 0xc9, 0x87, 0x69, 0x99, 0xda, 0x9f, 0x23, 0xa3, 0xf2, 0x42, 0xfd, 0x8e, 0xe2, 0x1a,
-	0xd2, 0x0d, 0x35, 0xf4, 0x87, 0x98, 0x41, 0x5c, 0x57, 0x43, 0x38, 0x51, 0x71, 0x5d, 0x89, 0x47,
-	0x48, 0xdf, 0xba, 0x4a, 0xff, 0x97, 0xdb, 0x6f, 0x8a, 0xfd, 0xa6, 0x07, 0x98, 0xee, 0x5d, 0xe3,
-	0x78, 0x70, 0xf5, 0x15, 0xc1, 0xc4, 0x91, 0xb8, 0x86, 0x99, 0xaf, 0x0c, 0xe7, 0x32, 0x28, 0x77,
-	0xb9, 0x90, 0x61, 0xb7, 0xe2, 0x04, 0xef, 0xe1, 0xca, 0xb3, 0x84, 0x99, 0x0c, 0x59, 0x5b, 0x7a,
-	0xde, 0x47, 0xce, 0x73, 0x80, 0x99, 0x0c, 0x39, 0x09, 0x71, 0x9e, 0x63, 0xcc, 0x64, 0xc8, 0xf9,
-	0x21, 0xf7, 0x7e, 0x3e, 0xbc, 0x9f, 0xbb, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xed, 0x08, 0xd2,
-	0x14, 0x58, 0x02, 0x00, 0x00,
 }

@@ -18,8 +18,10 @@ def removeOldTypings():
 
 def genProto():
     srcStr = r'\src'
+    splitStr = ';'
     if os.name != 'nt':
         os.system('source ~/.bash_profile')
+        splitStr = ':'
         srcStr = r'/src'
     print('操作系统:', os.name)
     fileList = os.listdir()
@@ -29,13 +31,11 @@ def genProto():
     os.system('go get -u -x github.com/cardsGame/qpProto')
     goPath = os.getenv('GOPATH') or '/Users/pengju/go/src'
     print("goPath:", goPath)
-    dIndex = goPath.find(';')
+    dIndex = goPath.find(splitStr)
     print("dIndex:", dIndex)
     if (dIndex > 0):
-        goPath = goPath[:dIndex+1]
-    ddIndex = goPath.find(',')
-    if (ddIndex > 0):
-        goPath = goPath[:dIndex+1]
+        goPath = goPath[:dIndex]
+    print("newGoPath:", goPath)
     goPath = goPath + srcStr
     folderList = []
     for i in range(0, len(fileList)):
