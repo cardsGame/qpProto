@@ -3,7 +3,7 @@ package history;
 import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 service History {
-    rpc GetUserHistroy(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
+    rpc GetUserHistory(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
     rpc StoreHistory (StoreHistoryRequest) returns (StoreHistoryResponse) {}
 }
 
