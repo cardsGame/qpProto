@@ -27,8 +27,12 @@ message GetHistoryByKeyRequest {
 
 message GetHistoryByKeyResponse {
     int32 total = 1;
-    oneof rooms {
-        friendRoom.RoomData friendRooms  = 2;
+    repeated HistoryData list = 2;
+}
+
+message HistoryData {
+    oneof room {
+        friendRoom.RoomData friendRoom  = 2;
     }
 }
 
