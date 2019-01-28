@@ -67,6 +67,14 @@ message RoomData {
     int32 dissolveStartUserId = 10;
     int32 curRound = 11; // 当前局数
     int32 curCircle = 12; // 当前圈数
+    repeated GameRecord gameRecords = 13; // 游戏记录
+}
+
+// 游戏记录
+message GameRecord {
+    oneof game {
+        zlmj.GameData zlmj = 1; // 镇赉麻将游戏数据
+    }
 }
 
 // 创建房间请求

@@ -4,6 +4,11 @@ import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 service History {
     rpc GetUserHistroy(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
+    rpc StoreHistory (StoreHistoryRequest) returns (StoreHistoryResponse) {}
+}
+
+enum HistoryType {
+    friend_room = 0;
 }
 
 // 获取用户战绩请求
@@ -14,7 +19,20 @@ message GetUserHistoryRequest {
 
 // 获取用户战绩响应
 message GetUserHistoryResponse {
-    oneof room {
+    oneof rooms {
+        friendRoom.RoomData friendRooms  = 1;
+    }
+}
+
+// 写入战绩请求
+message StoreHistoryRequest {
+    HistoryType t = 1;
+    oneof roomData {
         friendRoom.RoomData friendRoomData  = 1;
     }
+}
+
+// 写入战绩响应
+message StoreHistoryResponse {
+
 }
