@@ -12,6 +12,8 @@ It has these top-level messages:
 	GetUserHistoryResponse
 	StoreHistoryRequest
 	StoreHistoryResponse
+	AddIndexReqeust
+	AddIndexResponse
 */
 package history
 
@@ -46,7 +48,10 @@ var _ server.Option
 
 type HistoryService interface {
 	GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error)
+	// 存储数据 服务端调用
 	StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...client.CallOption) (*StoreHistoryResponse, error)
+	// 增加索引 服务端调用
+	AddIndex(ctx context.Context, in *AddIndexReqeust, opts ...client.CallOption) (*AddIndexResponse, error)
 }
 
 type historyService struct {
@@ -87,17 +92,31 @@ func (c *historyService) StoreHistory(ctx context.Context, in *StoreHistoryReque
 	return out, nil
 }
 
+func (c *historyService) AddIndex(ctx context.Context, in *AddIndexReqeust, opts ...client.CallOption) (*AddIndexResponse, error) {
+	req := c.c.NewRequest(c.name, "History.AddIndex", in)
+	out := new(AddIndexResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for History service
 
 type HistoryHandler interface {
 	GetUserHistory(context.Context, *GetUserHistoryRequest, *GetUserHistoryResponse) error
+	// 存储数据 服务端调用
 	StoreHistory(context.Context, *StoreHistoryRequest, *StoreHistoryResponse) error
+	// 增加索引 服务端调用
+	AddIndex(context.Context, *AddIndexReqeust, *AddIndexResponse) error
 }
 
 func RegisterHistoryHandler(s server.Server, hdlr HistoryHandler, opts ...server.HandlerOption) error {
 	type history interface {
 		GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error
 		StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error
+		AddIndex(ctx context.Context, in *AddIndexReqeust, out *AddIndexResponse) error
 	}
 	type History struct {
 		history
@@ -116,4 +135,8 @@ func (h *historyHandler) GetUserHistory(ctx context.Context, in *GetUserHistoryR
 
 func (h *historyHandler) StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error {
 	return h.HistoryHandler.StoreHistory(ctx, in, out)
+}
+
+func (h *historyHandler) AddIndex(ctx context.Context, in *AddIndexReqeust, out *AddIndexResponse) error {
+	return h.HistoryHandler.AddIndex(ctx, in, out)
 }
