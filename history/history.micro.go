@@ -8,10 +8,8 @@ It is generated from these files:
 	history/history.proto
 
 It has these top-level messages:
-	GetUserHistoryRequest
-	GetUserHistoryResponse
-	GetCircleHistoryRequest
-	GetCircleHistoryResponse
+	GetHistoryByKeyRequest
+	GetHistoryByKeyResponse
 	StoreHistoryRequest
 	StoreHistoryResponse
 	AddIndexReqeust
@@ -49,10 +47,8 @@ var _ server.Option
 // Client API for History service
 
 type HistoryService interface {
-	// 获取用户的战绩
-	GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error)
-	// 获取亲友圈的战绩
-	GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, opts ...client.CallOption) (*GetCircleHistoryResponse, error)
+	// 根据key获取战绩列表
+	GetHistoryByKey(ctx context.Context, in *GetHistoryByKeyRequest, opts ...client.CallOption) (*GetHistoryByKeyResponse, error)
 	// 存储数据 服务端调用
 	StoreHistory(ctx context.Context, in *StoreHistoryRequest, opts ...client.CallOption) (*StoreHistoryResponse, error)
 	// 增加索引 服务端调用
@@ -77,19 +73,9 @@ func NewHistoryService(name string, c client.Client) HistoryService {
 	}
 }
 
-func (c *historyService) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, opts ...client.CallOption) (*GetUserHistoryResponse, error) {
-	req := c.c.NewRequest(c.name, "History.GetUserHistory", in)
-	out := new(GetUserHistoryResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *historyService) GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, opts ...client.CallOption) (*GetCircleHistoryResponse, error) {
-	req := c.c.NewRequest(c.name, "History.GetCircleHistory", in)
-	out := new(GetCircleHistoryResponse)
+func (c *historyService) GetHistoryByKey(ctx context.Context, in *GetHistoryByKeyRequest, opts ...client.CallOption) (*GetHistoryByKeyResponse, error) {
+	req := c.c.NewRequest(c.name, "History.GetHistoryByKey", in)
+	out := new(GetHistoryByKeyResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -120,10 +106,8 @@ func (c *historyService) AddIndex(ctx context.Context, in *AddIndexReqeust, opts
 // Server API for History service
 
 type HistoryHandler interface {
-	// 获取用户的战绩
-	GetUserHistory(context.Context, *GetUserHistoryRequest, *GetUserHistoryResponse) error
-	// 获取亲友圈的战绩
-	GetCircleHistory(context.Context, *GetCircleHistoryRequest, *GetCircleHistoryResponse) error
+	// 根据key获取战绩列表
+	GetHistoryByKey(context.Context, *GetHistoryByKeyRequest, *GetHistoryByKeyResponse) error
 	// 存储数据 服务端调用
 	StoreHistory(context.Context, *StoreHistoryRequest, *StoreHistoryResponse) error
 	// 增加索引 服务端调用
@@ -132,8 +116,7 @@ type HistoryHandler interface {
 
 func RegisterHistoryHandler(s server.Server, hdlr HistoryHandler, opts ...server.HandlerOption) error {
 	type history interface {
-		GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error
-		GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, out *GetCircleHistoryResponse) error
+		GetHistoryByKey(ctx context.Context, in *GetHistoryByKeyRequest, out *GetHistoryByKeyResponse) error
 		StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error
 		AddIndex(ctx context.Context, in *AddIndexReqeust, out *AddIndexResponse) error
 	}
@@ -148,12 +131,8 @@ type historyHandler struct {
 	HistoryHandler
 }
 
-func (h *historyHandler) GetUserHistory(ctx context.Context, in *GetUserHistoryRequest, out *GetUserHistoryResponse) error {
-	return h.HistoryHandler.GetUserHistory(ctx, in, out)
-}
-
-func (h *historyHandler) GetCircleHistory(ctx context.Context, in *GetCircleHistoryRequest, out *GetCircleHistoryResponse) error {
-	return h.HistoryHandler.GetCircleHistory(ctx, in, out)
+func (h *historyHandler) GetHistoryByKey(ctx context.Context, in *GetHistoryByKeyRequest, out *GetHistoryByKeyResponse) error {
+	return h.HistoryHandler.GetHistoryByKey(ctx, in, out)
 }
 
 func (h *historyHandler) StoreHistory(ctx context.Context, in *StoreHistoryRequest, out *StoreHistoryResponse) error {
