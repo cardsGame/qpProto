@@ -418,5 +418,12 @@ message RoomReadyEvent {
 message RoomOverEvent {
     RoomState state = 1;
     room.RoomOverType overType = 2;
+    repeated GamePlayer players = 3;
+}
+
+message GamePlayer {
+    oneof gamePlayer{
+        zlmj.PlayerData zlmj = 2;
+    }
 }
 // endregion

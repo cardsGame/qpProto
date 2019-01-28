@@ -60,6 +60,7 @@ It has these top-level messages:
 	PlayerVoiceChatEvent
 	RoomReadyEvent
 	RoomOverEvent
+	GamePlayer
 */
 package friendRoom
 

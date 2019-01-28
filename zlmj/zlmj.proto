@@ -56,6 +56,11 @@ message PlayerData {
     bool canTing= 17; // 是否可以听
     repeated HuType huTypes = 18; // 胡的种类
     WinType winType = 19; // 赢的类型
+    int32 masterCount = 20; // 坐庄
+    int32 huCount = 21; // 胡次数
+    int32 dianpaoCount = 22; // 点炮次数
+    int32 mobaoCount = 23; // 摸宝次数
+    int32 zhiduiCount = 24; // 摸宝次数
 }
 
 // 状态
