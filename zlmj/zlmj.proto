@@ -115,7 +115,7 @@ enum CombinationId {
 
 // 胡的种类
 enum HuType {
-    none = 0; // 占位符
+    pinghu = 0; // 占位符
     qi_xiao_dui = 1; // 七对
 }
 
