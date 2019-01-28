@@ -11,6 +11,7 @@ It has these top-level messages:
 	RoomOption
 	PlayerData
 	RoomData
+	GameRecord
 	CreateRoomRequest
 	CreateCircleRoomRequest
 	CreateRoomResponse
