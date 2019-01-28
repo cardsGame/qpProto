@@ -17,34 +17,37 @@ def removeOldTypings():
 
 
 def genProto():
+    srcStr = r'\src'
     if os.name != 'nt':
         os.system('source ~/.bash_profile')
+        srcStr = r'/src'
     print('操作系统:', os.name)
     fileList = os.listdir()
     # 关闭goModule先
     os.environ['GO111MODULE'] = 'off'
     # 通过goget拉取项目路径到GOPATH
     os.system('go get -u -x github.com/cardsGame/qpProto')
-    goPath = os.getenv('GOPATH') or ''
-    print(goPath)
+    goPath = os.getenv('GOPATH') or '/Users/pengju/go/src'
+    print("goPath:", goPath)
     dIndex = goPath.find(';')
+    print("dIndex:", dIndex)
     if (dIndex > 0):
         goPath = goPath[:dIndex+1]
     ddIndex = goPath.find(',')
-    if (dIndex > 0):
-        goPath = goPath[:ddIndex] + r'\src'
+    if (ddIndex > 0):
+        goPath = goPath[:dIndex+1]
+    goPath = goPath + srcStr
     folderList = []
     for i in range(0, len(fileList)):
         fileName = fileList[i]
         dotIndex = fileName.find('.')
         if (dotIndex < 0):
             folderList.append(fileName)
-    print(folderList)
+    print("folderList:", folderList)
     for folderName in folderList:
         cmd = 'protoc --proto_path="' + goPath + \
             '" --proto_path=. --go_out=plugins=grpc:. --micro_out=plugins=grpc:. ' + \
             folderName + '/' + folderName + '.proto'
-        # print(cmd)
         os.system(cmd)
 
 
