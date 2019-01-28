@@ -46,6 +46,7 @@ message StoreHistoryResponse {
 message AddIndexReqeust {
     string key = 1;
     string subKey = 2;
+    string historyId = 3; // 战绩id
 }
 
 // 增加索引响应
