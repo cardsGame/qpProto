@@ -4,7 +4,12 @@ import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 service History {
     rpc GetUserHistory(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
+
+    // 存储数据 服务端调用
     rpc StoreHistory (StoreHistoryRequest) returns (StoreHistoryResponse) {}
+
+    // 增加索引 服务端调用
+    rpc AddIndex(AddIndexReqeust) returns (AddIndexResponse) {}
 }
 
 enum HistoryType {
@@ -15,6 +20,7 @@ enum HistoryType {
 message GetUserHistoryRequest {
     int32 page = 1;
     int32 limit = 2;
+    HistoryType t = 3;
 }
 
 // 获取用户战绩响应
@@ -26,13 +32,21 @@ message GetUserHistoryResponse {
 
 // 写入战绩请求
 message StoreHistoryRequest {
-    HistoryType t = 1;
     oneof roomData {
-        friendRoom.RoomData friendRoomData  = 2;
+        friendRoom.RoomData friendRoomData  = 1;
     }
 }
 
 // 写入战绩响应
 message StoreHistoryResponse {
-
+    string historyId = 1; // 战绩id
 }
+
+// 增加索引请求
+message AddIndexReqeust {
+    string key = 1;
+    string subKey = 2;
+}
+
+// 增加索引响应
+message AddIndexResponse {}
