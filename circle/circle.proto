@@ -64,7 +64,7 @@ service CircleUserService {
 message BuildCircleRequest {
     string name = 1;
     string notice = 2;
-    User u = 3;
+    int32 userId = 3;
 }
 
 message BuildCircleResponse {
@@ -102,7 +102,7 @@ message DelCircleResponse {
 
 message ApplyJoinCircleRequest {
     string circleId = 1;
-    User user =2 ;
+    int32 userId =2 ;
 
 }
 
@@ -123,12 +123,11 @@ message GetCircleLogResponse {
 }
 
 message DealApplyRequest {
-    User u = 1;
-    string circleId = 2;
-    int32 ownerId = 3;
-    int32 msgId = 4;
-    int32 userId = 5;
-    bool agree = 6;
+    string circleId = 1;
+    int32 ownerId = 2;
+    int32 msgId = 3;
+    int32 userId = 4;
+    bool agree = 5;
 }
 
 message DealApplyResponse {
@@ -268,8 +267,10 @@ message Circle {
     int32 ownerId = 1;
     string createAt = 2;
     string updateAt = 3;
-    //    string Notice = 4;
     string name = 4;
     string circleId = 5;
     int32 memberCount = 6;
 }
+
+
+

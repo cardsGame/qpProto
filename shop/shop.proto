@@ -55,6 +55,7 @@ message GetGoodsListRequest {
     int32 page = 1;
     int32 limit = 2;
     int32 t = 3;
+    int32 userId = 4;
 }
 
 message GetGoodsListResponse {
@@ -111,6 +112,7 @@ message BuyOneGoodRequest {
     int32 id = 1;
     int32 count = 2;
     int32 userId = 3;
+    
 }
 
 message BuyOneGoodResponse {
