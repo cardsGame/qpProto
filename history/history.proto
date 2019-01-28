@@ -3,11 +3,8 @@ package history;
 import "github.com/cardsGame/qpProto/friendRoom/friendRoom.proto";
 
 service History {
-    // 获取用户的战绩
-    rpc GetUserHistory(GetUserHistoryRequest) returns (GetUserHistoryResponse) {}
-
-    // 获取亲友圈的战绩
-    rpc GetCircleHistory(GetCircleHistoryRequest) returns (GetCircleHistoryResponse) {}
+    // 根据key获取战绩列表
+    rpc GetHistoryByKey(GetHistoryByKeyRequest) returns (GetHistoryByKeyResponse) {}
 
     // 存储数据 服务端调用
     rpc StoreHistory (StoreHistoryRequest) returns (StoreHistoryResponse) {}
@@ -16,32 +13,23 @@ service History {
     rpc AddIndex(AddIndexReqeust) returns (AddIndexResponse) {}
 }
 
+// 战绩类型
 enum HistoryType {
-    friend_room = 0;
+    friend_room = 0; // 好友房战绩
 }
 
-// 获取用户战绩请求
-message GetUserHistoryRequest {
+message GetHistoryByKeyRequest {
     int32 page = 1;
     int32 limit = 2;
     HistoryType t = 3;
+    string key = 4;
 }
 
-// 获取用户战绩响应
-message GetUserHistoryResponse {
+message GetHistoryByKeyResponse {
+    int32 total = 1;
     oneof rooms {
-        friendRoom.RoomData friendRooms  = 1;
+        friendRoom.RoomData friendRooms  = 2;
     }
-}
-
-message GetCircleHistoryRequest {
-    int32 page = 1;
-    int32 limit = 2;
-    HistoryType t = 3;
-}
-
-message GetCircleHistoryResponse {
-
 }
 
 // 写入战绩请求
